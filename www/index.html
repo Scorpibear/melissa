@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>Chess Best Move Trainer</title>
+    <link rel="stylesheet" href="css/chessboard.css"/>
+</head>
+<body>
+<div id="app">
+    <h1>Select Best Move</h1>
+
+    <div id="board" style="width: 400px"></div>
+    <p><span id="status"></span></p>
+
+    <p>Position: <span id="pgn"></span></p>
+    <button id="retry">Try again</button>
+    <button id="best">Best move</button>
+    <button id="next">Next position</button>
+</div>
+<script src="js/ext/json3.min.js"></script>
+<script src="js/ext/jquery-1.10.1.min.js"></script>
+<script src="js/ext/chessboard.js"></script>
+<script src="js/ext/chess.js"></script>
+<script src="js/shahmaster/base.js"></script>
+<script src="js/shahmaster/positions.js"></script>
+<script src="js/shahmaster.js"></script>
+<script>
+    $(document).ready(shahmaster.initialize);
+
+
+</script>
+</body>
+</html>

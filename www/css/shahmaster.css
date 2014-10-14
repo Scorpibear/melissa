@@ -1,0 +1,11 @@
+.badmove {
+    background-color: red;
+}
+
+.goodmove {
+    background-color: green;
+}
+
+.puzzle {
+    background-color: default;
+}
