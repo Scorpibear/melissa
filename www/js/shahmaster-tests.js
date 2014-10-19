@@ -17,7 +17,8 @@ var shahmaster-tests = {
     "base object is part of the solution":                      true,
     "base is used for taking positions":                        true,
     "next level of base is used for taking positions":          true,
-    "only best positions are shown":                            false
+    "only best positions are shown":                            true,
+    "learning strategy is used":                                false
     // next position in a sec after correct answer:             false,
     // show value after correct answer: false
 
