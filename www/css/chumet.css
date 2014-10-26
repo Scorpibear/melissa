@@ -1,3 +1,11 @@
+button {
+    font-size: 60px;
+}
+
+#chumetBoard {
+    width: 460px;
+}
+
 .badmove {
     background-color: red;
 }
