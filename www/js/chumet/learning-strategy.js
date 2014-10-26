@@ -83,7 +83,9 @@ function LearningStrategy(){
             var beginning = "";
             for(var j=0;j<positionContainer.length;j++){
                 positionContainer[j].beginning = "";
+                positionContainer[j].type = 'b';
             };
+            positionContainer[0].type = 'main';
         };
         var newPuzzle = this.findNewPuzzleFromPositions(positionContainer);
         this.learningPuzzles.push(newPuzzle);
@@ -101,12 +103,24 @@ function LearningStrategy(){
                 var beginning = this.createPosition(positionObject);
                 for(var j=0;j<positionObject.s.length;j++){
                     positionObject.s[j].beginning = beginning;
+                    if(positionObject.type == 'main' && j!=0) {
+                        positionObject.s[j].type = positionObject.c;
+                    } else {
+                        positionObject.s[j].type = positionObject.type;
+                    }
                 }
-                queueForDeepening = queueForDeepening.concat(positionObject.s);
+                if(positionObject.type!='main' && positionObject.type!=positionObject.c){
+                    queueForDeepening.push(positionObject.s[0]);
+                } else {
+                    queueForDeepening = queueForDeepening.concat(positionObject.s);
+                };
                 continue;
             };
-            var newPuzzle = this.createPuzzle(positionObject);
-            return newPuzzle;
+            // type should match the answer, not position
+            if(positionObject.type != positionObject.c){
+                var newPuzzle = this.createPuzzle(positionObject);
+                return newPuzzle;
+            };
         };
         return this.findNewPuzzleFromPositions(queueForDeepening);
     };
@@ -139,4 +153,4 @@ function LearningStrategy(){
 
 };
 
-LearningStrategy.QUICK_MODE = true;
+LearningStrategy.QUICK_MODE = false;
