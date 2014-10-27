@@ -12,9 +12,11 @@
     <div id="chumetBoard"></div>
     <p><span id="status"></span></p>
     <p>Position: <span id="pgn"></span></p>
-    <button id="retry">Retry</button>
-    <button id="best">Best</button>
-    <button id="next">Next</button>
+
+    <div id="controls">
+        <button id="best">Best</button>
+        <button id="next">Next</button>
+    </div>
 </div>
 <script src="js/ext/json3.min.js"></script>
 <script src="js/ext/jquery-1.10.1.min.js"></script>
@@ -23,6 +25,7 @@
 <!-- chumet includes starts -->
 <script src="js/chumet/base.js"></script>
 <script src="js/chumet/puzzle.js"></script>
+<script src="js/chumet/learning-progress.js"></script>
 <script src="js/chumet/position-object-validator.js"></script>
 <script src="js/chumet/learning-strategy.js"></script>
 <script src="js/chumet/move-validator.js"></script>

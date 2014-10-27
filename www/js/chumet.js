@@ -5,7 +5,8 @@ function Chumet() {
     this.puzzle = null;
 
     this.start = function () {
-        this.learningStrategy = new LearningStrategy();
+        this.learningProgress = new LearningProgress();
+        this.learningStrategy = new LearningStrategy(this.learningProgress.puzzles);
         this.moveValidator = new MoveValidator();
         this.chessBoardConfig = new ChessBoardConfig(this.moveValidator);
         this.chessBoard = new ChessBoard(this.boardID, this.chessBoardConfig);
@@ -20,14 +21,12 @@ function Chumet() {
     };
 
     this.setupHandlers = function() {
-        document.getElementById('retry').onclick = function() {
-            chumet.resetPosition();
-        };
         document.getElementById('best').onclick = function() {
             chumet.showBest();
         };
         document.getElementById('next').onclick = function() {
             chumet.showNextPuzzle();
+            chumet.learningProgress.save();
         };
     };
 

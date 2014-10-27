@@ -1,45 +1,13 @@
 // know what to learn next
-function LearningStrategy(){
+function LearningStrategy(puzzles){
     this.puzzleQueue = [];
-    this.learningPuzzles = [new Puzzle('', 'd4')];
+    this.learningPuzzles = puzzles;
     this.positionBase = base;
     this.positionObjectValidator = new PositionObjectValidator();
     this.getNextPuzzle = function(){
         this.refillQueue();
         var puzzle = this.puzzleQueue.shift();
         return puzzle;
-        //return this.getNextRandomPosition();
-    };
-    //obsolete, to remove
-    this.getNextRandomPosition = function(){
-        var maxDepth = 50;
-        var depth = Math.floor(Math.random()*maxDepth);
-        var baseContainer = base;
-        var position = "";
-        var bestMove;
-        // for what side it's position - who will provide an answer
-        // wb - for main line, when both are playing ideally
-        var positionType = "wb"; // "wb", "w", "b";
-        // go as deep as we could until stumble upon any blocks
-        while(depth>=0){
-            // let's select random position from the list
-            var posIndex = Math.floor(Math.random()*baseContainer.length);
-            var positionObject = baseContainer[posIndex];
-
-            // TODO: extract validation method
-
-            // if main line become not main, time to specify position - white or black
-            if((positionType=="wb")&&(posIndex!=0))
-                positionType=positionObject.s[0].c;
-
-            // going deeper to change container
-            baseContainer = positionObject.s;
-            depth--;
-            // if depth ended but position type does not meet position object, increase the depth.
-            if((depth==-1)&&(positionType.search(positionObject.s[0].c)==-1))
-                depth++;
-        };
-        return {position: position, bestMove: bestMove};
     };
 
     this.refillQueue = function(){
@@ -61,9 +29,11 @@ function LearningStrategy(){
     };
     this.addToQueueAndMoveToEnd = function(index){
         var puzzle = this.learningPuzzles[index];
-        this.puzzleQueue.push(puzzle);
-        this.learningPuzzles.splice(index, 1);
-        this.learningPuzzles.push(puzzle);
+        if(puzzle.isTimeToLearn()){
+            this.puzzleQueue.push(puzzle);
+            this.learningPuzzles.splice(index, 1);
+            this.learningPuzzles.push(puzzle);
+        }
     };
     this.addRandomFromLearning = function(number){
         // -1 in order do not consider the latest one
@@ -149,7 +119,6 @@ function LearningStrategy(){
         position += positionObject.m;
         return position;
     };
-
 
 };
 
