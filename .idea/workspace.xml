@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1ecacd23-e8bb-45d1-a528-adc5853538ae" name="Default" comment="Save learning progress between sessions - issue #4 fixed.&#10;Minimal interval between repeat for learnt positions.&#10;Retry button removed.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/js/ext/angular.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/www/js/chumet/learning-stats.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/chumet/base.js" afterPath="$PROJECT_DIR$/www/js/chumet/base.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/css/chumet.css" afterPath="$PROJECT_DIR$/www/css/chumet.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/chumet.js" afterPath="$PROJECT_DIR$/www/js/chumet.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/index.html" afterPath="$PROJECT_DIR$/www/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/chumet/learning-strategy.js" afterPath="$PROJECT_DIR$/www/js/chumet/learning-strategy.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/chumet/puzzle.js" afterPath="$PROJECT_DIR$/www/js/chumet/puzzle.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="D:\Projects\Chumet\src\www\js\chumet\learning-strategy.js" afterPath="$PROJECT_DIR$/www/js/chumet/puzzle-generator.js" />
     </list>
     <ignored path="choper.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -520,8 +511,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1600" height="860" extended-state="1" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1600" height="860" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
