@@ -1,5 +1,9 @@
 button {
-    font-size: 100px;
+    font-size: 60px;
+}
+
+#chumet-board {
+    width: 460px;
 }
 
 .badmove {

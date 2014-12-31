@@ -9,13 +9,28 @@
 </head>
 <body>
 <div id="app">
-    <div id="chumetBoard"></div>
+    <div id="chumet-board"></div>
     <p><span id="status"></span></p>
     <p>Position: <span id="pgn"></span></p>
 
     <div id="controls">
         <button id="best">Best</button>
         <button id="next">Next</button>
+    </div>
+    <div id="stats-container"><ul id="stats-list">
+        <li>
+            Positions learnt: <span id="positions-learnt">N/A</span>
+        </li>
+        <li>
+            <span id="label-for-move-1">1st move</span>: <span id="stat-for-move-1">N/A</span>
+        </li>
+        <li>
+            <span id="label-for-move-2">2nd move</span>: <span id="stat-for-move-2">N/A</span>
+        </li>
+        <li>
+            <span id="label-for-move-3">3rd move</span>: <span id="stat-for-move-3">N/A</span>
+        </li>
+        </ul>
     </div>
 </div>
 <script src="js/ext/json3.min.js"></script>
@@ -25,7 +40,9 @@
 <!-- chumet includes starts -->
 <script src="js/chumet/base.js"></script>
 <script src="js/chumet/puzzle.js"></script>
+<script src="js/chumet/puzzle-generator.js"></script>
 <script src="js/chumet/learning-progress.js"></script>
+<script src="js/chumet/learning-stats.js"></script>
 <script src="js/chumet/position-object-validator.js"></script>
 <script src="js/chumet/learning-strategy.js"></script>
 <script src="js/chumet/move-validator.js"></script>
