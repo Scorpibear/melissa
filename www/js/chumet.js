@@ -1,16 +1,18 @@
 // Train chess memory
 function Chumet() {
     //constants
-    this.boardID = "chumetBoard";
+    this.boardID = "chumet-board";
     this.puzzle = null;
 
     this.start = function () {
         this.learningProgress = new LearningProgress();
         this.learningStrategy = new LearningStrategy(this.learningProgress.puzzles);
+        this.learningStats = new LearningStats(this.learningProgress.puzzles);
         this.moveValidator = new MoveValidator();
         this.chessBoardConfig = new ChessBoardConfig(this.moveValidator);
         this.chessBoard = new ChessBoard(this.boardID, this.chessBoardConfig);
         this.showNextPuzzle();
+        this.updateStats();
         this.setupHandlers();
         this.chessBoard.onSnapEnd = this.updateBoard;
     };
@@ -27,9 +29,13 @@ function Chumet() {
         document.getElementById('next').onclick = function() {
             chumet.showNextPuzzle();
             chumet.learningProgress.save();
+            chumet.updateStats();
+
         };
     };
-
+    this.updateStats = function() {
+        $('#positions-learnt').html(this.learningStats.getPositionsLearnt());
+    }
     // update the board position after the piece snap
     // for castling, en passant, pawn promotion
     this.updateBoard = function() {

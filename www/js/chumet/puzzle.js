@@ -5,7 +5,7 @@ function Puzzle(position, bestMove){
     this.bestMove = bestMove;
     this.progress = 0;
     this.MAX_PERCENT = 100;
-    this.lastLearnt = Date();
+    this.lastLearnt = new Date().getTime();
     this.minLearningInterval = Puzzle.BASE_MIN_LEARNING_INTERVAL;
     this.solved = function(){
         var solvedPercentIncrement = 20;
@@ -14,7 +14,7 @@ function Puzzle(position, bestMove){
         this.progress+=solvedPercentIncrement;
         if(this.progress > Puzzle.MAX_PERCENT)
             this.progress = Puzzle.MAX_PERCENT;
-        this.lastLearnt = Date();
+        this.lastLearnt = new Date().getTime();
         this.minLearningInterval*=Puzzle.LEARNING_INTERVAL_FACTOR;
     };
     this.failed = function(){
@@ -27,7 +27,7 @@ function Puzzle(position, bestMove){
     };
     this.isTimeToLearn = function(){
         if(this.isLearnt()){
-            return ((new Date() - this.lastLearnt)>this.minLearningInterval);
+            return (((new Date().getTime()) - this.lastLearnt)>this.minLearningInterval);
         } else {
             return true;
         }
