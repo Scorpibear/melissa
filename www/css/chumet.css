@@ -6,11 +6,11 @@ button {
     width: 460px;
 }
 
-.badmove {
+.bad-move {
     background-color: red;
 }
 
-.goodmove {
+.good-move {
     background-color: green;
 }
 
