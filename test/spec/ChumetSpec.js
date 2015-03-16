@@ -5,8 +5,8 @@ describe("Chumet", function() {
     chumet = new Chumet();
   });
 
-  it("should work", function() {
-
+  it("has learning progress", function() {
+    expect(chumet.learningProgress).not.toBe(null);
   });
 
 });

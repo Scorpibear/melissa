@@ -6,6 +6,7 @@ function LearningStrategy(puzzles){
     this.puzzleGenerator = new PuzzleGenerator(base, puzzles);
 
     this.getNextPuzzle = function(){
+        debugger;
         this.refillQueue();
         var puzzle = this.puzzleQueue.shift();
         return puzzle;
@@ -64,4 +65,4 @@ function LearningStrategy(puzzles){
     };
 };
 
-LearningStrategy.QUICK_MODE = false;
+LearningStrategy.QUICK_MODE = true;
