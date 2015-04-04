@@ -1,11 +1,15 @@
 // generate puzzles from base
-function PuzzleGenerator(baseObject, puzzles) {
+// TODO: review the logics, as there is an issue while remembering positionsQueue. Seems like positionsQueue and
+//     queueForDeepenings are misused.
+function PuzzleGenerator(baseArray, puzzles) {
     'use strict';
     this.learningPuzzles = puzzles;
     this.positionObjectValidator = new PositionObjectValidator();
-    this.positionsQueue = baseObject;
+    // queue of all positions from which puzzles will be generated
+    this.positionsQueue = baseArray;
 
     this.generate = function() {
+        // sets .type and .beginning properties of for elements of this.positionQueue array, if not yet
         this.prepareQueue();
         var puzzleOrQueue = this.findNewPuzzleFromPositions(this.positionsQueue);
         while(!(puzzleOrQueue instanceof Puzzle)) {
@@ -16,20 +20,19 @@ function PuzzleGenerator(baseObject, puzzles) {
                 return null;
             }
         }
-        debugger;
-        var newPuzzle = puzzleOrQueue;
-        return newPuzzle;
+        return puzzleOrQueue;
     };
 
+    // sets .type and .beginning properties of for elements of this.positionQueue array
     this.prepareQueue = function() {
         if(!this.positionsQueue[0].beginning) {
             var beginning = "";
             for(var j=0;j<this.positionsQueue.length;j++) {
-                this.positionsQueue[j].beginning = "";
+                this.positionsQueue[j].beginning = beginning;
                 this.positionsQueue[j].type = 'b';
-            };
+            }
             this.positionsQueue[0].type = 'main';
-        };
+        }
     };
     // return either puzzle or queue of positions for further search
     this.findNewPuzzleFromPositions = function(positionContainer) {
@@ -46,12 +49,11 @@ function PuzzleGenerator(baseObject, puzzles) {
             } else {
                 // type should match the answer, not position
                 if(positionObject.type != positionObject.c) {
-                    debugger;
                     var newPuzzle = this.createPuzzle(positionObject);
                     return newPuzzle;
                 } else {
                     queueForDeepening = this.extendPositionQueue(queueForDeepening, positionObject);
-                };
+                }
             }
         };
         return queueForDeepening;

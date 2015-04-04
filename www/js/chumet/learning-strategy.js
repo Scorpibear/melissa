@@ -2,13 +2,11 @@
 function LearningStrategy(puzzles){
     this.puzzleQueue = [];
     this.learningPuzzles = puzzles;
-    this.positionBase = base;
     this.puzzleGenerator = new PuzzleGenerator(base, puzzles);
 
     this.getNextPuzzle = function(){
-        debugger;
         this.refillQueue();
-        var puzzle = this.puzzleQueue.shift();
+        var puzzle =  this.puzzleQueue.shift();
         return puzzle;
     };
 
@@ -32,7 +30,7 @@ function LearningStrategy(puzzles){
             } else {
                 oldestPuzzle = puzzle;
             }
-        };
+        }
         if(oldestPuzzle){
             this.puzzleQueue.push(puzzle);
         }
@@ -41,7 +39,7 @@ function LearningStrategy(puzzles){
         var puzzle = this.learningPuzzles[index];
         this.learningPuzzles.splice(index, 1);
         this.learningPuzzles.push(puzzle);
-    }
+    };
     this.addRandomFromLearning = function(number){
         var maxIndex = this.learningPuzzles.length-1;
         var toAdd = Math.min(number, maxIndex);
@@ -51,10 +49,10 @@ function LearningStrategy(puzzles){
             if(!puzzle.isLearnt()){
                 this.puzzleQueue.push(puzzle);
                 toAdd--;
-            };
+            }
             this.moveToEnd(indexToAdd);
             maxIndex--;
-        };
+        }
     };
     this.addNew = function(){
         var newPuzzle = this.puzzleGenerator.generate();
@@ -63,6 +61,6 @@ function LearningStrategy(puzzles){
             this.puzzleQueue.push(newPuzzle);
         }
     };
-};
+}
 
-LearningStrategy.QUICK_MODE = true;
+LearningStrategy.QUICK_MODE = false;
