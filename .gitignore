@@ -1,6 +1,6 @@
 # IDEA specific files
 *.iml
-.idea/
+.idea
 *.ipr
 *.iws
 out/
@@ -13,4 +13,10 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 
-# Add yours below
+logs/*
+*.log
+!.gitkeep
+node_modules/
+bower_components/
+tmp
+.DS_Store
