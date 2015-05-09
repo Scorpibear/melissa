@@ -1,0 +1,10 @@
+<div ng-app="melissa.stats" ng-controller="StatsController as statsCtrl">
+    <ul id="stats-list">
+        <li>
+            <span class="stats-label">Positions learnt</span>: <span class="stats-value">N/A</span>
+        </li>
+        <li ng-repeat="stat in statsCtrl.stats">
+            <span class="stats-label">{{ stat.name }}</span>: <span class="stats-value"> {{ stat.value }} </span>
+        </li>
+    </ul>
+</div>

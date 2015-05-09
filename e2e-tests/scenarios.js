@@ -9,6 +9,6 @@ describe('melissa', function () {
     it('title is Melissa', function () {
         expect(browser.getTitle()).toEqual('Melissa');
 
-    })
+    });
 
 });

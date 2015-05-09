@@ -4,8 +4,7 @@
 angular.module('melissa', [
     'ngRoute',
     'melissa.train',
-    'melissa.achievements',
-    'melissa.version'
+    'melissa.achievements'
 ]).
     config(['$routeProvider', function ($routeProvider) {
         $routeProvider.otherwise({redirectTo: '/train'});
