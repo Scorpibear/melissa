@@ -1,7 +1,17 @@
-angular.module('melissa.services')
-    .service('puzzleProvider', function () {
-        var puzzles = [{position: "1. d4", answer: "Nf6"}, {position: "1. e4", answer: "e6"}];
-        this.getPuzzle = function () {
-            return puzzles.pop();
+function Puzzle(position, answer) {
+    this.position = position;
+    this.answer = answer;
+}
+
+angular.module('melissa.services', [])
+    .factory('puzzleProvider', function () {
+        var puzzles = [
+            new Puzzle("1. d4", "Nf6"),
+            new Puzzle("1. e4", "e6")
+        ];
+        return {
+            getPuzzle: function () {
+                return puzzles.pop();
+            }
         };
     });
