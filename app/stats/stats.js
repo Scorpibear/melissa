@@ -4,10 +4,11 @@ angular.module('melissa.stats', ['ngRoute'])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/stats', {
-            templateUrl: 'stats/stats.html',
-            controller: 'StatsCtrl'
+            templateUrl: 'stats/stats.html'
         });
     }])
 
-    .controller('StatsCtrl', function ($scope) {
+    .controller('StatsController', function ($scope) {
+        $scope.positionsLearnt = 0;
+        $scope.stats = [];
     });

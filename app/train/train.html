@@ -1,6 +1,7 @@
-<div id="train" ng-app="melissa.train" ng-controller="TrainCtrl as trainCtrl">
-    <div id="board"></div>
-    <p>{{ trainCtrl.status }}</p>
+<div id="train" ng-app="melissa.train" ng-controller="TrainController">
+    <div id="board" melissa-train-board></div>
+    <p>{{training.status}}</p>
 
-    <p>Position: {{ trainCtrl.position }}</p>
+    <p>Position: <span id="positionValue">{{training.puzzle.position}}</span></p>
+
 </div>
