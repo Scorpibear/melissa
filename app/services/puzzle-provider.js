@@ -3,15 +3,18 @@ function Puzzle(position, answer) {
     this.answer = answer;
 }
 
-angular.module('melissa.services', [])
-    .factory('puzzleProvider', function () {
-        var puzzles = [
-            new Puzzle("1. d4", "Nf6"),
-            new Puzzle("1. e4", "e6")
-        ];
+angular.module('melissa.services')
+    .factory('puzzleProvider', function (puzzleGenerator) {
+        var puzzles = [];
+        for (var i = 0; i < 5; i++) {
+            var puzzle = puzzleGenerator.getNew();
+            if (puzzle != null) {
+                puzzles.push(puzzle);
+            }
+        }
         return {
             getPuzzle: function () {
-                return puzzles.pop();
+                return puzzles.shift();
             }
         };
     });

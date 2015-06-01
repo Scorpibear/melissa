@@ -1,5 +1,5 @@
 angular.module("melissa.train")
-    .directive("melissaTrainBoard", function () {
+    .directive("melissaTrainBoard", function (chessGame) {
         var boardConfig = {
             draggable: true,
             pieceTheme: 'bower_components/chessboardjs/img/chesspieces/wikipedia/{piece}.png',
@@ -14,13 +14,13 @@ angular.module("melissa.train")
         return {
             link: function (scope, element, attrs) {
                 boardConfig.onDrop = function (source, target) {
-                    var move = scope.chessGame.move({
+                    var move = chessGame.move({
                         from: source,
                         to: target,
                         promotion: 'q'
                     });
                     var isCorrect = (move != null) && (move.san === scope.training.puzzle.answer);
-                    scope.chessGame.undo();
+                    chessGame.undo();
                     if (!isCorrect) {
                         return 'snapback';
                     } else {

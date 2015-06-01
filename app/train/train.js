@@ -7,17 +7,18 @@ angular.module('melissa.train', ['ngRoute', 'melissa.services'])
             templateUrl: 'train/train.html'
         });
     }])
-    .controller('TrainController', function ($scope, puzzleProvider) {
-        $scope.chessGame = new Chess();
+    .constant('chessGame', new Chess())
+    .constant("TIMEOUT_BETWEEN_PUZZLES", 1000)
+    .controller('TrainController', function ($scope, puzzleProvider, chessGame, TIMEOUT_BETWEEN_PUZZLES) {
         $scope.training = {};
         $scope.showNextPuzzle = function () {
             var puzzle = puzzleProvider.getPuzzle();
             if (puzzle != null) {
                 $scope.training.puzzle = puzzle;
                 var pgn = $scope.training.puzzle.position;
-                $scope.chessGame.load_pgn(pgn);
-                var fen = $scope.chessGame.fen();
-                var orientation = ($scope.chessGame.turn() == $scope.chessGame.WHITE) ? 'white' : 'black';
+                chessGame.load_pgn(pgn);
+                var fen = chessGame.fen();
+                var orientation = (chessGame.turn() == chessGame.WHITE) ? 'white' : 'black';
                 $scope.board.orientation(orientation);
                 $scope.board.position(fen);
                 $scope.training.status = "What is the best move?";
@@ -25,12 +26,11 @@ angular.module('melissa.train', ['ngRoute', 'melissa.services'])
                 $scope.training.status = "Good job, no more puzzles, have a rest!";
             }
         };
-        $scope.TIMEOUT_BETWEEN_PUZZLES = 1000;
         $scope.next = function () {
             setTimeout(function () {
                 $scope.showNextPuzzle();
                 $scope.$apply()
-            }, $scope.TIMEOUT_BETWEEN_PUZZLES);
+            }, TIMEOUT_BETWEEN_PUZZLES);
         }
     })
 ;
