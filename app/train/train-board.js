@@ -13,6 +13,11 @@ angular.module("melissa.train")
         };
         return {
             link: function (scope, element, attrs) {
+                var id = attrs["id"];
+                var highlightSquare = function (square) {
+                    var squareEl = $('#' + id + ' .square-' + square);
+                    squareEl.css('background', '#FFFF80');
+                };
                 boardConfig.onDrop = function (source, target) {
                     var move = chessGame.move({
                         from: source,
@@ -20,18 +25,16 @@ angular.module("melissa.train")
                         promotion: 'q'
                     });
                     var isCorrect = (move != null) && (move.san === scope.training.puzzle.answer);
-                    chessGame.undo();
+                    if (move != null)
+                        chessGame.undo();
                     if (!isCorrect) {
+                        highlightSquare(scope.training.puzzle.answer.substr(-2));
                         return 'snapback';
                     } else {
-                        var correctMessages = ["Correct!", "Exactly!", "Right!", "Yes!"];
-                        scope.training.status = correctMessages[Math.round(Math.random() * correctMessages.length)];
-                        scope.$apply();
-                        scope.next();
+                        scope.registerCorrectAnswer();
                     }
                 };
                 if (window['ChessBoard'] !== undefined) {
-                    var id = attrs["id"];
                     scope.board = new window.ChessBoard(id, boardConfig);
                 }
                 scope.showNextPuzzle();

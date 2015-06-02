@@ -9,7 +9,7 @@ angular.module('melissa.train', ['ngRoute', 'melissa.services'])
     }])
     .constant('chessGame', new Chess())
     .constant("TIMEOUT_BETWEEN_PUZZLES", 1000)
-    .controller('TrainController', function ($scope, puzzleProvider, chessGame, TIMEOUT_BETWEEN_PUZZLES) {
+    .controller('TrainController', function ($scope, puzzleProvider, chessGame, messages, TIMEOUT_BETWEEN_PUZZLES) {
         $scope.training = {};
         $scope.showNextPuzzle = function () {
             var puzzle = puzzleProvider.getPuzzle();
@@ -17,16 +17,17 @@ angular.module('melissa.train', ['ngRoute', 'melissa.services'])
                 $scope.training.puzzle = puzzle;
                 var pgn = $scope.training.puzzle.position;
                 chessGame.load_pgn(pgn);
-                var fen = chessGame.fen();
                 var orientation = (chessGame.turn() == chessGame.WHITE) ? 'white' : 'black';
                 $scope.board.orientation(orientation);
-                $scope.board.position(fen);
-                $scope.training.status = "What is the best move?";
+                $scope.board.position(chessGame.fen());
+                $scope.training.status = messages.question();
             } else {
-                $scope.training.status = "Good job, no more puzzles, have a rest!";
+                $scope.training.status = messages.noMorePuzzles();
             }
         };
-        $scope.next = function () {
+        $scope.registerCorrectAnswer = function () {
+            $scope.training.status = messages.correctAnswer();
+            $scope.$apply();
             setTimeout(function () {
                 $scope.showNextPuzzle();
                 $scope.$apply()
