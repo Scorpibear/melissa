@@ -19,8 +19,7 @@ angular.module("melissa.services")
             buildFromPositionObject: function (positionObject) {
                 var position = buildPositionFromObject(positionObject);
                 var answer = buildAnswerFromObject(positionObject);
-                var puzzle = new Puzzle(position, answer);
-                return puzzle;
+                return new Puzzle(position, answer);
             }
         }
     });

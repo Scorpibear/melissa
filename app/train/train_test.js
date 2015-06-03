@@ -6,7 +6,7 @@ describe('melissa.train module', function () {
 
     describe('train controller', function () {
 
-        it('should ....', inject(function ($controller) {
+        it('is defined', inject(function ($controller) {
             //spec body
             var trainCtrl = $controller('TrainCtrl');
             expect(trainCtrl).toBeDefined();

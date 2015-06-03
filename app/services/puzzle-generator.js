@@ -1,13 +1,19 @@
 angular.module("melissa.services")
     .factory("puzzleGenerator", function (baseProvider, puzzleBuilder) {
-        var base = baseProvider.getAll();
+        var source = baseProvider.getAll();
+        var nextSource = [];
         var index = 0;
         return {
             getNew: function () {
-                if (index < base.length) {
-                    var positionObject = base[index];
+                if (index < source.length) {
+                    var positionObject = source[index];
                     var puzzle = puzzleBuilder.buildFromPositionObject(positionObject);
+                    nextSource.push(positionObject.s);
                     index++;
+                    if(index == source.length) {
+                        source = nextSource;
+                        nextSource = [];
+                    }
                     return puzzle;
                 } else {
                     return null;
