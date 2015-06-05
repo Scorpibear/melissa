@@ -2,9 +2,6 @@
 
 describe('puzzleGenerator service', function () {
     var puzzleGenerator;
-    var lastPositionObject;
-    var originalPuzzle = {position: "p1", answer: "a1"};
-    var secondPuzzle = {position: "p2", answer: "a2"};
 
     beforeEach(module('melissa.services'));
 
@@ -13,10 +10,12 @@ describe('puzzleGenerator service', function () {
             getAll: function () {
                 return [
                     {
+                        m: "p1",
                         s: [
                             {
+                                m: "p2",
                                 s: [
-                                    {s: []}
+                                    {s: [{}]}
                                 ]
                             }
                         ]
@@ -26,8 +25,7 @@ describe('puzzleGenerator service', function () {
         };
         var puzzleBuilder = {
             buildFromPositionObject: function (positionObject) {
-                lastPositionObject = positionObject;
-                return originalPuzzle;
+                return {position: positionObject.m}
             }
         };
         $provide.value("baseProvider", baseProvider);
@@ -35,7 +33,6 @@ describe('puzzleGenerator service', function () {
     }));
 
     beforeEach(inject(function (_puzzleGenerator_) {
-
         puzzleGenerator = _puzzleGenerator_;
     }));
 
@@ -43,13 +40,13 @@ describe('puzzleGenerator service', function () {
 
         it('should get puzzle by positionObject', function () {
             var puzzle = puzzleGenerator.getNew();
-            expect(puzzle).toEqual(originalPuzzle);
+            expect(puzzle).toEqual({position: "p1"});
         });
 
         it('should go next level', function () {
             puzzleGenerator.getNew();
             var puzzle = puzzleGenerator.getNew();
-            expect(puzzle).toEqual(secondPuzzle);
+            expect(puzzle).toEqual({position: "p2"});
         })
     });
 });

@@ -8,11 +8,12 @@ angular.module("melissa.services")
                 if (index < source.length) {
                     var positionObject = source[index];
                     var puzzle = puzzleBuilder.buildFromPositionObject(positionObject);
-                    nextSource.push(positionObject.s);
+                    nextSource = nextSource.concat(positionObject.s);
                     index++;
                     if(index == source.length) {
                         source = nextSource;
                         nextSource = [];
+                        index = 0;
                     }
                     return puzzle;
                 } else {
