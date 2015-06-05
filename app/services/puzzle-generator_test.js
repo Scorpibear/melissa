@@ -28,8 +28,14 @@ describe('puzzleGenerator service', function () {
                 return {position: positionObject.m}
             }
         };
+        var positionSelector = {
+            getBestSubPositions: function () {
+                return [{m: "p2"}];
+            }
+        };
         $provide.value("baseProvider", baseProvider);
         $provide.value("puzzleBuilder", puzzleBuilder);
+        $provide.value("positionSelector", positionSelector);
     }));
 
     beforeEach(inject(function (_puzzleGenerator_) {

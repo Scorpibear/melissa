@@ -11,6 +11,7 @@ module.exports = function (config) {
             'app/bower_components/chessboardjs/js/chess.js',
             'app/bower_components/chessboardjs/js/chessboard.js',
             'app/bower_components/jquery/dist/jquery.js',
+            'app/services/base.js',
             'app/services/services.js',
             'app/services/*.js',
             'app/services/**/*.js',

@@ -13,13 +13,21 @@ angular.module("melissa.services")
             return "" + positionObject.n + "." + positionObject.m;
         };
         var buildAnswerFromObject = function (positionObject) {
-            return positionObject.s[0].m;
+            if (positionObject.s.length) {
+                return positionObject.s[0].m;
+            } else {
+                return null;
+            }
         };
         return {
             buildFromPositionObject: function (positionObject) {
                 var position = buildPositionFromObject(positionObject);
                 var answer = buildAnswerFromObject(positionObject);
-                return new Puzzle(position, answer);
+                if (answer) {
+                    return new Puzzle(position, answer);
+                } else {
+                    return null;
+                }
             }
         }
     });
