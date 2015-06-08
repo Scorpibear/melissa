@@ -12,10 +12,15 @@ describe("baseProvider", function () {
         baseProvider = _baseProvider_;
     }));
     describe("getAll", function () {
-        it("set 'wb'-white/black & 'b'-black position types for first line", function () {
-            myBase.push({m: "d4"}, {m: "e4"});
+        beforeEach(function () {
+            while (myBase.length) {
+                myBase.pop();
+            }
+        });
+        it("set 'wb'-white/black & 'b'-black position types and fen for first line", function () {
+            myBase.push({m: "d4", n: 1}, {m: "e4", n: 1});
             var returnedBase = baseProvider.getAll();
-            expect(returnedBase).toEqual([{m: "d4", t: "wb"}, {m: "e4", t: "b"}]);
-        })
+            expect(returnedBase).toEqual([{m: "d4", t: "wb", fen: "1.d4", n: 1}, {m: "e4", t: "b", fen: "1.e4", n: 1}]);
+        });
     })
 });

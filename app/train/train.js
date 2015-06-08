@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('melissa.train', ['ngRoute', 'melissa.services'])
+angular.module('melissa.train', ['ngRoute', 'melissa.services', 'melissa.messages'])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/train', {
@@ -20,9 +20,9 @@ angular.module('melissa.train', ['ngRoute', 'melissa.services'])
                 var orientation = (chessGame.turn() == chessGame.WHITE) ? 'white' : 'black';
                 $scope.board.orientation(orientation);
                 $scope.board.position(chessGame.fen());
-                $scope.training.status = messages.question();
+                $scope.training.status = messages.get("What is the best move?");
             } else {
-                $scope.training.status = messages.noMorePuzzles();
+                $scope.training.status = messages.get("Good job, no more puzzles, have a rest!");
             }
         };
         $scope.registerCorrectAnswer = function () {

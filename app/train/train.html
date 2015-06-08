@@ -2,6 +2,6 @@
     <div id="board" melissa-train-board></div>
     <p>{{training.status}}</p>
 
-    <p>Position: <span id="positionValue">{{training.puzzle.position}}</span></p>
+    <p>{{('Position' | localize) + ':' }}<span id="positionValue">{{training.puzzle.position}}</span></p>
 
 </div>

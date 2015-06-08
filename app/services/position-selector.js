@@ -1,14 +1,16 @@
 angular.module("melissa.services")
 
     .factory("positionSelector", function () {
-        var createIndependentSubObject = function (positionObject) {
-            var subObject = positionObject.s[0];
-            if (positionObject.m.search(" ") != -1) {
-                subObject.m = "" + positionObject.n + "." + positionObject.m + " " + subObject.n + "." + subObject.m;
-            } else {
-                subObject.m = positionObject.m + " " + subObject.m;
+        var createIndependentSubObject = function (positionObject, index) {
+            index = index || 0;
+            var subObject = positionObject.s[index];
+            var newFen = positionObject.fen + " ";
+            if (subObject.c == 'w') {
+                newFen += subObject.n + ".";
             }
-            subObject.t = positionObject.t;
+            newFen += subObject.m;
+            subObject.fen = newFen;
+            subObject.t = index ? positionObject.c : positionObject.t;
             return subObject;
         };
         return {
@@ -17,11 +19,18 @@ angular.module("melissa.services")
                 if (positionObject.s.length) {
                     var subObject = createIndependentSubObject(positionObject);
                     // if type "wb" contains "b" or "b" contains "b"
-                    console.log("subObject", subObject);
                     if (positionObject.t) {
                         if (positionObject.t.search(positionObject.c) != -1) {
+                            // wb & b, wb & w, b & b, w & w
                             subPositions.push(subObject);
+                            if (positionObject.t == "wb") {
+                                for (var i = 1, l = positionObject.s.length; i < l; i++) {
+                                    var variationObject = createIndependentSubObject(positionObject, i);
+                                    subPositions.push(variationObject);
+                                }
+                            }
                         } else {
+                            // b & w, w & b
                             // need to skip one level and go deeper
                             if (subObject.s.length) {
                                 var subSubObject = createIndependentSubObject(subObject);
