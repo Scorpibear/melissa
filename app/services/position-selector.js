@@ -16,7 +16,7 @@ angular.module("melissa.services")
         return {
             getBestSubPositions: function (positionObject) {
                 var subPositions = [];
-                if (positionObject.s.length) {
+                if (positionObject.s && positionObject.s.length) {
                     var subObject = createIndependentSubObject(positionObject);
                     // if type "wb" contains "b" or "b" contains "b"
                     if (positionObject.t) {

@@ -1,4 +1,7 @@
 /* app css stylesheet */
+.chess-board {
+    width: 400px;
+}
 
 .menu {
     list-style: none;

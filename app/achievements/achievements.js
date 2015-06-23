@@ -9,6 +9,7 @@ angular.module('melissa.achievements', ['ngRoute'])
         });
     }])
 
-    .controller('AchievementsCtrl', [function () {
-
+    .controller('AchievementsCtrl', ['$scope', function ($scope) {
+        $scope.positionsLearnt = 0;
+        $scope.stats = [];
     }]);

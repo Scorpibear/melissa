@@ -6,8 +6,12 @@ function Puzzle(position, answer) {
 angular.module('melissa.services')
     .factory('puzzleProvider', function ($timeout, puzzleGenerator) {
         var puzzles = [];
+        var stackSize = 1;
+        var prevStackSize = 0;
         var fillPuzzles = function () {
-            for (var i = 0; i < 5; i++) {
+            stackSize = stackSize + prevStackSize;
+            prevStackSize = stackSize - prevStackSize;
+            for (var i = 0; i < stackSize; i++) {
                 var puzzle = puzzleGenerator.getNew();
                 if (puzzle != null) {
                     puzzles.push(puzzle);

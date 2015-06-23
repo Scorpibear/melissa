@@ -1,0 +1,11 @@
+<div ng-app="melissa.analyze" ng-controller="AnalyzeController">
+    <div id="analyze-board" class="chess-board" melissa-analyze-board></div>
+    <div>{{'Position' | localize}}:
+        <span id="analyzed-pgn">
+            <span class="best-move">1.d4</span>
+            <span class="wrong-move">d5</span>
+            <span class="unanalyzed-move">2.h3</span>
+        </span>
+    </div>
+    <div>{{position}}</div>
+</div>

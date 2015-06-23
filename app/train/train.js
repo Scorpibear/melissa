@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('melissa.train', ['ngRoute', 'melissa.services', 'melissa.messages'])
+angular.module('melissa.train', ['ngRoute', 'melissa.messages', 'melissa.services'])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/train', {

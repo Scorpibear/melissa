@@ -15,7 +15,7 @@ module.exports = function (config) {
             'app/services/services.js',
             'app/services/*.js',
             'app/services/**/*.js',
-            'app/stats/**/*.js',
+            'app/analyze/**/*.js',
             'app/train/train.js',
             'app/train/**/*.js',
             'app/achievements/**/*.js'
