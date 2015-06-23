@@ -43,5 +43,19 @@ describe("positionSelector", function () {
             });
             expect(result[0]).toEqual({fen: "1.e4 e6 2.Nf3", m: "Nf3", n: 2, c: "w", t: "b"});
         });
+        it("returns emply array if s is not specified", function () {
+            var result = positionSelector.getBestSubPositions({fen: ""});
+            expect(result.length).toEqual(0);
+        });
+        it("skip if n is less than prev", function () {
+            var result = positionSelector.getBestSubPositions({
+                fen: "1.d4 Nf6 2.c4",
+                n: 2,
+                c: "w",
+                t: "b",
+                s: [{m: "e6", n: 1}]
+            });
+            expect(result.length).toEqual(0);
+        })
     })
 });

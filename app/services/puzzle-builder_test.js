@@ -27,6 +27,10 @@ describe("puzzleBuilder", function () {
                 s: [{m: 'd6', n: 2, c: 'b'}]
             });
             expect(puzzle).toEqual({position: "1.Nf3 c5 2.e4", answer: "d6"});
+        });
+        it("returns null if s is not specified", function () {
+            var puzzle = puzzleBuilder.buildFromPositionObject({fen: ""});
+            expect(puzzle).toBeNull();
         })
     })
 });

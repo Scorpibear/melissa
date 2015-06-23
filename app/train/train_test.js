@@ -8,8 +8,10 @@ describe('TrainController', function () {
 
     beforeEach(module(function ($provide) {
         var messages = {
-            noMorePuzzles: function () {
-                return noMorePuzzles;
+            get: function (message) {
+                if (message == "Good job, no more puzzles, have a rest!")
+                    return noMorePuzzles;
+                return "unexpected message";
             }
         };
         var puzzleProvider = {

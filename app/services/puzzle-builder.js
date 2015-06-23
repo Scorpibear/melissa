@@ -13,7 +13,7 @@ angular.module("melissa.services")
             return positionObject.fen;
         };
         var buildAnswerFromObject = function (positionObject) {
-            if (positionObject.s.length) {
+            if (positionObject.s && positionObject.s.length) {
                 return positionObject.s[0].m;
             } else {
                 return null;

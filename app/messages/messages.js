@@ -5,23 +5,27 @@ angular.module("melissa.messages", [])
     .factory("messages", function (locale, defaultLocale) {
         var base = [];
         base["en"] = {
-            correctAnswers: ["Yes!", "Great!", "Perfect!", "Right!", "Excellent!", "You are right!", "Correct!"],
+            correctAnswers: ["Yes!", "Great!", "Perfect!", "Right!", "Excellent!", "You are right!", "Correct!",
+                "Brilliant!"],
             "Good job, no more puzzles, have a rest!": "Good job, no more puzzles, have a rest!",
             "What is the best move?": "What is the best move?",
             "Position": "Position",
             "Train": "Train",
             "Achievements": "Achievements",
-            "Statistics": "Statistics"
+            "Analyze": "Analyze",
+            "Positions learnt": "Positions learnt"
         };
         base["ru"] = {
             correctAnswers: ["Верно!", "Правильно!", "Точно!", "Да!", "Да, это самый лучший ход в этой позиции!",
-                "Верно, это самый лучший ход в этой позиции!", "Отлично!", "Супер!", "Так точно!"],
+                "Верно, это самый лучший ход в этой позиции!", "Отлично!", "Супер!", "Так точно!", "Именно!",
+                "Именно так!", "Превосходно!"],
             "Good job, no more puzzles, have a rest!": "Хорошо потренировались, теперь можно отдохнуть!",
             "What is the best move?": "Какой самый лучший ход в этой позиции? Попробуй угадать и сделай его!",
             "Position": "Позиция",
             "Train": "Тренировка",
             "Achievements": "Достижения",
-            "Statistics": "Статистика"
+            "Analyze": "Анализ",
+            "Positions learnt": "Изучено позиций"
         };
         var getBase = function () {
             var out = base[locale];
@@ -51,7 +55,6 @@ angular.module("melissa.messages", [])
     .filter("localize", function (messages) {
         return function (input) {
             input = input || '';
-            var out = messages.get(input);
-            return out;
+            return messages.get(input);
         };
     });

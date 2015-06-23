@@ -1,0 +1,11 @@
+.best-move {
+    background-color: green;
+}
+
+.wrong-move {
+    background-color: yellow;
+}
+
+.unanalyzed-move {
+    /* default */
+}

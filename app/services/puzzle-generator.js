@@ -1,14 +1,13 @@
 angular.module("melissa.services")
-    .factory("puzzleGenerator", function (baseProvider, puzzleBuilder, positionSelector) {
-        var activePositionList = baseProvider.getAll();
-        var nextPositionList = [];
-        var activeIndex = 0;
+    .factory("puzzleGenerator", function (baseProvider, puzzleBuilder) {
+        var activePositionList = [], nextPositionList = [], activeIndex = 0;
+        activePositionList.push(baseProvider.getStart());
         return {
             getNew: function () {
                 if (activeIndex < activePositionList.length) {
                     var positionObject = activePositionList[activeIndex];
                     var puzzle = puzzleBuilder.buildFromPositionObject(positionObject);
-                    var bestSubPositions = positionSelector.getBestSubPositions(positionObject);
+                    var bestSubPositions = baseProvider.getBestSubPositions(positionObject);
                     nextPositionList = nextPositionList.concat(bestSubPositions);
                     activeIndex++;
                     if (activeIndex == activePositionList.length) {
