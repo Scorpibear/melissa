@@ -11,14 +11,15 @@ module.exports = function (config) {
             'app/bower_components/chessboardjs/js/chess.js',
             'app/bower_components/chessboardjs/js/chessboard.js',
             'app/bower_components/jquery/dist/jquery.js',
+            'app/messages/messages.js',
             'app/services/base.js',
             'app/services/services.js',
             'app/services/*.js',
-            'app/services/**/*.js',
-            'app/analyze/**/*.js',
+            'app/analyze/analyze.js',
+            'app/analyze/*.js',
             'app/train/train.js',
-            'app/train/**/*.js',
-            'app/achievements/**/*.js'
+            'app/train/*.js',
+            'app/achievements/*.js'
         ],
 
         autoWatch: true,

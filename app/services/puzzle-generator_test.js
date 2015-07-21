@@ -7,20 +7,15 @@ describe('puzzleGenerator service', function () {
 
     beforeEach(module(function ($provide) {
         var baseProvider = {
-            getAll: function () {
-                return [
-                    {
-                        m: "p1",
-                        s: [
-                            {
-                                m: "p2",
-                                s: [
-                                    {s: [{}]}
-                                ]
-                            }
-                        ]
-                    }
-                ];
+            getStart: function () {
+                return {m: '', s: [
+                    {m: "p1", s: [
+                        { m: "p2", s: []}
+                    ]}
+                ]};
+            },
+            getBestSubPositions: function () {
+                return [{m: "p1"}];
             }
         };
         var puzzleBuilder = {
@@ -28,14 +23,8 @@ describe('puzzleGenerator service', function () {
                 return {position: positionObject.m}
             }
         };
-        var positionSelector = {
-            getBestSubPositions: function () {
-                return [{m: "p2"}];
-            }
-        };
         $provide.value("baseProvider", baseProvider);
         $provide.value("puzzleBuilder", puzzleBuilder);
-        $provide.value("positionSelector", positionSelector);
     }));
 
     beforeEach(inject(function (_puzzleGenerator_) {
@@ -46,13 +35,13 @@ describe('puzzleGenerator service', function () {
 
         it('should get puzzle by positionObject', function () {
             var puzzle = puzzleGenerator.getNew();
-            expect(puzzle).toEqual({position: "p1"});
+            expect(puzzle).toEqual({position: ""});
         });
 
         it('should go next level', function () {
             puzzleGenerator.getNew();
             var puzzle = puzzleGenerator.getNew();
-            expect(puzzle).toEqual({position: "p2"});
+            expect(puzzle).toEqual({position: "p1"});
         })
     });
 });
