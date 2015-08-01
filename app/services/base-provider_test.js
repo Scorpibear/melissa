@@ -2,25 +2,58 @@
 
 describe("baseProvider", function () {
     var baseProvider;
-    var myBase = [];
+    var myBase = {};
+    var moveValidator = {
+        called: false,
+        validateParams: null,
+        validateResult: "unknown",
+        validate: function(moves, base) {
+            this.called = true;
+            this.validateParams = [moves, base];
+            return this.validateResult;
+        }};
+    var queueToAnalyze = [];
 
     beforeEach(module("melissa.services"));
     beforeEach(module(function ($provide) {
         $provide.value("base", myBase);
+        $provide.value("moveValidator", moveValidator);
+        $provide.value("queueToAnalyze", queueToAnalyze);
     }));
     beforeEach(inject(function (_baseProvider_) {
         baseProvider = _baseProvider_;
     }));
-    describe("getAll", function () {
+
+    describe("getStart", function () {
         beforeEach(function () {
-            while (myBase.length) {
-                myBase.pop();
-            }
+            myBase.s = [];
         });
-        it("set 'wb'-white/black & 'b'-black position types and fen for first line", function () {
-            myBase.push({m: "d4", n: 1}, {m: "e4", n: 1});
-            var returnedBase = baseProvider.getAll();
-            expect(returnedBase).toEqual([{m: "d4", t: "wb", fen: "1.d4", n: 1}, {m: "e4", t: "b", fen: "1.e4", n: 1}]);
+        it("returns base with subnodes", function () {
+            myBase.s.push({m: "d4", n: 1});
+            var returnedBase = baseProvider.getStart();
+            expect(returnedBase).toEqual({fen : '', s : [ { m : 'd4', n : 1 } ]});
         });
+    });
+    describe("validateMoves", function() {
+        it("uses move validator", function() {
+            moveValidator.called = false;
+            baseProvider.validateMoves(["d4", "Nf6"]);
+            expect(moveValidator.called).toBeTruthy();
+        });
+        it("pass correct parameters", function() {
+            moveValidator.validateParams = null;
+            baseProvider.validateMoves(["d4", "Nf6"]);
+            expect(moveValidator.validateParams).toEqual([["d4", "Nf6"],myBase]);
+        });
+        it("unanalyzed moves added to queue without last", function() {
+            queueToAnalyze.length = 0;
+            baseProvider.validateMoves(["Nf6", "h4"]);
+            expect(queueToAnalyze).toEqual([["Nf6"]]);
+        });
+        it("returns result", function() {
+            moveValidator.validateResult = "returns result as is";
+            var result = baseProvider.validateMoves([]);
+            expect(result).toEqual("returns result as is");
+        })
     })
 });

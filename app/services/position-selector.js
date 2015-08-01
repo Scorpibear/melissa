@@ -32,7 +32,7 @@ angular.module("melissa.services")
                         } else {
                             // b & w, w & b
                             // need to skip one level and go deeper
-                            if (subObject.s.length) {
+                            if (subObject.s && subObject.s.length) {
                                 var subSubObject = createIndependentSubObject(subObject);
                                 subPositions.push(subSubObject);
                             }

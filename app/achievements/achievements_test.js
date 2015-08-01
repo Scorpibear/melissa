@@ -1,16 +1,20 @@
 'use strict';
 
 describe('melissa.achievements module', function () {
+    var $controller;
 
     beforeEach(module('melissa.achievements'));
 
     describe('achievements controller', function () {
-
-        it('should ....', inject(function ($controller) {
-            //spec body
-            var achievementsCtrl = $controller('AchievementsCtrl');
-            expect(achievementsCtrl).toBeDefined();
+        beforeEach(inject(function (_$controller_) {
+            $controller = _$controller_;
         }));
+
+        it('should be defined', function () {
+            var $scope = {};
+            var achievementsCtrl = $controller('AchievementsController', {$scope: $scope});
+            expect(achievementsCtrl).toBeDefined();
+        });
 
     });
 });

@@ -5,11 +5,11 @@ angular.module('melissa.achievements', ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/achievements', {
             templateUrl: 'achievements/achievements.html',
-            controller: 'AchievementsCtrl'
+            controller: 'AchievementsController'
         });
     }])
 
-    .controller('AchievementsCtrl', ['$scope', function ($scope) {
+    .controller('AchievementsController', ['$scope', function ($scope) {
         $scope.positionsLearnt = 0;
         $scope.stats = [];
     }]);

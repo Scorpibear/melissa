@@ -8,7 +8,7 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
         });
     }])
     .constant('analyzeChessGame', new Chess())
-    .controller('AnalyzeController', ['$scope', '$document', 'analyzeChessGame', function ($scope, $document, analyzeChessGame) {
+    .controller('AnalyzeController', ['$scope', 'analyzeChessGame', 'baseProvider', function ($scope, analyzeChessGame, baseProvider) {
 
         $scope.position = '';
         $('#analyzed-pgn').html("");
@@ -16,14 +16,14 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
 
         $scope.registerPositionChange = function (move) {
             var numStr = (move.color == "w") ? "" + (++$scope.moveNumber) + ". " : "";
-            var typeStr = $scope.getType(analyzeChessGame.pgn());
+            var typeStr = $scope.getType(analyzeChessGame.history());
             var className = typeStr + "-move";
             var moveEl = $(document.createElement('span')).addClass(className).html(numStr + move.san + ' ');
             $('#analyzed-pgn').append(moveEl);
         };
 
-        $scope.getType = function (pgn) {
-            var types = ["unknown", "best", "wrong"];
-            return types[Math.round(Math.random() * 3)];
+        /* returns "unknown"/"best"/"wrong"*/
+        $scope.getType = function (moves) {
+            return baseProvider.validateMoves(moves);
         }
     }]);

@@ -1,8 +1,8 @@
 {
-  "name": "angular-seed",
-  "description": "A starter project for AngularJS",
-  "version": "0.0.0",
-  "homepage": "https://github.com/angular/angular-seed",
+  "name": "melissa",
+  "description": "Chess trainer",
+  "version": "0.1.0",
+  "homepage": "https://github.com/scorpibear/chumet",
   "license": "MIT",
   "private": true,
   "dependencies": {
