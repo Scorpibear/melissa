@@ -50,8 +50,8 @@ angular.module("melissa.services")
             validateMoves: function(moves) {
                 var result = moveValidator.validate(moves, base);
                 if (result == "unknown") {
-                    moves.pop();
-                    queueToAnalyze.push(moves);
+                    var movesWithoutLast = moves.slice(0,moves.length-1);
+                    queueToAnalyze.push(movesWithoutLast);
                 }
                 return result;
             }

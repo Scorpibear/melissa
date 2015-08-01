@@ -10,7 +10,7 @@ angular.module('melissa.train', ['ngRoute', 'melissa.messages', 'melissa.service
     .constant('chessGame', new Chess())
     .constant("TIMEOUT_BETWEEN_PUZZLES", 1000)
     .controller('TrainController', function ($scope, puzzleProvider, chessGame, messages, TIMEOUT_BETWEEN_PUZZLES) {
-        $scope.training = {};
+        $scope.training = {solved: 0, tried: 0};
         $scope.showNextPuzzle = function () {
             var puzzle = puzzleProvider.getPuzzle();
             if (puzzle != null) {
@@ -24,9 +24,11 @@ angular.module('melissa.train', ['ngRoute', 'melissa.messages', 'melissa.service
             } else {
                 $scope.training.status = messages.get("Good job, no more puzzles, have a rest!");
             }
+
         };
         $scope.registerCorrectAnswer = function () {
             $scope.training.status = messages.correctAnswer();
+            $scope.training.solved++;
             $scope.$apply();
             setTimeout(function () {
                 $scope.showNextPuzzle();

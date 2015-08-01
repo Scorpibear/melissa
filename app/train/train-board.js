@@ -1,5 +1,5 @@
 angular.module("melissa.train")
-    .directive("melissaTrainBoard", function (chessGame) {
+    .directive("melissaTrainBoard", ['chessGame', 'chessMoveConverter', function (chessGame, chessMoveConverter) {
         var boardConfig = {
             draggable: true,
             pieceTheme: 'bower_components/chessboardjs/img/chesspieces/wikipedia/{piece}.png',
@@ -28,7 +28,8 @@ angular.module("melissa.train")
                     if (move != null)
                         chessGame.undo();
                     if (!isCorrect) {
-                        highlightSquare(scope.training.puzzle.answer.substr(-2));
+                        var square = chessMoveConverter.sanToSquare(scope.training.puzzle.answer);
+                        highlightSquare(square);
                         return 'snapback';
                     } else {
                         scope.registerCorrectAnswer();
@@ -40,5 +41,5 @@ angular.module("melissa.train")
                 scope.showNextPuzzle();
             }
         };
-    })
+    }])
 ;

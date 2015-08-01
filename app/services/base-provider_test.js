@@ -45,10 +45,10 @@ describe("baseProvider", function () {
             baseProvider.validateMoves(["d4", "Nf6"]);
             expect(moveValidator.validateParams).toEqual([["d4", "Nf6"],myBase]);
         });
-        it("unanalyzed moves added to queue", function() {
+        it("unanalyzed moves added to queue without last", function() {
             queueToAnalyze.length = 0;
             baseProvider.validateMoves(["Nf6", "h4"]);
-            expect(queueToAnalyze).toEqual([["Nf6", "h4"]]);
+            expect(queueToAnalyze).toEqual([["Nf6"]]);
         });
         it("returns result", function() {
             moveValidator.validateResult = "returns result as is";
