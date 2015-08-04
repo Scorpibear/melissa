@@ -10,12 +10,15 @@ angular.module("melissa.services")
         var baseUpdated = false;
         base.fen = '';
         var backendUrl = 'http://localhost:9966';
-        $http.get(backendUrl + "/api/getbase").
+        $http({method: 'GET', url: backendUrl + '/api/getbase', transformResponse: false}).
             success(function (data) {
-                console.log('new base received: ', data);
-                base = JSON.parse(data);
+                console.log("new base received, ", data.length, " bytes");
+                base = (new Function("var base = " + data + "; return base;"))();
                 base.fen = '';
                 baseUpdated = true;
+            }).
+            error(function(data, status, headers, config) {
+                console.error("could not update base from server: ", data, status, headers, config);
             });
         var sendForAnalysisInProgress = false;
         var sendForAnalysis = function() {
