@@ -6,7 +6,7 @@ angular.module("melissa.analyze")
             position: 'start',
             onDragStart: function (source, piece, position, orientation) {
             }
-        };
+        };        
         return {
             link: function (scope, element, attrs) {
                 var id = attrs["id"];
@@ -19,6 +19,8 @@ angular.module("melissa.analyze")
                     var isCorrect = (move != null);
                     if (isCorrect) {
                         scope.registerPositionChange(move);
+                        // to display castling, en-passant, promotion
+                        scope.board.position(analyzeChessGame.fen());
                     } else {
                         return 'snapback';
                     }
