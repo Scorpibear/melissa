@@ -16,7 +16,7 @@ angular.module("melissa.services")
                 var i, l;
                 var result = "best"; // until it would be proven wrong
                 for(i = 0, l = moves.length; i < l; i++) {
-                    if(currentObject && currentObject.s) {
+                    if(currentObject && currentObject.s && currentObject.s.length>0) {
                         if (currentObject.s[0].m == moves[i]) {
                             result = "best";
                             currentObject = currentObject.s[0];
