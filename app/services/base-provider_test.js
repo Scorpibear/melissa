@@ -31,7 +31,7 @@ describe("baseProvider", function () {
         it("returns base with subnodes", function () {
             myBase.s.push({m: "d4", n: 1});
             var returnedBase = baseProvider.getStart();
-            expect(returnedBase).toEqual({fen : '', s : [ { m : 'd4', n : 1 } ]});
+            expect(returnedBase).toEqual({pgn : '', s : [ { m : 'd4', n : 1 } ]});
         });
     });
     describe("validateMoves", function() {

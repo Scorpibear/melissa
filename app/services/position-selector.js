@@ -4,12 +4,12 @@ angular.module("melissa.services")
         var createIndependentSubObject = function (positionObject, index) {
             index = index || 0;
             var subObject = positionObject.s[index];
-            var newFen = positionObject.fen + " ";
+            var newFen = positionObject.pgn + " ";
             if (subObject.c == 'w') {
                 newFen += subObject.n + ".";
             }
             newFen += subObject.m;
-            subObject.fen = newFen;
+            subObject.pgn = newFen;
             subObject.t = index ? positionObject.c : positionObject.t;
             return subObject;
         };
@@ -18,7 +18,6 @@ angular.module("melissa.services")
                 var subPositions = [];
                 if (positionObject.s && positionObject.s.length) {
                     var subObject = createIndependentSubObject(positionObject);
-                    // if type "wb" contains "b" or "b" contains "b"
                     if (positionObject.t) {
                         if (positionObject.t.search(positionObject.c) != -1) {
                             // wb & b, wb & w, b & b, w & w
@@ -32,9 +31,11 @@ angular.module("melissa.services")
                         } else {
                             // b & w, w & b
                             // need to skip one level and go deeper
-                            if (subObject.s && subObject.s.length) {
-                                var subSubObject = createIndependentSubObject(subObject);
-                                subPositions.push(subSubObject);
+                            if (subObject.s) {
+                                for(var i = 0, l = subObject.s.length; i < l; i++) {
+                                    var subSubObject = createIndependentSubObject(subObject, i);
+                                    subPositions.push(subSubObject);
+                                }
                             }
                         }
                     }

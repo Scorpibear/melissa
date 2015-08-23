@@ -8,13 +8,13 @@ angular.module("melissa.services")
             '$http', 'base', 'positionSelector', 'moveValidator', 'queueToAnalyze', 'sendForAnalysisTimeout',
             function ($http, base, positionSelector, moveValidator, queueToAnalyze, sendForAnalysisTimeout) {
         var baseUpdated = false;
-        base.fen = '';
+        base.pgn = '';
         var backendUrl = 'http://localhost:9966';
         $http({method: 'GET', url: backendUrl + '/api/getbase', transformResponse: false}).
             success(function (data) {
                 console.log("new base received, ", data.length, " bytes");
                 base = (new Function("var base = " + data + "; return base;"))();
-                base.fen = '';
+                base.pgn = '';
                 baseUpdated = true;
             }).
             error(function(data, status, headers, config) {
