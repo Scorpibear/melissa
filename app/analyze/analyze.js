@@ -35,4 +35,8 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
             $scope.board.position(analyzeChessGame.fen());
             $($scope.pgnElements.pop()).remove()
         }
+
+        $scope.switchOrientation = function() {
+            $scope.board.orientation(($scope.board.orientation() == 'white') ? 'black' : 'white');
+        }
     }]);
