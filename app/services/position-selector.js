@@ -4,12 +4,12 @@ angular.module("melissa.services")
         var createIndependentSubObject = function (positionObject, index) {
             index = index || 0;
             var subObject = positionObject.s[index];
-            var newFen = positionObject.pgn + " ";
+            var newPgn = positionObject.pgn + " ";
             if (subObject.c == 'w') {
-                newFen += subObject.n + ".";
+                newPgn += subObject.n + ".";
             }
-            newFen += subObject.m;
-            subObject.pgn = newFen;
+            newPgn += subObject.m;
+            subObject.pgn = newPgn;
             subObject.t = index ? positionObject.c : positionObject.t;
             return subObject;
         };
