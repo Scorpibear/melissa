@@ -16,9 +16,13 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
         $scope.registerPositionChange = function (move) {
             var numStr = (move.color == "w") ? "" + (++$scope.moveNumber) + ". " : "";
             $scope.$apply();
-            var typeStr = $scope.getType(analyzeChessGame.history());
+            var moves = analyzeChessGame.history()
+            var bestMoveSan = baseProvider.getBestMove(moves.slice(0, -1))
+            var lastMoveSan = moves[moves.length-1]
+            var betterMoveStr = $scope.getBetterMoveStr(bestMoveSan, lastMoveSan);
+            var typeStr = $scope.getType(moves);
             var className = typeStr + "-move";
-            var moveEl = $(document.createElement('span')).addClass(className).html(numStr + move.san + ' ');
+            var moveEl = $(document.createElement('span')).addClass(className).html(numStr + move.san + betterMoveStr +' ');
             $scope.pgnElements.push(moveEl);
             $('#analyzed-pgn').append(moveEl);
         };
@@ -38,5 +42,9 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
 
         $scope.switchOrientation = function() {
             $scope.board.orientation(($scope.board.orientation() == 'white') ? 'black' : 'white');
+        }
+
+        $scope.getBetterMoveStr = function(bestMoveSan, lastMoveSan) {
+            return (bestMoveSan && bestMoveSan!=lastMoveSan) ? "("+bestMoveSan+"!)" : "";
         }
     }]);

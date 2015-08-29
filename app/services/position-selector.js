@@ -41,6 +41,27 @@ angular.module("melissa.services")
                     }
                 }
                 return subPositions;
+            },
+            getPositionByMoves: function (base, moves) {
+                var positionObject = base;
+                if(moves && moves.length) {
+                    for (var m = 0; m < moves.length; m++) {
+                        var subPositionObject = null;
+                        if (positionObject && positionObject.s) {
+                            for (var i = 0, l = positionObject.s.length; i < l; i++) {
+                                if (positionObject.s[i].m == moves[m]) {
+                                    subPositionObject = positionObject.s[i];
+                                }
+                            }
+                        }
+                        if (subPositionObject) {
+                            positionObject = subPositionObject
+                        } else {
+                            return null
+                        }
+                    }
+                }
+                return positionObject;
             }
         }
     });

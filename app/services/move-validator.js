@@ -30,7 +30,12 @@ angular.module("melissa.services")
                             currentObject = findObjectWithMove(currentObject, moves[i]);
                         }
                     } else {
-                        result = "unknown";
+                        if( result == "wrong path") {
+                            result == "wrong"
+                            break
+                        } else {
+                            result = "unknown"
+                        }
                     }
                 }
                 result = (result == "wrong path") ? "wrong" : result;

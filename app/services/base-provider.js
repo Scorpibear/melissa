@@ -10,6 +10,7 @@ angular.module("melissa.services")
         var baseUpdated = false;
         base.pgn = '';
         var backendUrl = 'http://umain-02.cloudapp.net:9966';
+        //var backendUrl = 'http://localhost:9966'
         $http({method: 'GET', url: backendUrl + '/api/getbase', transformResponse: false}).
             success(function (data) {
                 console.log("new base received, ", data.length, " bytes");
@@ -57,6 +58,15 @@ angular.module("melissa.services")
                     queueToAnalyze.push(movesWithoutLast);
                 }
                 return result;
+            },
+            getBestMove: function(moves) {
+                var positionObject = positionSelector.getPositionByMoves(base, moves);
+                if (positionObject && positionObject.s && positionObject.s.length>0) {
+                    return positionObject.s[0].m
+                } else {
+                    queueToAnalyze.push(moves);
+                    return null;
+                }
             }
         }
     }]);
