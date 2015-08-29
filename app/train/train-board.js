@@ -25,7 +25,7 @@ angular.module("melissa.train")
                         promotion: 'q'
                     });
                     var isCorrect = (move != null) && (move.san === scope.training.puzzle.answer);
-                    if (move != null)
+                    if (move)
                         chessGame.undo();
                     if (!isCorrect) {
                         var square = chessMoveConverter.sanToSquare(scope.training.puzzle.answer);
@@ -34,6 +34,10 @@ angular.module("melissa.train")
                     } else {
                         scope.registerCorrectAnswer();
                     }
+                };
+                boardConfig.onSnapEnd = function() {
+                    chessGame.move(scope.training.puzzle.answer)
+                    scope.board.position(chessGame.fen());
                 };
                 if (window['ChessBoard'] !== undefined) {
                     scope.board = new window.ChessBoard(id, boardConfig);
