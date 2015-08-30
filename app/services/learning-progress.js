@@ -4,10 +4,12 @@ angular.module("melissa.services")
 .factory("learningProgress", function() {
         var learntPuzzlesJson = localStorage.getItem('melissa.learntPuzzles');
         var learntPuzzles = []
-        try{
-            learntPuzzles = JSON.parse(learntPuzzlesJson)
-        } catch(err) {
-            console.error("Could not parse learntPuzzles from localStorage: " + err)
+        if(learntPuzzlesJson) {
+            try {
+                learntPuzzles = JSON.parse(learntPuzzlesJson)
+            } catch (err) {
+                console.error("Could not parse learntPuzzles from localStorage: " + err)
+            }
         }
         return {
             getPuzzlesLearnt: function () {
