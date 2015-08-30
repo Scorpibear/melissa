@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('melissa.train', ['ngRoute', 'melissa.messages', 'melissa.services'])
-
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/train', {
             templateUrl: 'train/train.html'
@@ -9,12 +8,17 @@ angular.module('melissa.train', ['ngRoute', 'melissa.messages', 'melissa.service
     }])
     .constant('chessGame', new Chess())
     .constant("TIMEOUT_BETWEEN_PUZZLES", 1000)
-    .controller('TrainController', function ($scope, puzzleProvider, chessGame, messages, TIMEOUT_BETWEEN_PUZZLES) {
-        $scope.training = {solved: 0, tried: 0};
+    .controller('TrainController', ['$scope', 'puzzleProvider', 'chessGame', 'messages', 'learningProgress',
+            'TIMEOUT_BETWEEN_PUZZLES', function ($scope, puzzleProvider, chessGame, messages, learningProgress, TIMEOUT_BETWEEN_PUZZLES) {
+        $scope.training = {solved: 0};
         $scope.showNextPuzzle = function () {
             var puzzle = puzzleProvider.getPuzzle();
+            while(puzzle && learningProgress.isLearnt(puzzle)) {
+                puzzle = puzzleProvider.getPuzzle();
+            }
             if (puzzle != null) {
                 $scope.training.puzzle = puzzle;
+                $scope.training.solvedFromFirstTry = true;
                 var pgn = $scope.training.puzzle.position;
                 chessGame.load_pgn(pgn);
                 var orientation = (chessGame.turn() == chessGame.WHITE) ? 'white' : 'black';
@@ -29,11 +33,13 @@ angular.module('melissa.train', ['ngRoute', 'melissa.messages', 'melissa.service
         $scope.registerCorrectAnswer = function () {
             $scope.training.status = messages.correctAnswer();
             $scope.training.solved++;
+            if($scope.training.solvedFromFirstTry) {
+                learningProgress.markAsLearnt($scope.training.puzzle)
+            }
             $scope.$apply();
             setTimeout(function () {
                 $scope.showNextPuzzle();
                 $scope.$apply()
             }, TIMEOUT_BETWEEN_PUZZLES);
         }
-    })
-;
+    }])

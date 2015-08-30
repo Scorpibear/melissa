@@ -3,7 +3,7 @@
 angular.module("melissa.services")
     .value("base", base)
     .value("queueToAnalyze", [])
-    .constant("sendForAnalysisTimeout", 3000)
+    .constant("sendForAnalysisTimeout", 5000)
     .factory("baseProvider", [
             '$http', 'base', 'positionSelector', 'moveValidator', 'queueToAnalyze', 'sendForAnalysisTimeout',
             function ($http, base, positionSelector, moveValidator, queueToAnalyze, sendForAnalysisTimeout) {
@@ -30,7 +30,7 @@ angular.module("melissa.services")
                     success(function () {
                         queueToAnalyze.shift();
                         sendForAnalysisInProgress = false;
-                        console.log('post success');
+                        console.log('sent to analyze: ' + dataToAnalyze);
                     }).
                     error(function () {
                         sendForAnalysisInProgress = false;

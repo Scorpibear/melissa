@@ -28,6 +28,7 @@ angular.module("melissa.train")
                     if (move)
                         chessGame.undo();
                     if (!isCorrect) {
+                        scope.training.solvedFromFirstTry = false;
                         var square = chessMoveConverter.sanToSquare(scope.training.puzzle.answer);
                         highlightSquare(square);
                         return 'snapback';

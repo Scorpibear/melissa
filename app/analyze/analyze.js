@@ -8,7 +8,7 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
         });
     }])
     .constant('analyzeChessGame', new Chess())
-    .controller('AnalyzeController', ['$scope', 'analyzeChessGame', 'baseProvider', function ($scope, analyzeChessGame, baseProvider) {
+    .controller('AnalyzeController', ['$scope', 'analyzeChessGame', 'baseProvider', 'trainMode', function ($scope, analyzeChessGame, baseProvider, trainMode) {
         $('#analyzed-pgn').html("");
         $scope.moveNumber = 0;
         $scope.pgnElements = [];
@@ -46,5 +46,11 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
 
         $scope.getBetterMoveStr = function(bestMoveSan, lastMoveSan) {
             return (bestMoveSan && bestMoveSan!=lastMoveSan) ? "("+bestMoveSan+"!)" : "";
+        }
+
+        $scope.trainBranch = function() {
+            var position = analyzeChessGame.history()
+            console.log(position)
+            trainMode.branch(position)
         }
     }]);

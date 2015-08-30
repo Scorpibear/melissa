@@ -1,9 +1,9 @@
 <div ng-app="melissa.achievements">
     <ul id="stats-list">
-        <li><span class="stats-label">{{'Positions learnt' | localize}}</span>: <span class="stats-value">{{positionsLearnt}}</span>
+        <li><span class="stats-label">{{'Positions learnt' | localize}}</span>: <span class="stats-value">{{getPositionLearnt()}}</span>
         </li>
-        <li ng-repeat="stat in stats">
+        <!--li ng-repeat="stat in stats">
             <span class="stats-label">{{ stat.name }}</span>: <span class="stats-value"> {{ stat.value }} </span>
-        </li>
+        </li-->
     </ul>
 </div>

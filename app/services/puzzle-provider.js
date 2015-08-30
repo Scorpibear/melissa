@@ -4,7 +4,8 @@ function Puzzle(position, answer) {
 }
 
 angular.module('melissa.services')
-    .factory('puzzleProvider', function ($timeout, puzzleGenerator) {
+    .factory('puzzleProvider', ['$timeout', 'puzzleGenerator', 'trainMode',
+    function ($timeout, puzzleGenerator, trainMode) {
         var puzzles = [];
         var stackSize = 1;
         var prevStackSize = 0;
@@ -21,6 +22,9 @@ angular.module('melissa.services')
         fillPuzzles();
         return {
             getPuzzle: function () {
+                if(puzzles.length == 0) {
+                    fillPuzzles()
+                }
                 var puzzle = puzzles.shift();
                 if(puzzles.length == 0) {
                     $timeout(fillPuzzles, 0);
@@ -28,4 +32,4 @@ angular.module('melissa.services')
                 return puzzle;
             }
         };
-    });
+    }]);

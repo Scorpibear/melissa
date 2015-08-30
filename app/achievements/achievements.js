@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('melissa.achievements', ['ngRoute'])
+angular.module('melissa.achievements', ['ngRoute','melissa.messages','melissa.services'])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/achievements', {
@@ -9,7 +9,8 @@ angular.module('melissa.achievements', ['ngRoute'])
         });
     }])
 
-    .controller('AchievementsController', ['$scope', function ($scope) {
-        $scope.positionsLearnt = 0;
-        $scope.stats = [];
+    .controller('AchievementsController', ['$scope', 'learningProgress', function ($scope, learningProgress) {
+        $scope.getPositionLearnt = function() {
+            return learningProgress.getPuzzlesLearnt()
+        }
     }]);
