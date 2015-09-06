@@ -2,8 +2,8 @@
 
 angular.module("melissa.services")
 .factory("learningProgress", function() {
+        var learntPuzzles = [];
         var learntPuzzlesJson = localStorage.getItem('melissa.learntPuzzles');
-        var learntPuzzles = []
         if(learntPuzzlesJson) {
             try {
                 learntPuzzles = JSON.parse(learntPuzzlesJson)
@@ -22,10 +22,18 @@ angular.module("melissa.services")
             isLearnt: function (puzzle) {
                 for(var i=0; i<learntPuzzles.length; i++) {
                     if(learntPuzzles[i].position == puzzle.position) {
-                        return true;
+                        if(learntPuzzles[i].answer == puzzle.answer) {
+                            return true;
+                        } else {
+                            learntPuzzles.splice(i, 1)
+                            return false;
+                        }
                     }
                 }
                 return false;
+            },
+            reset: function() {
+                learntPuzzles = []
             }
         }
     });

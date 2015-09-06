@@ -13,4 +13,7 @@ angular.module('melissa.achievements', ['ngRoute','melissa.messages','melissa.se
         $scope.getPositionLearnt = function() {
             return learningProgress.getPuzzlesLearnt()
         }
+        $scope.resetProgress = function() {
+            learningProgress.reset();
+        }
     }]);

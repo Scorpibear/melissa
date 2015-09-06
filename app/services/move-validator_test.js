@@ -40,5 +40,13 @@ describe("moveValidator", function () {
             var result = moveValidator.validate(["d4", "d5", "c4"], base);
             expect(result).toEqual("unknown");
         });
+        it("should be wrong if answer on wrong move is unknown (no need to evaluate)", function() {
+            var result = moveValidator.validate(["d4", "e6", "h4"], base)
+            expect(result).toEqual("wrong")
+        });
+        it("should be wrong even if asked very deep (no need to evaluate)", function() {
+            var result = moveValidator.validate(["d4", "e6", "h4", "Nc3"], base)
+            expect(result).toEqual("wrong")
+        })
     })
 });

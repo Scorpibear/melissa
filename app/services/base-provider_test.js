@@ -55,5 +55,13 @@ describe("baseProvider", function () {
             var result = baseProvider.validateMoves([]);
             expect(result).toEqual("returns result as is");
         })
+    });
+    describe("getBestMove", function() {
+        it("does not send for analysis", function() {
+            spyOn(queueToAnalyze, 'push')
+            baseProvider.getBestMove(["d4", "a5", "c4"])
+            expect(queueToAnalyze.push).not.toHaveBeenCalled()
+        })
     })
+
 });

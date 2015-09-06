@@ -31,10 +31,10 @@ angular.module("melissa.services")
                         }
                     } else {
                         if( result == "wrong path") {
-                            result == "wrong"
+                            result = "unknown";
                             break
                         } else {
-                            result = "unknown"
+                            result = "unknown";
                         }
                     }
                 }
