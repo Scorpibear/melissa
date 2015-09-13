@@ -16,8 +16,10 @@ angular.module("melissa.services")
                 return learntPuzzles.length;
             },
             markAsLearnt: function (puzzle) {
-                learntPuzzles.push(puzzle)
-                localStorage.setItem('melissa.learntPuzzles', JSON.stringify(learntPuzzles))
+                if(!this.isLearnt(puzzle)) {
+                    learntPuzzles.push(puzzle);
+                    localStorage.setItem('melissa.learntPuzzles', JSON.stringify(learntPuzzles))
+                }
             },
             isLearnt: function (puzzle) {
                 for(var i=0; i<learntPuzzles.length; i++) {
@@ -25,7 +27,7 @@ angular.module("melissa.services")
                         if(learntPuzzles[i].answer == puzzle.answer) {
                             return true;
                         } else {
-                            learntPuzzles.splice(i, 1)
+                            learntPuzzles.splice(i, 1);
                             return false;
                         }
                     }
