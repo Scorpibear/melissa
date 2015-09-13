@@ -13,9 +13,6 @@ angular.module('melissa.train', ['ngRoute', 'melissa.messages', 'melissa.service
         $scope.training = {solved: 0};
         $scope.showNextPuzzle = function () {
             var puzzle = puzzleProvider.getPuzzle();
-            while(puzzle && learningProgress.isLearnt(puzzle)) {
-                puzzle = puzzleProvider.getPuzzle();
-            }
             if (puzzle != null) {
                 $scope.training.puzzle = puzzle;
                 $scope.training.solvedFromFirstTry = true;
