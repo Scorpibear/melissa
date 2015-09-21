@@ -14,7 +14,7 @@ describe('puzzleProvider', function() {
         it("1000 puzzles per second", function() {
             var start = new Date();
             var puzzle;
-            var count = 500;
+            var count = 1000;
             for(var i=0; i<count; i++) {
                 puzzle = puzzleProvider.getPuzzle();
             }
