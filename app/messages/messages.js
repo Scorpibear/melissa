@@ -15,7 +15,9 @@ angular.module("melissa.messages", [])
             "Analyze": "Analyze",
             "Positions learnt": "Positions learnt",
             "Train branch": "Train branch",
-            "Reset progress": "Reset progress"
+            "Reset progress": "Reset progress",
+            "Level": "Level",
+            "Positions left for next level": "Positions left for next level"
         };
         base["ru"] = {
             correctAnswers: ["Верно!", "Правильно!", "Точно!", "Да!", "Да, это самый лучший ход в этой позиции!",
@@ -29,7 +31,10 @@ angular.module("melissa.messages", [])
             "Analyze": "Анализ",
             "Positions learnt": "Изучено позиций",
             "Train branch": "Тренировать ветку",
-            "Reset progress": "Сброс"
+            "Reset progress": "Сброс",
+            "Level": "Уровень",
+            "Positions left for next level": "Осталось изучить до следующего уровня"
+
         };
         var getBase = function () {
             var out = base[locale];
