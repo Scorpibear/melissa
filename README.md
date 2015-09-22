@@ -3,6 +3,8 @@ Melissa
 
 Memory interactive trainer
 
+Deployed on http://shahmaster.ru/melissa
+
 Positive side effect - knowing best answers on chess positions.
 
 MEmory Learning Interactive cheSS 
