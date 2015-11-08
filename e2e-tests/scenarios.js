@@ -4,7 +4,9 @@
 
 describe('melissa', function () {
 
-    browser.get('index.html');
+    beforeEach(function() {
+    	browser.get('index.html');
+    });
 
     it('title is Melissa', function () {
         expect(browser.getTitle()).toEqual('Melissa');
@@ -12,14 +14,6 @@ describe('melissa', function () {
     });
 
     it('puzzle is showned', function () {
-        /*
-         var puzzleProvider = {
-         getPuzzle: function(){
-         return {position: "1. d4", answer: "Nc6"}
-         }
-         };*/
-        // some replace of puzzleProvider
-        // force to display next position
-        expect(element("position")).getText().equalTo("1. d4");
+        expect(element(by.id("positionValue")).getText()).toEqual("");
     })
 });
