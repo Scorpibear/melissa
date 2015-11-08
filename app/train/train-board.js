@@ -19,6 +19,10 @@ angular.module("melissa.train")
                     squareEl.css('background', '#FFFF80');
                 };
                 boardConfig.onDrop = function (source, target) {
+                	if(source == target) {
+                		// it means that user returned piece to the same place, so need to do nothing, just give him another chance
+                		return 'snapback';
+                	}
                     var move = chessGame.move({
                         from: source,
                         to: target,
