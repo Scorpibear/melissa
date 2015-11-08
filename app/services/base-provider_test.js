@@ -62,6 +62,16 @@ describe("baseProvider", function () {
             baseProvider.getBestMove(["d4", "a5", "c4"])
             expect(queueToAnalyze.push).not.toHaveBeenCalled()
         })
-    })
+    });
+    describe("getEvaluation", function() {
+    	it("returns evaluation", function() {
+    		var evaluation = {v: 0.3, d: 31};
+            myBase.e = evaluation;
+            var moves = [];
+            var outputEvaluation = baseProvider.getEvaluation(moves);
+    		expect(outputEvaluation.v).toEqual(0.3);
+    		expect(outputEvaluation.d).toEqual(31);
+    	});
+    });
 
 });

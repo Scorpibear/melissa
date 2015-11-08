@@ -67,6 +67,10 @@ angular.module("melissa.services")
                     } else {
                         return null;
                     }
+                },
+                getEvaluation: function(moves) {
+                    var position = positionSelector.getPositionByMoves(base, moves);
+                    return position.e;
                 }
             }
         }]);

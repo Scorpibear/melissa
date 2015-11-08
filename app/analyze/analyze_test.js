@@ -5,7 +5,12 @@ describe('melissa.analyze module', function () {
     beforeEach(module('melissa.analyze'));
 
     describe('analyze controller', function () {
-        var baseProvider = {validateMoves: function() {}};
+        var baseProvider = { 
+        	validateMoves: function() {},
+        	getEvaluation: function() {
+        		return {v: 0.06, d: 32};
+        	}
+        	};
         var $controller;
         beforeEach(inject(function (_$controller_) {
             $controller = _$controller_;
@@ -19,7 +24,32 @@ describe('melissa.analyze module', function () {
                 var analyzeCtrl = $controller('AnalyzeController', {$scope: $scope, baseProvider: baseProvider});
                 $scope.getType([]);
                 expect(baseProvider.validateMoves).toHaveBeenCalled();
-            })
-        })
+            });
+        });
+        describe('getEvaluationAndDepthStr', function() {
+        	it("get evaluation by move", function() {
+        		var $scope = {};
+                var analyzeCtrl = $controller('AnalyzeController', {$scope: $scope, baseProvider: baseProvider});
+        		expect($scope.getEvaluationAndDepthStr()).toEqual("0.06 32");
+        	});
+            it("get empty string if evaluation is undefined", function() {
+                var $scope = {};
+                var analyzeCtrl = $controller('AnalyzeController', {$scope: $scope, baseProvider: baseProvider});
+                spyOn(baseProvider, 'getEvaluation').and.returnValue(undefined);
+                expect($scope.getEvaluationAndDepthStr()).toEqual("");
+            });
+            it("provide only existing value if only it is known", function() {
+                var $scope = {};
+                var analyzeCtrl = $controller('AnalyzeController', {$scope: $scope, baseProvider: baseProvider});
+                spyOn(baseProvider, 'getEvaluation').and.returnValue({v: 0.23});
+                expect($scope.getEvaluationAndDepthStr()).toEqual("0.23");
+            });
+            it("if evaluation is unknown, depth is useless so provide empty string", function() {
+                var $scope = {};
+                var analyzeCtrl = $controller('AnalyzeController', {$scope: $scope, baseProvider: baseProvider});
+                spyOn(baseProvider, 'getEvaluation').and.returnValue({d: 30});
+                expect($scope.getEvaluationAndDepthStr()).toEqual("");
+            });
+        });
     });
 });
