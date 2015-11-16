@@ -72,6 +72,9 @@ describe("baseProvider", function () {
     		expect(outputEvaluation.v).toEqual(0.3);
     		expect(outputEvaluation.d).toEqual(31);
     	});
+        it("returns null if position is null", function() {
+            expect(baseProvider.getEvaluation(["h4", "h5", "a4"])).toEqual(null);
+        })
     });
 
 });

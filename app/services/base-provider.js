@@ -3,7 +3,7 @@
 angular.module("melissa.services")
     .value("base", base)
     .value("queueToAnalyze", [])
-    .constant("sendForAnalysisTimeout", 5000)
+    .constant("sendForAnalysisTimeout", 2000)
     .factory("baseProvider", [
         '$http', 'base', 'positionSelector', 'moveValidator', 'queueToAnalyze', 'sendForAnalysisTimeout', 'userService',
         function ($http, base, positionSelector, moveValidator, queueToAnalyze, sendForAnalysisTimeout, userService) {
@@ -70,7 +70,7 @@ angular.module("melissa.services")
                 },
                 getEvaluation: function(moves) {
                     var position = positionSelector.getPositionByMoves(base, moves);
-                    return position.e;
+                    return position ? position.e : null;
                 }
             }
         }]);
