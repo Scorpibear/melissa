@@ -15,7 +15,7 @@ angular.module("melissa.services")
             $http({method: 'GET', url: backendUrl + '/api/getbase?userid=' + user.id, transformResponse: false}).
                 success(function (data) {
                     console.log("new base received, ", data.length, " bytes");
-                    base = (new Function("var base = " + data + "; return base;"))();
+                    base = JSON.parse(data);
                     base.pgn = '';
                     baseUpdated = true;
                 }).
