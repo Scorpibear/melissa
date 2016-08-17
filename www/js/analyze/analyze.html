@@ -1,4 +1,4 @@
-<div ng-app="melissa.analyze" ng-controller="AnalyzeController">
+<div id="analyze" ng-app="melissa.analyze" ng-controller="AnalyzeController">
     <div id="analyze-board" class="chess-board" melissa-analyze-board></div>
     <div>{{'Position' | localize}}:
         <span id="analyzed-pgn">
@@ -7,5 +7,10 @@
             <span class="unanalyzed-move" title="0.12 30">2.h3</span>
         </span>
     </div>
-    <div><button ng-click="back()" ng-show="moveNumber!=0">«</button> <button ng-click="switchOrientation()">↕</button> <!--a href="#/train" ng-click="trainBranch()">{{'Train branch' | localize}}</a--></div>
+    <div>
+        <button ng-click="back()" ng-show="moveNumber!=0"> « </button>&nbsp;&nbsp;
+        <button ng-click="switchOrientation()"> ↕ </button>&nbsp;&nbsp;
+        <button ng-click="reload()" ng-show="moveNumber!=0"> ↻ </button>
+        <!--a href="#/train" ng-click="trainBranch()">{{'Train branch' | localize}}</a-->
+    </div>
 </div>

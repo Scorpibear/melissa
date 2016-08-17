@@ -3,8 +3,8 @@
 angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.services'])
 
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/analyze', {
-            templateUrl: 'analyze/analyze.html'
+        $routeProvider.when('/js/analyze', {
+            templateUrl: 'js/analyze/analyze.html'
         });
     }])
     .constant('analyzeChessGame', new Chess())
@@ -56,6 +56,12 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
             $scope.board.position(analyzeChessGame.fen());
             $($scope.pgnElements.pop()).remove();
         };
+
+        $scope.reload = function() {
+            while($scope.moveNumber !== 0) {
+                $scope.back();
+            }
+        }
         
         $scope.switchOrientation = function() {
             $scope.board.orientation(($scope.board.orientation() == 'white') ? 'black' : 'white');

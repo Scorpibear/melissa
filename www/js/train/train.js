@@ -2,8 +2,8 @@
 
 angular.module('melissa.train', ['ngRoute', 'melissa.messages', 'melissa.services'])
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/train', {
-            templateUrl: 'train/train.html'
+        $routeProvider.when('/js/train', {
+            templateUrl: 'js/train/train.html'
         });
     }])
     .constant('chessGame', new Chess())

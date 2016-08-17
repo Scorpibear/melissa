@@ -9,6 +9,6 @@ angular.module('melissa', [
     'melissa.achievements'
 ])
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.otherwise({redirectTo: '/train'});
+        $routeProvider.otherwise({redirectTo: '/js/train'});
     }])
 ;

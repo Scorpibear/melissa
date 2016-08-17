@@ -9,3 +9,8 @@
 .unanalyzed-move {
     /* default */
 }
+
+#stats-list {
+    /*list-style-type: none;*/
+    text-align: left;
+}

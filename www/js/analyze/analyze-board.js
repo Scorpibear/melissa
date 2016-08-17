@@ -2,7 +2,7 @@ angular.module("melissa.analyze")
     .directive("melissaAnalyzeBoard", ['analyzeChessGame', function (analyzeChessGame) {
         var boardConfig = {
             draggable: true,
-            pieceTheme: 'bower_components/chessboardjs/img/chesspieces/wikipedia/{piece}.png',
+            pieceTheme: 'js/bower_components/chessboardjs/img/chesspieces/wikipedia/{piece}.png',
             position: 'start',
             onDragStart: function (source, piece, position, orientation) {
             }

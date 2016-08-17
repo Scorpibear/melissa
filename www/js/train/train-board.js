@@ -2,7 +2,7 @@ angular.module("melissa.train")
     .directive("melissaTrainBoard", ['chessGame', 'chessMoveConverter', function (chessGame, chessMoveConverter) {
         var boardConfig = {
             draggable: true,
-            pieceTheme: 'bower_components/chessboardjs/img/chesspieces/wikipedia/{piece}.png',
+            pieceTheme: 'js/bower_components/chessboardjs/img/chesspieces/wikipedia/{piece}.png',
             onDragStart: function (source, piece, position, orientation) {
                 // only pick up pieces for the side to move
                 if ((orientation === 'white' && piece.search(/^b/) !== -1) ||
