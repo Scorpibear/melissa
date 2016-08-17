@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html lang="en" class="no-js">
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; connect-src http://umain-02.cloudapp.net:* 'self'">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta charset="utf-8">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" href="js/bower_components/html5-boilerplate/css/normalize.css">
+        <link rel="stylesheet" href="js/bower_components/html5-boilerplate/css/main.css">
+        <link rel="stylesheet" href="js/bower_components/chessboardjs/css/chessboard.css">
+        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" href="js/train/train.css">
+        <link rel="stylesheet" href="js/analyze/analyze.css">
+        <title>Melissa</title>
+    </head>
+    <body>
+        <div class="app" ng-app="melissa">
+            <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+                your browser</a> to improve your experience.</p>
+            <![endif]-->
+            <div id="deviceready">
+                <p class="event listening">Connecting to Device</p>
+                <p class="event received">
+                    <ul class="menu">
+                        <li><a href="#/js/train">{{'Train' | localize}}</a></li>
+                        <li><a href="#/js/analyze">{{'Analyze' | localize}}</a></li>
+                        <li><a href="#/js/achievements">{{'Achievements' | localize}}</a></li>
+                    </ul>
+                </p>
+            </div>
+            <div id="ng-view" ng-view></div>
+            <span class="version">Melissa v1.1</span>
+        </div>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script src="js/bower_components/angular/angular.js"></script>
+        <script src="js/bower_components/angular-route/angular-route.js"></script>
+        <script src="js/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="js/bower_components/chessboardjs/js/chess.js"></script>
+        <script src="js/bower_components/chessboardjs/js/chessboard.js"></script>
+        <script src="js/services/base.js"></script>
+        <script src="js/services/services.js"></script>
+        <script src="js/services/user-service.js"></script>
+        <script src="js/services/move-validator.js"></script>
+        <script src="js/services/chess-move-converter.js"></script>
+        <script src="js/services/base-provider.js"></script>
+        <script src="js/services/puzzle-builder.js"></script>
+        <script src="js/services/puzzle-provider.js"></script>
+        <script src="js/services/position-selector.js"></script>
+        <script src="js/services/puzzle-generator.js"></script>
+        <script src="js/services/learning-progress.js"></script>
+        <script src="js/services/train-mode.js"></script>
+        <script src="js/messages/messages.js"></script>
+        <script src="js/achievements/achievements.js"></script>
+        <script src="js/analyze/analyze.js"></script>
+        <script src="js/analyze/analyze-board.js"></script>
+        <script src="js/train/train.js"></script>
+        <script src="js/train/train-board.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>

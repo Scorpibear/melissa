@@ -1,8 +1,8 @@
 {
   "name": "melissa",
   "description": "Chess trainer",
-  "version": "0.1.0",
-  "homepage": "https://github.com/scorpibear/chumet",
+  "version": "1.1.0",
+  "homepage": "https://github.com/scorpibear/melissa",
   "license": "MIT",
   "private": true,
   "dependencies": {
