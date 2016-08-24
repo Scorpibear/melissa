@@ -1,14 +1,13 @@
 'use strict';
 
 angular.module("melissa.services")
-    .value("base", base)
     .value("queueToAnalyze", [])
     .constant("sendForAnalysisTimeout", 2000)
     .factory("baseProvider", [
-        '$http', 'base', 'positionSelector', 'moveValidator', 'queueToAnalyze', 'sendForAnalysisTimeout', 'userService',
-        function ($http, base, positionSelector, moveValidator, queueToAnalyze, sendForAnalysisTimeout, userService) {
+        '$http', 'baseManager', 'positionSelector', 'moveValidator', 'queueToAnalyze', 'sendForAnalysisTimeout', 'userService',
+        function ($http, baseManager, positionSelector, moveValidator, queueToAnalyze, sendForAnalysisTimeout, userService) {
             var baseUpdated = false;
-            base.pgn = '';
+            var base = baseManager.restoreBase();
             var backendUrl = 'http://umain-02.cloudapp.net:9966';
             //backendUrl = 'http://localhost:9966';
             var user = userService.getUser();
@@ -18,6 +17,7 @@ angular.module("melissa.services")
                     base = JSON.parse(data);
                     base.pgn = '';
                     baseUpdated = true;
+                    baseManager.saveBase(base)
                 }).
                 error(function(data, status, headers, config) {
                     console.error("could not update base from server: ", data, status, headers, config);
