@@ -10,10 +10,10 @@ angular.module("melissa.services")
          }
          */
         var buildPositionFromObject = function (positionObject) {
-            return positionObject.pgn;
+            return positionObject ? positionObject.pgn : null;
         };
         var buildAnswerFromObject = function (positionObject) {
-            if (positionObject.s && positionObject.s.length) {
+            if (positionObject && positionObject.s && positionObject.s.length) {
                 return positionObject.s[0].m;
             } else {
                 return null;

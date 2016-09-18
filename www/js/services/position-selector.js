@@ -1,16 +1,21 @@
+"use strict";
+
 angular.module("melissa.services")
 
     .factory("positionSelector", function () {
         var createIndependentSubObject = function (positionObject, index) {
             index = index || 0;
-            var subObject = positionObject.s[index];
-            var newPgn = positionObject.pgn + " ";
-            if (subObject.c == 'w') {
-                newPgn += subObject.n + ".";
+            var subObject = null;
+            if(positionObject && positionObject.s && positionObject.s.length) {
+                subObject = positionObject.s[index];
+                var newPgn = (positionObject.pgn === "") ? "" : positionObject.pgn + " ";
+                if (subObject.c == 'w') {
+                    newPgn += subObject.n + ".";
+                }
+                newPgn += subObject.m;
+                subObject.pgn = newPgn;
+                subObject.t = index ? positionObject.c : positionObject.t;
             }
-            newPgn += subObject.m;
-            subObject.pgn = newPgn;
-            subObject.t = index ? positionObject.c : positionObject.t;
             return subObject;
         };
         return {
@@ -62,6 +67,11 @@ angular.module("melissa.services")
                     }
                 }
                 return positionObject;
+            },
+            getNextPositionOfTheColor: function(positionObject) {
+                var result = createIndependentSubObject(positionObject); 
+                result = createIndependentSubObject(result);
+                return result;
             }
         }
     });

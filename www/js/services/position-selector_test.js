@@ -57,5 +57,27 @@ describe("positionSelector", function () {
             });
             expect(result.length).toEqual(0);
         })
+    });
+    describe("getNextPositionOfTheColor", function() {
+      var positionObject = {pgn: "", m: "", s: [
+          {m: "e4", s: [
+            {m: "e6", s: [
+              {m: "d4"}
+            ]}
+          ]}
+        ]};
+      it("returns next position", function() {
+        var result = positionSelector.getNextPositionOfTheColor(positionObject);
+        expect(result).toBe(positionObject.s[0].s[0]);
+      });
+      it("fills pgn property", function() {
+        var result = positionSelector.getNextPositionOfTheColor(positionObject);
+        expect(result.pgn).toBe('e4 e6');
+      })
+      it("returns null if no next position", function() {
+        var result = positionSelector.getNextPositionOfTheColor(positionObject);
+        result = positionSelector.getNextPositionOfTheColor(result);
+        expect(result).toEqual(null);
+      })
     })
 });

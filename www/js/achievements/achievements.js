@@ -4,8 +4,7 @@ angular.module('melissa.achievements', ['ngRoute','melissa.messages','melissa.se
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/js/achievements', {
-            templateUrl: 'js/achievements/achievements.html',
-            controller: 'AchievementsController'
+            templateUrl: 'js/achievements/achievements.html'
         });
     }])
 

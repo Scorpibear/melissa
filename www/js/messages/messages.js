@@ -17,7 +17,10 @@ angular.module("melissa.messages", [])
             "Train branch": "Train branch",
             "Reset progress": "Reset progress",
             "Level": "Level",
-            "Positions left for next level": "Positions left for next level"
+            "Positions left for next level": "Positions left for next level",
+            "Choose the way how to train your chess memory": "Choose the way how to train your chess memory",
+            "Best Moves": "Best Moves",
+            "Game": "Game"
         };
         base["ru"] = {
             correctAnswers: ["Верно!", "Правильно!", "Точно!", "Да!", "Да, это самый лучший ход в этой позиции!",
@@ -33,8 +36,10 @@ angular.module("melissa.messages", [])
             "Train branch": "Тренировать ветку",
             "Reset progress": "Сброс",
             "Level": "Уровень",
-            "Positions left for next level": "Осталось изучить до следующего уровня"
-
+            "Positions left for next level": "Осталось изучить до следующего уровня",
+            "Choose the way how to train your chess memory": "Выберите способ тренировки своей шахматной памяти",
+            "Best Moves": "Лучшие ходы",
+            "Game": "Партия"
         };
         var getBase = function () {
             var out = base[locale];

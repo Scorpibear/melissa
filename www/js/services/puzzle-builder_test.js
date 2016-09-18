@@ -31,6 +31,10 @@ describe("puzzleBuilder", function () {
         it("returns null if s is not specified", function () {
             var puzzle = puzzleBuilder.buildFromPositionObject({pgn: ""});
             expect(puzzle).toBeNull();
-        })
+        });
+        it("return null if positionObject is null", function() {
+            var puzzle = puzzleBuilder.buildFromPositionObject(null);
+            expect(puzzle).toBeNull();
+        });
     })
 });

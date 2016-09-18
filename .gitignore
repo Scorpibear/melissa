@@ -49,3 +49,4 @@ gen/
 local.properties
 /platforms
 /plugins
+/.vscode

@@ -1,24 +1,21 @@
 angular.module("melissa.services")
-    .factory("puzzleGenerator", function (baseProvider, puzzleBuilder) {
-        var activePositionList = [], nextPositionList = [], activeIndex = 0;
-        activePositionList.push(baseProvider.getStart());
-        return {
-            getNew: function () {
-                if (activeIndex < activePositionList.length) {
-                    var positionObject = activePositionList[activeIndex];
-                    var puzzle = puzzleBuilder.buildFromPositionObject(positionObject);
-                    var bestSubPositions = baseProvider.getBestSubPositions(positionObject);
-                    nextPositionList = nextPositionList.concat(bestSubPositions);
-                    activeIndex++;
-                    if (activeIndex == activePositionList.length) {
-                        activePositionList = nextPositionList;
-                        nextPositionList = [];
-                        activeIndex = 0;
-                    }
-                    return puzzle;
-                } else {
-                    return null;
-                }
-            }
-        }
-    });
+  .factory("puzzleGenerator", function (notLearntPuzzleGenerator, gamePuzzleGenerator, trainMode) {
+    function getGenerator() {
+      var generator = notLearntPuzzleGenerator;
+      if(trainMode.isGame()) {
+        generator = gamePuzzleGenerator;    
+      }
+      return generator;
+    }
+    return {
+      getNew: function() {
+        var generator = getGenerator();
+        var puzzle = generator.getNew();
+        return puzzle;
+      },
+      reset: function() {
+        var generator = getGenerator();
+        generator.reset();
+      }
+    }
+  });

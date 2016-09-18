@@ -40,6 +40,7 @@
         <link rel="stylesheet" href="js/bower_components/chessboardjs/css/chessboard.css">
         <link rel="stylesheet" href="css/app.css">
         <link rel="stylesheet" href="js/train/train.css">
+        <link rel="stylesheet" href="js/train-mode-selection/train-mode-selection.css">
         <link rel="stylesheet" href="js/analyze/analyze.css">
         <title>Melissa</title>
     </head>
@@ -53,14 +54,14 @@
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">
                     <ul class="menu">
-                        <li><a href="#/js/train">{{'Train' | localize}}</a></li>
+                        <li><a href="#/js/train-mode-selection">{{'Train' | localize}}</a></li>
                         <li><a href="#/js/analyze">{{'Analyze' | localize}}</a></li>
                         <li><a href="#/js/achievements">{{'Achievements' | localize}}</a></li>
                     </ul>
                 </p>
             </div>
             <div id="ng-view" ng-view></div>
-            <span class="version">Melissa v1.1.1</span>
+            <span class="version">Melissa v1.2-rc0</span>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script src="js/bower_components/angular/angular.js"></script>
@@ -76,6 +77,9 @@
         <script src="js/services/base-manager.js"></script>
         <script src="js/services/base-provider.js"></script>
         <script src="js/services/puzzle-builder.js"></script>
+        <script src="js/services/train_strategies/continuous-puzzle-generator.js"></script>
+        <script src="js/services/train_strategies/not-learnt-puzzle-generator.js"></script>
+        <script src="js/services/train_strategies/game-puzzle-generator.js"></script>
         <script src="js/services/puzzle-provider.js"></script>
         <script src="js/services/position-selector.js"></script>
         <script src="js/services/puzzle-generator.js"></script>
@@ -85,6 +89,7 @@
         <script src="js/achievements/achievements.js"></script>
         <script src="js/analyze/analyze.js"></script>
         <script src="js/analyze/analyze-board.js"></script>
+        <script src="js/train-mode-selection/train-mode-selection.js"></script>
         <script src="js/train/train.js"></script>
         <script src="js/train/train-board.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
