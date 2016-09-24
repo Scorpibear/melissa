@@ -1,9 +1,9 @@
 {
   "name": "melissa",
   "private": true,
-  "version": "1.1.1",
-  "description": "Interactive memory trainer",
-  "repository": "https://github.com/Scorpibear/chumet",
+  "version": "1.2-rc1",
+  "description": "Chess Uberman Memory Trainer",
+  "repository": "https://github.com/Scorpibear/melissa",
   "license": "MIT",
   "devDependencies": {
     "bower": "^1.3.1",
