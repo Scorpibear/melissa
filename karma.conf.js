@@ -8,7 +8,7 @@ module.exports = function (config) {
             'www/js/bower_components/angular-loader/angular-loader.js',
             'www/js/bower_components/angular-route/angular-route.js',
             'www/js/bower_components/angular-mocks/angular-mocks.js',
-            'www/js/bower_components/chess.js/chess.js',
+            'www/js/bower_components/chess.js/index.js',
             'www/js/bower_components/chessboardjs/js/chessboard-0.3.0.js',
             'www/js/bower_components/jquery/dist/jquery.js',
             'www/js/messages/messages.js',
