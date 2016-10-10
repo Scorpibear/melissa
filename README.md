@@ -1,6 +1,6 @@
 Melissa
 ======
-
+[![Build Status](https://travis-ci.org/Scorpibear/melissa.svg?branch=master)](https://travis-ci.org/Scorpibear/melissa)
 Memory interactive trainer
 
 Deployed on http://shahmaster.ru/melissa
