@@ -1,0 +1,7 @@
+<div id="trainModeSelection" ng-controller="TrainModeSelectionController">
+    <h1>{{'Choose the way how to train your chess memory' | localize}}</h1>
+    <div id="modes">
+        <button type="button" ng-click="startContinuousTraining()">{{('Best Moves' | localize)}}</button>
+        <button type="button" ng-click="startGameTraining()">{{('Game' | localize)}}</button>
+    </div>
+</div>

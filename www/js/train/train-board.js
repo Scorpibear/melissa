@@ -18,6 +18,9 @@ angular.module("melissa.train")
                     var squareEl = $('#' + id + ' .square-' + square);
                     squareEl.css('background', '#FFFF80');
                 };
+                var highlightSquares = function (squares) {
+                    squares.forEach(function(item) {highlightSquare(item)});
+                }
                 boardConfig.onDrop = function (source, target) {
                 	if(source == target) {
                 		// it means that user returned piece to the same place, so need to do nothing, just give him another chance
@@ -33,8 +36,8 @@ angular.module("melissa.train")
                         chessGame.undo();
                     if (!isCorrect) {
                         scope.training.solvedFromFirstTry = false;
-                        var square = chessMoveConverter.sanToSquare(scope.training.puzzle.answer);
-                        highlightSquare(square);
+                        var squares = chessMoveConverter.sanToSquares(scope.training.puzzle.answer, chessGame.turn());
+                        highlightSquares(squares);
                         return 'snapback';
                     } else {
                         scope.registerCorrectAnswer();

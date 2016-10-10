@@ -10,12 +10,21 @@ describe('continuousPuzzleGenerator service', function () {
       getStart: function () {
         return {m: '', s: [
           {m: "p1", s: [
-            { m: "p2", s: []}
+            { m: "p2", s: []},
+            { m: "p3", s: [
+              {m: "p3.1", s: []}
+            ]}
           ]}
         ]};
       },
-      getBestSubPositions: function () {
-        return [{m: "p1"}];
+      getBestSubPositions: function (positionObject) {
+        var map = {
+          '': [{m: "p1", s: [{m: "p1"}]}],
+          'p1': [{m: "p2", s:[]}, {m: "p3", s:[{m: "p3.1", s:[]}]}],
+          'p2': [],
+          'p3': [{m: "p3.1", s: []}]
+        }
+        return map[positionObject.m];
       }
     };
     var puzzleBuilder = {
@@ -42,6 +51,13 @@ describe('continuousPuzzleGenerator service', function () {
       continuousPuzzleGenerator.getNew();
       var puzzle = continuousPuzzleGenerator.getNew();
       expect(puzzle).toEqual({position: "p1"});
-    })
+    });
+
+    it('should skip positions with empty subpositions array', function() {
+      continuousPuzzleGenerator.getNew();
+      continuousPuzzleGenerator.getNew();
+      var puzzle = continuousPuzzleGenerator.getNew();
+      expect(puzzle).toEqual({position: "p3"});
+    });
   });
 });
