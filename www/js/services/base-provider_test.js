@@ -2,7 +2,7 @@
 
 describe("baseProvider", function () {
     var baseProvider;
-    var myBase = {};
+    var myBase = {pgn: ''};
     var moveValidator = {
         called: false,
         validateParams: null,
@@ -16,7 +16,7 @@ describe("baseProvider", function () {
 
     beforeEach(module("melissa.services"));
     beforeEach(module(function ($provide) {
-        $provide.value("base", myBase);
+        $provide.value("baseManager", {restoreBase: function(){return myBase}});
         $provide.value("moveValidator", moveValidator);
         $provide.value("queueToAnalyze", queueToAnalyze);
     }));

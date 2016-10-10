@@ -8,19 +8,19 @@ describe('baseManager', function() {
 
   describe('restoreBase', function() {
     it('restores base from local storage', function() {
-      spyOn(localStorage, 'getItem');
+      spyOn(Storage.prototype, 'getItem').and.returnValue({});
       var base = baseManager.restoreBase();
-      expect(localStorage.getItem).toHaveBeenCalledWith('base'); 
+      expect(Storage.prototype.getItem).toHaveBeenCalledWith('base'); 
     });
   });
   describe('saveBase', function() {
     it('saves base to localStorage', function() {
       var base = {m: ""};
-      spyOn(localStorage, 'setItem');
-      spyOn(JSON, 'stringify').and.returnValue('valid json');
+      spyOn(Storage.prototype, 'setItem').and.stub();
+      spyOn(JSON, 'stringify').and.returnValue('{"some": "json"}');
       baseManager.saveBase(base);
       expect(JSON.stringify).toHaveBeenCalledWith(base);
-      expect(localStorage.setItem).toHaveBeenCalledWith('base', 'valid json');
+      expect(Storage.prototype.setItem).toHaveBeenCalledWith('base', '{"some": "json"}');
     });
   });
 });

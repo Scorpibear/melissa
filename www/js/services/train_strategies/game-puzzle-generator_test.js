@@ -2,9 +2,9 @@
 
 describe('gamePuzzleGenerator service', function () {
   var gamePuzzleGenerator;
-  var base = {pgn: "", m: "", s: [
-    {m: "e4", s: [
-      {m: "e6", s: [
+  var base = {pgn: "", m: "", "n": 0, "c": "b", "t": "wb", s: [
+    {m: "e4", "n": 1, "c": "w", s: [
+      {m: "e6", n: 1, s: [
         {m: "d4"}
       ]}
     ]}  
@@ -13,9 +13,15 @@ describe('gamePuzzleGenerator service', function () {
 
   beforeEach(module('melissa.services'));
 
+  beforeEach(module(function($provide) {
+    $provide.value("baseProvider", baseProvider);
+  }));
+
   beforeEach(inject(function (_gamePuzzleGenerator_) {
       gamePuzzleGenerator = _gamePuzzleGenerator_;
   }));
+
+
 
   describe('getNew', function () {
     it('should get the first position', function () {

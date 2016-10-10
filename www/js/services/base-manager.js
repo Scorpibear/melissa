@@ -10,7 +10,11 @@ angular.module("melissa.services")
         base.pgn = '';
         var baseFromLocalStorage = localStorage.getItem(localStorageItemForBase);
         if(baseFromLocalStorage) {
-          base = JSON.parse(baseFromLocalStorage);
+          try {
+            base = JSON.parse(baseFromLocalStorage);
+          } catch (err) {
+            console.error(err);
+          }
         }
         return base;
       },
