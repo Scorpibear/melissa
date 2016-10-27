@@ -13,7 +13,7 @@ angular.module("melissa.services")
           try {
             base = JSON.parse(baseFromLocalStorage);
           } catch (err) {
-            console.error(err);
+            console.error("Could not parse base from local storage", baseFromLocalStorage);
           }
         }
         return base;

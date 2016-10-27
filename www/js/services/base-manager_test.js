@@ -8,7 +8,7 @@ describe('baseManager', function() {
 
   describe('restoreBase', function() {
     it('restores base from local storage', function() {
-      spyOn(Storage.prototype, 'getItem').and.returnValue({});
+      spyOn(Storage.prototype, 'getItem').and.returnValue("{}");
       var base = baseManager.restoreBase();
       expect(Storage.prototype.getItem).toHaveBeenCalledWith('base'); 
     });

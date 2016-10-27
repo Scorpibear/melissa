@@ -73,7 +73,6 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
 
         $scope.trainBranch = function() {
             var position = analyzeChessGame.history();
-            console.log(position);
             trainMode.branch(position);
         };
     }]);

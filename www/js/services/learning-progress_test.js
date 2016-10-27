@@ -33,19 +33,24 @@ describe("learningProgress", function() {
     });
 
     describe("isLearnt", function() {
-        it("returns false for unknown puzzles", function() {
+        beforeEach(function() {
             learningProgress.reset();
+            learningProgress.markAsLearnt({position: "1.e4 e6", answer: "d4"});
+        })
+        it("returns false for null", function() {
+            expect(learningProgress.isLearnt(null)).toBeFalsy();
+        })
+        it("returns false for unknown puzzles", function() {
             expect(learningProgress.isLearnt({position: "1.d4 Nf6", answer: "Nf3"})).toBeFalsy();
         });
         it("remove puzzle with changed answer", function() {
-            learningProgress.reset();
             learningProgress.markAsLearnt({position: "d4", answer: "e6"});
             expect(learningProgress.isLearnt({position: "d4", answer: "Nf6"})).toBeFalsy();
-            expect(learningProgress.getPuzzlesLearnt()).toEqual(0)
+            expect(learningProgress.getPuzzlesLearnt()).toEqual(1);
         });
         it("returns true if is learnt", function() {
             learningProgress.markAsLearnt({position: "1.d4", answer: "Nf6"});
-            expect({position: "1.d4", answer: "Nf6"}).toBeTruthy()
+            expect(learningProgress.isLearnt({position: "1.d4", answer: "Nf6"})).toBeTruthy()
         })
     });
 

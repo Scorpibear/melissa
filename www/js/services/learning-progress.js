@@ -22,13 +22,15 @@ angular.module("melissa.services")
                 }
             },
             isLearnt: function (puzzle) {
-                for(var i=0; i<learntPuzzles.length; i++) {
-                    if(learntPuzzles[i].position == puzzle.position) {
-                        if(learntPuzzles[i].answer == puzzle.answer) {
-                            return true;
-                        } else {
-                            learntPuzzles.splice(i, 1);
-                            return false;
+                if(puzzle) {
+                    for(var i=0; i<learntPuzzles.length; i++) {
+                        if(learntPuzzles[i].position == puzzle.position) {
+                            if(learntPuzzles[i].answer == puzzle.answer) {
+                                return true;
+                            } else {
+                                learntPuzzles.splice(i, 1);
+                                return false;
+                            }
                         }
                     }
                 }
