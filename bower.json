@@ -1,7 +1,7 @@
 {
   "name": "melissa",
   "description": "Chess trainer",
-  "version": "1.2.0-rc3",
+  "version": "1.2.0",
   "homepage": "https://github.com/scorpibear/melissa",
   "license": "MIT",
   "private": true,
