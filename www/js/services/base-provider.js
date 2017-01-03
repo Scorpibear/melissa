@@ -4,39 +4,45 @@ angular.module("melissa.services")
     .value("queueToAnalyze", [])
     .constant("sendForAnalysisTimeout", 2000)
     .factory("baseProvider", [
-        '$http', 'baseManager', 'positionSelector', 'moveValidator', 'queueToAnalyze', 'sendForAnalysisTimeout', 'userService',
-        function ($http, baseManager, positionSelector, moveValidator, queueToAnalyze, sendForAnalysisTimeout, userService) {
+        '$http', 'baseManager', 'positionSelector', 'moveValidator', 'queueToAnalyze', 'sendForAnalysisTimeout', 'userService', 'connectionIndicator',
+        function ($http, baseManager, positionSelector, moveValidator, queueToAnalyze, sendForAnalysisTimeout, userService, connectionIndicator) {
             var baseUpdated = false;
             var base = baseManager.restoreBase();
             var backendUrl = 'http://umain-02.cloudapp.net:9966';
             //backendUrl = 'http://localhost:9966';
             var user = userService.getUser();
+            connectionIndicator.startSending();
             $http({method: 'GET', url: backendUrl + '/api/getbase?userid=' + user.id, transformResponse: false}).
                 success(function (data) {
                     console.log("new base received, ", data.length, " bytes");
                     base = JSON.parse(data);
                     base.pgn = '';
                     baseUpdated = true;
-                    baseManager.saveBase(base)
+                    baseManager.saveBase(base);
+                    connectionIndicator.success();
                 }).
                 error(function(data, status, headers, config) {
                     console.error("could not update base from server: ", data, status, headers, config);
+                    connectionIndicator.error();
                 });
             var sendForAnalysisInProgress = false;
             var sendForAnalysis = function() {
                 if(queueToAnalyze.length > 0) {
                     sendForAnalysisInProgress = true;
                     var dataToAnalyze = queueToAnalyze[0];
+                    connectionIndicator.startSending()
                     $http.post(backendUrl + '/api/analyze', {moves: dataToAnalyze}).
                         success(function () {
                             queueToAnalyze.shift();
                             sendForAnalysisInProgress = false;
                             console.log('sent to analyze: ' + dataToAnalyze);
+                            connectionIndicator.success();
                         }).
-                        error(function () {
+                        error(function (err) {
                             sendForAnalysisInProgress = false;
-                            console.log('post error');
-                        })
+                            console.log('post error: ' + err);
+                            connectionIndicator.error();
+                        });
                 }
             };
             setInterval(sendForAnalysis, sendForAnalysisTimeout);

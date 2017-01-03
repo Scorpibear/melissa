@@ -24,19 +24,14 @@ button {
 
 .menu {
     list-style: none;
+    font-size: large;
+    padding: 0 0 0.5em;
+}
+
+.header {
     border-bottom: 0.1em solid black;
     margin-bottom: 2em;
-    padding: 0 0 0.5em;
-    font-size: large;
 }
-
-/*.menu:before {
-    content: "[";
-}
-
-.menu:after {
-    content: "]";
-}*/
 
 .menu > li {
     display: inline;
