@@ -12,6 +12,7 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
         $('#analyzed-pgn').html("");
         $scope.moveNumber = 0;
         $scope.pgnElements = [];
+        analyzeChessGame.reset();
 
         $scope.registerPositionChange = function (move) {
             var numStr = (move.color == "w") ? "" + (++$scope.moveNumber) + ". " : "";

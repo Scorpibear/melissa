@@ -15,6 +15,14 @@ describe('melissa.analyze module', function () {
         beforeEach(inject(function (_$controller_) {
             $controller = _$controller_;
         }));
+        describe('constructor', function() {
+            it('resets chessGame', function() {
+                var analyzeChessGame = {reset: function() {}};
+                spyOn(analyzeChessGame, 'reset');
+                var analyzeCtrl = $controller('AnalyzeController', {$scope: {}, analyzeChessGame: analyzeChessGame});
+                expect(analyzeChessGame.reset).toHaveBeenCalled();
+            });
+        });
         describe('getType', function() {
             beforeEach(function () {
                 spyOn(baseProvider, 'validateMoves');
