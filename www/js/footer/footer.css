@@ -1,0 +1,11 @@
+.default-connection {
+    color: black;
+}
+
+.good-connection {
+    color: green;
+}
+
+.no-connection {
+    color: red;
+}
