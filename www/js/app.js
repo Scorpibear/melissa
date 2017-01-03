@@ -7,7 +7,8 @@ angular.module('melissa', [
     'melissa.trainModeSelection',
     'melissa.train',
     'melissa.analyze',
-    'melissa.achievements'
+    'melissa.achievements',
+    'melissa.footer'
 ])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.otherwise({redirectTo: '/js/train-mode-selection'});
