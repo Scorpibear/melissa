@@ -1,9 +1,10 @@
-angular.module("melissa.footer", [])
-  .directive('melissaFooter', [function() {
+angular.module('melissa.footer', ['melissa.services'])
+  .directive('melissaFooter', ['connectionIndicator', function(connectionIndicator) {
     return {
       link: function(scope, element, attrs) {
-        var states = {"default":"default", "good":"good", "no":"no"};
-        scope.connectionState = states.default;
+        connectionIndicator.refresh(function(state) {
+          scope.connectionState = state;
+        });
       },
       templateUrl: 'js/footer/footer.html'
     };

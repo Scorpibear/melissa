@@ -1,11 +1,15 @@
 .default-connection {
-    color: black;
+  color: black;
 }
 
 .good-connection {
-    color: green;
+  color: green;
 }
 
 .no-connection {
-    color: red;
+  color: red;
+}
+
+.unclear-connection {
+  color: yellow;
 }
