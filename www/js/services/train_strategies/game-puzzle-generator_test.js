@@ -43,12 +43,25 @@ describe('gamePuzzleGenerator service', function () {
     });
   });
   describe('start', function() {
+    var realBaseProvider = null;
+    beforeEach(inject(function (_baseProvider_) {
+      realBaseProvider = _baseProvider_;
+    }));
     it('should check what game is better if there are several', function() {
       spyOn(gameCreator, 'isBetter');
       spyOn(baseProvider, 'getBestSubPositions').and.returnValue([{},{}]);
       gamePuzzleGenerator.start();
       expect(gameCreator.isBetter).toHaveBeenCalled();
     });
+    it('should request game generation for not the best first move of black', function() {
+      spyOn(gameCreator, 'create');
+      spyOn(baseProvider, 'getBestSubPositions').and.returnValues(
+        [{pgn: "1.e4"}, {pgn: "1.d4"}],
+        [{pgn: "1.e4 e6"}, {pgn: "1.e4 d5"}]
+      );
+      gamePuzzleGenerator.start();
+      expect(baseProvider.getBestSubPositions).toHaveBeenCalledWith({pgn: '1.e4 d5'});
+    })
   })
   describe('reset', function() {
     it('calls start', function() {
