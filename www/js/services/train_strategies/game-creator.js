@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module("melissa.services")
-  .factory("gameCreator", function (positionSelector, learningProgress, puzzleBuilder) {
+  .factory("gameCreator", ['positionSelector', 'learningProgress', 'puzzleBuilder', function (positionSelector, learningProgress, puzzleBuilder) {
     
     return {
       create: function(positionObject) {
@@ -32,4 +32,4 @@ angular.module("melissa.services")
         return count;
       }
     }
-  });
+  }]);
