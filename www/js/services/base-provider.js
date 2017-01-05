@@ -13,18 +13,20 @@ angular.module("melissa.services")
             var user = userService.getUser();
             connectionIndicator.startSending();
             $http({method: 'GET', url: backendUrl + '/api/getbase?userid=' + user.id, transformResponse: false}).
-                success(function (data) {
-                    console.log("new base received, ", data.length, " bytes");
-                    base = JSON.parse(data);
-                    base.pgn = '';
-                    baseUpdated = true;
-                    baseManager.saveBase(base);
-                    connectionIndicator.success();
-                }).
-                error(function(data, status, headers, config) {
-                    console.error("could not update base from server: ", data, status, headers, config);
-                    connectionIndicator.error();
-                });
+                then(
+                    function success(response){
+                        console.log("new base received, ", response.data.length, " bytes");
+                        base = JSON.parse(response.data);
+                        base.pgn = '';
+                        baseUpdated = true;
+                        baseManager.saveBase(base);
+                        connectionIndicator.success();
+                    },
+                    function error(response) {
+                        console.error("could not update base from server: ", response);
+                        connectionIndicator.error();
+                    }
+                );
             var sendForAnalysisInProgress = false;
             var sendForAnalysis = function() {
                 if(queueToAnalyze.length > 0) {
