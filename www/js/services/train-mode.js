@@ -6,10 +6,10 @@ angular.module('melissa.services')
         var branch = []
         var mode = modes.bestMoves;
         return {
-            continuous: function() {
+            bestMoves: function() {
                 mode = modes.bestMoves;
             },
-            game: function() {
+            bestGames: function() {
                 mode = modes.bestGames;
             },
             branch: function(moves) {

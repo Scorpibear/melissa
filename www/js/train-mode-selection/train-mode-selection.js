@@ -7,12 +7,12 @@ angular.module('melissa.trainModeSelection', ['ngRoute', 'melissa.messages', 'me
     });
   }])
   .controller('TrainModeSelectionController', ['$scope', 'trainMode', '$location', 'puzzleProvider', function ($scope, trainMode, $location, puzzleProvider) {
-    $scope.startContinuousTraining = function(){
-      trainMode.continuous();
+    $scope.startBestMovesTraining = function(){
+      trainMode.bestMoves();
       $scope.startTraining()
     }
-    $scope.startGameTraining = function() {
-      trainMode.game();
+    $scope.startBestGamesTraining = function() {
+      trainMode.bestGames();
       $scope.startTraining();
     }
     $scope.startTraining = function() {

@@ -34,13 +34,12 @@ angular.module("melissa.services")
                     var dataToAnalyze = queueToAnalyze[0];
                     connectionIndicator.startSending()
                     $http.post(backendUrl + '/api/analyze', {moves: dataToAnalyze}).
-                        success(function () {
+                        then(function success() {
                             queueToAnalyze.shift();
                             sendForAnalysisInProgress = false;
                             console.log('sent to analyze: ' + dataToAnalyze);
                             connectionIndicator.success();
-                        }).
-                        error(function (err) {
+                        }, function error(err) {
                             sendForAnalysisInProgress = false;
                             console.log('post error: ' + err);
                             connectionIndicator.error();
