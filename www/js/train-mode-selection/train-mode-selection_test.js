@@ -21,8 +21,8 @@ describe('TrainModeSelection controller', function() {
       expect(puzzleProvider.reset).toHaveBeenCalled();
     });
     it('starts training session', function() {
-      let $scope = {};
-      let trainingSession = {start: () => {}};
+      var $scope = {};
+      var trainingSession = {start: function() {}};
       spyOn(trainingSession, 'start');
       $controller('TrainModeSelectionController', {$scope: $scope, trainingSession: trainingSession});
       $scope.startTraining();
@@ -31,12 +31,12 @@ describe('TrainModeSelection controller', function() {
   });
   describe('startBestMovesTraining', function() {
     it('bestMoves starts session with 10 puzzles', function() {
-      let $scope = {};
-      let trainingSession = {start: () => {}};
+      var $scope = {};
+      var trainingSession = {start: function() {}};
       spyOn(trainingSession, 'start');
       $controller('TrainModeSelectionController', {$scope: $scope, trainingSession: trainingSession});
       $scope.startBestMovesTraining();
       expect(trainingSession.start).toHaveBeenCalledWith(10);
     });
   });
-})
+});

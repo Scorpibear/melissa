@@ -21,7 +21,7 @@ describe('TrainController', function () {
     describe("showNextPuzzle", function() {
         it("update training status", function() {
             var $scope = {};
-            var messages = {get: () => {}};
+            var messages = {get: function() {}};
             spyOn(messages, 'get').and.returnValue('no more');
             $controller('TrainController', {$scope: $scope, messages: messages});
             $scope.showNextPuzzle();
@@ -29,15 +29,15 @@ describe('TrainController', function () {
         });
         it("stops when session limit is reached", function() {
             var $scope = {};
-            var puzzleProvider = {getPuzzle: () => ({position: ''})};
+            var puzzleProvider = {getPuzzle: function() {return {position: ''}}};
             $controller('TrainController', {$scope: $scope, puzzleProvider: puzzleProvider});
             expect($scope.showNextPuzzle()).toBeFalsy();
         });
     });
     describe("registerCorrectAnswer", function() {
         it("register result in trainingSession", function() {
-            var $scope = {$apply: () => {}};
-            var trainingSession = {register: () => {}};
+            var $scope = {$apply: function() {}};
+            var trainingSession = {register: function () {}};
             spyOn(trainingSession, 'register');
             $controller('TrainController', {$scope: $scope, trainingSession: trainingSession})
             $scope.training.solvedFromFirstTry = true;
