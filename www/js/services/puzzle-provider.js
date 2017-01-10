@@ -30,8 +30,6 @@ angular.module('melissa.services')
                 }
                 return puzzle;
             },
-            reset: function() {
-                reset();
-            }
+            reset: reset
         };
     }]);

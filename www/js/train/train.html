@@ -1,5 +1,6 @@
 <div id="train" ng-controller="TrainController">
     <div id="train-board" class="chess-board" melissa-train-board></div>
     <p>{{training.status}}</p>
-    <p>{{('Position' | localize) + ':' }}<span id="positionValue">{{training.puzzle.position}}</span></p>
+    <p>{{('Position' | localize) + ':' }} <span id="positionValue">{{training.puzzle.position}}</span></p>
+    <p>{{('Training progress (learnt / total):' | localize)}} <span id="progress">{{trainingSession.getNumberOfCorrectAnswers()}} / {{trainingSession.getNumberOfAnswers()}}</span></p>
 </div>
