@@ -6,17 +6,19 @@ angular.module('melissa.trainModeSelection', ['ngRoute', 'melissa.messages', 'me
         templateUrl: 'js/train-mode-selection/train-mode-selection.html'
     });
   }])
-  .controller('TrainModeSelectionController', ['$scope', 'trainMode', '$location', 'puzzleProvider', function ($scope, trainMode, $location, puzzleProvider) {
-    $scope.startContinuousTraining = function(){
-      trainMode.continuous();
-      $scope.startTraining()
+  .controller('TrainModeSelectionController', ['$scope', 'trainMode', '$location', 'puzzleProvider', 'trainingSession', function ($scope, trainMode, $location, puzzleProvider, trainingSession) {
+    $scope.startBestMovesTraining = function(){
+      trainMode.bestMoves();
+      var puzzlesToTrain = 10;
+      $scope.startTraining(puzzlesToTrain);
     }
-    $scope.startGameTraining = function() {
-      trainMode.game();
+    $scope.startBestGamesTraining = function() {
+      trainMode.bestGames();
       $scope.startTraining();
     }
-    $scope.startTraining = function() {
-      puzzleProvider.reset()
+    $scope.startTraining = function(maxPuzzlesToTrainInSession) {
+      puzzleProvider.reset();
+      trainingSession.start(maxPuzzlesToTrainInSession);
       $location.url('/js/train');
     }
   }]);
