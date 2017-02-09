@@ -11,6 +11,11 @@
 		"bower_components",
 		"jspm_packages",
 		"tmp",
-		"temp"
+		"temp",
+		"bin",
+		"bld",
+		"platforms",
+		"plugins",
+		"res"
 	]
 }

@@ -39,4 +39,14 @@ describe('TrainModeSelection controller', function() {
       expect(trainingSession.start).toHaveBeenCalledWith(10);
     });
   });
+  describe('startWatchBestPlay', function() {
+    it('play games', function() {
+      var $scope = {};
+      var $location = {url: function() {}};
+      spyOn($location, 'url');
+      $controller('TrainModeSelectionController', {$scope: $scope, $location: $location});
+      $scope.startWatchBestPlay();
+      expect($location.url).toHaveBeenCalledWith('/js/watch-games');
+    })
+  })
 });

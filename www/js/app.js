@@ -6,6 +6,7 @@ angular.module('melissa', [
     'melissa.messages',
     'melissa.trainModeSelection',
     'melissa.train',
+    'melissa.watchGames',
     'melissa.analyze',
     'melissa.achievements',
     'melissa.footer'

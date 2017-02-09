@@ -7,6 +7,11 @@ angular.module('melissa.trainModeSelection', ['ngRoute', 'melissa.messages', 'me
     });
   }])
   .controller('TrainModeSelectionController', ['$scope', 'trainMode', '$location', 'puzzleProvider', 'trainingSession', function ($scope, trainMode, $location, puzzleProvider, trainingSession) {
+    $scope.startTraining = function(maxPuzzlesToTrainInSession) {
+      puzzleProvider.reset();
+      trainingSession.start(maxPuzzlesToTrainInSession);
+      $location.url('/js/train');
+    }
     $scope.startBestMovesTraining = function(){
       trainMode.bestMoves();
       var puzzlesToTrain = 10;
@@ -16,9 +21,7 @@ angular.module('melissa.trainModeSelection', ['ngRoute', 'melissa.messages', 'me
       trainMode.bestGames();
       $scope.startTraining();
     }
-    $scope.startTraining = function(maxPuzzlesToTrainInSession) {
-      puzzleProvider.reset();
-      trainingSession.start(maxPuzzlesToTrainInSession);
-      $location.url('/js/train');
+    $scope.startWatchBestPlay = function() {
+      $location.url('/js/watch-games');
     }
   }]);
