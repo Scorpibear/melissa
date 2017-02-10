@@ -18,9 +18,10 @@ angular.module("melissa.messages", [])
             "Reset progress": "Reset progress",
             "Level": "Level",
             "Positions left for next level": "Positions left for next level",
-            "Choose the way how to train your chess memory": "Choose the way how to train your chess memory",
+            "Choose the way how to train your memory and chess intuition": "Choose the way how to train your memory and chess intuition",
             "Best Moves": "Best Moves",
             "Best Games": "Best Games",
+            "Watch & Remember": "Watch & Remember",
             "Training progress (learnt / total):": "Progress (learnt / total):"
         };
         base["ru"] = {
@@ -38,9 +39,10 @@ angular.module("melissa.messages", [])
             "Reset progress": "Сброс",
             "Level": "Уровень",
             "Positions left for next level": "Осталось изучить до следующего уровня",
-            "Choose the way how to train your chess memory": "Выберите способ тренировки своей шахматной памяти",
+            "Choose the way how to train your memory and chess intuition": "Выберите способ тренировки своей памяти и шахматной интуиции",
             "Best Moves": "Лучшие ходы",
             "Best Games": "Лучшие партии",
+            "Watch & Remember": "Смотри и запоминай",
             "Training progress (learnt / total):": "Прогресс тренировки (изучено / всего):"
         };
         var getBase = function () {

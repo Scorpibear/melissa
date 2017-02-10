@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("melissa.services")
-
+    // helping to select specific positionObject based on provided. Updates existing positionObject with pgn property as string
     .factory("positionSelector", function () {
         var createIndependentSubObject = function (positionObject, index) {
             index = index || 0;
