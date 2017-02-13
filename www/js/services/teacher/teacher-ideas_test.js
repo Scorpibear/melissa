@@ -35,12 +35,21 @@ describe('teacherIdeas', function() {
     it('push extended ideas if lack of ideas', function() {
       spyOn(ideasContainer, 'getIdea').and.returnValue(null);
       spyOn(ideasContainer, 'popIdeas').and.returnValue([{pgn:['e4']}]);
-      spyOn(baseIterator, 'getSubPgns').and.returnValue([['e4','e5'],['e4','e6']]);
+      spyOn(baseIterator, 'getSubPgns').and.returnValue([['e4','e6','Nf3'],['e4','e6','d4']]);
+      spyOn(baseIterator, 'getBestAnswer').and.returnValue('e6');
       spyOn(ideasContainer, 'pushIdea');
       teacherIdeas.getIdea(ideasContainer);
       expect(ideasContainer.pushIdea.calls.count()).toBe(2);
-      expect(ideasContainer.pushIdea).toHaveBeenCalledWith({pgn:['e4','e5']});
-      expect(ideasContainer.pushIdea).toHaveBeenCalledWith({pgn:['e4','e6']});
+      expect(ideasContainer.pushIdea).toHaveBeenCalledWith({pgn:['e4','e6','Nf3']});
+      expect(ideasContainer.pushIdea).toHaveBeenCalledWith({pgn:['e4','e6','d4']});
+    });
+    it('does not push not full ideas', function() {
+      spyOn(ideasContainer, 'popIdeas').and.returnValue([{pgn:['a3']}]);
+      spyOn(baseIterator, 'getBestAnswer').and.returnValue('e5')
+      spyOn(baseIterator, 'getSubPgns').and.returnValue([]);
+      spyOn(ideasContainer, 'pushIdea');
+      teacherIdeas.getIdea(ideasContainer);
+      expect(ideasContainer.pushIdea).not.toHaveBeenCalled();
     });
   });
   describe('areEqual', function() {

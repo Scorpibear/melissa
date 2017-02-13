@@ -2,7 +2,7 @@
 
 describe('puzzleGenerator service', function () {
   var puzzleGenerator;
-  var continuousPuzzleGenerator = {getNew: function(){}};
+  var notLearntPuzzleGenerator = {getNew: function(){}};
   var gamePuzzleGenerator = {getNew: function(){}, reset: function(){}};
   var learningProgress = {isLearnt: function(){}};
   var isGame = false;
@@ -10,7 +10,7 @@ describe('puzzleGenerator service', function () {
 
   beforeEach(module('melissa.services'));
   beforeEach(module(function ($provide) {
-    $provide.value("continuousPuzzleGenerator", continuousPuzzleGenerator);
+    $provide.value("notLearntPuzzleGenerator", notLearntPuzzleGenerator);
     $provide.value("gamePuzzleGenerator", gamePuzzleGenerator);
     $provide.value("trainMode", trainMode);
   }));
@@ -20,11 +20,11 @@ describe('puzzleGenerator service', function () {
 
   describe('getNew', function () {
 
-    it('uses getNew from continuousPuzzleGenerator if trainMode is "continuous"', function() {
+    it('uses getNew from notLearntPuzzleGenerator if trainMode is "best move"', function() {
       isGame = false;
-      spyOn(continuousPuzzleGenerator, 'getNew');
+      spyOn(notLearntPuzzleGenerator, 'getNew');
       puzzleGenerator.getNew();
-      expect(continuousPuzzleGenerator.getNew).toHaveBeenCalled();
+      expect(notLearntPuzzleGenerator.getNew).toHaveBeenCalled();
     });
     it('uses getNew from gamePuzzleGenerator if trainMode is "game"', function() {
       isGame = true;

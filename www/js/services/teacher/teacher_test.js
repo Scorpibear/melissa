@@ -1,7 +1,7 @@
 'use strict';
 describe('teacher', function() {
   var teacher;
-  var ideasContainer = {};
+  var ideasContainer = {reset: function(){}};
   var ideaTester = {isGoodIdea: function() {return true;}};
   var teacherIdeas = {getIdea: function() {}, areEqual: function(){return false}};
   
@@ -35,5 +35,17 @@ describe('teacher', function() {
       spyOn(teacherIdeas, 'areEqual').and.returnValues(false, true);
       expect(teacher.getListOfPgnsToLearn(2).length).toEqual(1);
     });
+    it('resets ideasContainer', function() {
+      spyOn(ideasContainer, 'reset');
+      spyOn(teacherIdeas, 'areEqual').and.returnValue(true);
+      teacher.getListOfPgnsToLearn();
+      expect(ideasContainer.reset).toHaveBeenCalled();
+    });
+    it('does not add empty ideas', function() {
+      spyOn(teacherIdeas, 'getIdea').and.returnValues({pgn:['e4']}, null);
+      spyOn(ideaTester, 'isGoodIdea').and.returnValue(true);
+      expect(teacher.getListOfPgnsToLearn()).toEqual([['e4']]);
+    })
   });
+
 });

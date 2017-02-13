@@ -46,4 +46,16 @@ describe('ideasContainer', function() {
       expect(ideasContainer.isEmpty()).toBeTruthy();
     })
   });
+  describe('reset', function() {
+    it('empties backlog', function() {
+      ideasContainer.pushIdea({pgn:'a3'});
+      ideasContainer.reset();
+      expect(ideasContainer.isEmpty()).toBeTruthy();
+    });
+    it('empties ideas', function() {
+      ideasContainer.addIdea({pgn:'b3'});
+      ideasContainer.reset();
+      expect(ideasContainer.getIdea()).toEqual(undefined);
+    });
+  });
 });

@@ -25,9 +25,14 @@ angular.module("melissa.services")
       },
       // pop ideas from backlog, empties it
       popIdeas: function() {
-        var ideas = backlog;
+        var backlogIdeas = backlog;
         backlog = [];
-        return ideas;
+        return backlogIdeas;
+      },
+      // empties backlog and ideas
+      reset: function() {
+        backlog = [];
+        ideas = [];
       }
     };
   }]);

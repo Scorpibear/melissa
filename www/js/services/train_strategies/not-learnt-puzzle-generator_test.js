@@ -2,32 +2,44 @@
 
 describe('notLearntPuzzleGenerator', function () {
   var notLearntPuzzleGenerator;
-  var continuousPuzzleGenerator = {getNew: function(){}};
-  var learningProgress = {isLearnt: function(){}};
   var puzzle = {position: '', answer: 'e4'};
+  var teacher = {getListOfPgnsToLearn: function(){}};
+  var puzzleBuilder = {buildFromPgn: function(){}};
+  var baseIterator = {getBestAnswer: function(){}};
 
   beforeEach(module('melissa.services'));
   beforeEach(module(function($provide) {
-    $provide.value("continuousPuzzleGenerator", continuousPuzzleGenerator);
-    $provide.value("learningProgress", learningProgress);
+    $provide.value("teacher", teacher);
+    $provide.value("puzzleBuilder", puzzleBuilder);
+    $provide.value("baseIterator", baseIterator);
   }));
   beforeEach(inject(function(_notLearntPuzzleGenerator_){
     notLearntPuzzleGenerator = _notLearntPuzzleGenerator_;
   }))
   describe('getNew', function() {
-    it('uses puzzles from continuousPuzzleGenerator', function() {
-      
-      spyOn(continuousPuzzleGenerator, 'getNew').and.returnValue(puzzle);
+    it('returns undefined if no puzzles in backlog', function() {
+      expect(notLearntPuzzleGenerator.getNew()).toEqual(undefined);
+    });
+    it('returns puzzle which was firstly built', function() {
+      spyOn(teacher, 'getListOfPgnsToLearn').and.returnValue([[]]);
+      var puzzle = {position: '', answer: 'e4'};
+      spyOn(puzzleBuilder, 'buildFromPgn').and.returnValue(puzzle);
+      notLearntPuzzleGenerator.reset();
       expect(notLearntPuzzleGenerator.getNew()).toEqual(puzzle);
+    })
+  });
+  describe('reset', function() {
+    it('calls teacher.getListOfPgnsToLearn()', function() {
+      spyOn(teacher, 'getListOfPgnsToLearn');
+      notLearntPuzzleGenerator.reset();
+      expect(teacher.getListOfPgnsToLearn).toHaveBeenCalled();
     });
-    it('ignores learnt puzzles', function() {
-      spyOn(learningProgress, 'isLearnt').and.returnValue(true);
-      var callCount = 0;
-      spyOn(continuousPuzzleGenerator, 'getNew').and.callFake(function(){
-        callCount++;
-        return (callCount == 1) ? puzzle : null;
-      });
-      expect(notLearntPuzzleGenerator.getNew()).toEqual(null);
-    });
+    it('uses baseIterator.getBestAnswer result to build the puzzle', function() {
+      spyOn(teacher, 'getListOfPgnsToLearn').and.returnValue([['d4']]);
+      spyOn(baseIterator, 'getBestAnswer').and.returnValue('Nf6');
+      spyOn(puzzleBuilder, 'buildFromPgn');
+      notLearntPuzzleGenerator.reset();
+      expect(puzzleBuilder.buildFromPgn).toHaveBeenCalledWith(['d4'], 'Nf6');
+    })
   })
 });

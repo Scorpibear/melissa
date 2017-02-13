@@ -19,6 +19,10 @@ angular.module("melissa.services")
             break;
           }
         }
+        // check if we end with different color then start and remove the last half-move if not
+        if(startPgn.length % 2 == result.length % 2) {
+          result.pop();
+        }
         return result;
       },
       // input: pgn
@@ -32,13 +36,15 @@ angular.module("melissa.services")
       // output: array of pgns
       getSubPgns: function(pgn) {
         var result = [];
-        var position = positionSelector.getPositionByMoves(baseProvider.getStart(), pgn);
-        if(position && position.s && position.s.length) {
-          position.s.forEach(function(subPosition) {
-            var subPgn = pgn.slice();
-            subPgn.push(subPosition.m);
-            result.push(subPgn);
-          });
+        if(Array.isArray(pgn)) {
+          var position = positionSelector.getPositionByMoves(baseProvider.getStart(), pgn);
+          if(position && position.s && position.s.length) {
+            position.s.forEach(function(subPosition) {
+              var subPgn = pgn.slice();
+              subPgn.push(subPosition.m);
+              result.push(subPgn);
+            });
+          }
         }
         return result;
       }

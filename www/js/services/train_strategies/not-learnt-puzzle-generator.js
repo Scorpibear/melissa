@@ -1,32 +1,22 @@
 "use strict";
 
 angular.module("melissa.services")
-  .factory("notLearntPuzzleGenerator", 
-    ['continuousPuzzleGenerator', 'learningProgress', 
-    function (continuousPuzzleGenerator, learningProgress) {
-    var previousPuzzle = null;
-    var buffer = [];
-    var addPuzzleToBuffer = function() {
-      var puzzle = continuousPuzzleGenerator.getNew();
-      buffer.push(puzzle);
-      if(puzzle) setTimeout(addPuzzleToBuffer, 0);
-    }
-    var generator = {
-      getNew: function() {
-        addPuzzleToBuffer();
-        return buffer.shift();
-      }
-    };
+  .factory("notLearntPuzzleGenerator", ['teacher', 'puzzleBuilder', 'baseIterator', function (teacher, puzzleBuilder, baseIterator) {
+    var puzzleList = [];
     return {
       getNew: function() {
-        var puzzle = generator.getNew(); 
-        while(puzzle && puzzle!=previousPuzzle && learningProgress && learningProgress.isLearnt && learningProgress.isLearnt(puzzle)) {
-          previousPuzzle = puzzle;
-          puzzle = generator.getNew();
-        }
+        var puzzle = puzzleList.shift();
         return puzzle;
       },
       reset: function() {
+        puzzleList = [];
+        var pgns = teacher.getListOfPgnsToLearn();
+        if(Array.isArray(pgns)){
+          pgns.forEach(function(pgn) {
+            var puzzle = puzzleBuilder.buildFromPgn(pgn, baseIterator.getBestAnswer(pgn));
+            puzzleList.push(puzzle);
+          });
+        }
       }
     }
   }]);

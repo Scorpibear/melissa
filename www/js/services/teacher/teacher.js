@@ -6,6 +6,7 @@ angular.module("melissa.services")
     return {
       getListOfPgnsToLearn: function(amount) {
         amount = amount || 10;
+        ideasContainer.reset();
         var result = [];
         var idea, prevIdea;
         do {
@@ -14,8 +15,12 @@ angular.module("melissa.services")
           if(teacherIdeas.areEqual(idea, prevIdea)) {
             break;
           }
-          if(ideaTester.isGoodIdea(idea)) {
-            result.push(idea.pgn);
+          if(idea && idea.pgn) {
+            if(ideaTester.isGoodIdea(idea)) {
+              result.push(idea.pgn);
+            }
+          } else {
+            break;
           }
         } while(result.length < amount);
         return result;
