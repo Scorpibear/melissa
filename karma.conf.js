@@ -38,12 +38,39 @@ module.exports = function (config) {
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-jasmine',
-            'karma-junit-reporter'
+            'karma-junit-reporter',
+            'karma-coverage'
         ],
 
         junitReporter: {
             outputFile: 'test_out/unit.xml',
             suite: 'unit'
+		}
+
+        // Code coverage report
+        reporters: ['progress', 'coverage'],
+        preprocessors: {
+            // source files, that you wanna generate coverage for
+            // do not include tests or libraries
+            // (these files will be instrumented by Istanbul)
+            'www/js/achievements/!(*_test).js': ['coverage'],
+            'www/js/analyze/!(*_test).js': ['coverage'],
+            'www/js/footer/!(*_test).js': ['coverage'],
+            'www/js/messages/!(*_test).js': ['coverage'],
+            'www/js/services/!(*_test).js': ['coverage'],
+            'www/js/services/**/!(*_test).js': ['coverage'],
+            'www/js/train/!(*_test).js': ['coverage'],
+            'www/js/train-mode-selection/!(*_test).js': ['coverage'],
+            'www/js/watch-games/!(*_test).js': ['coverage']
+        },
+        coverageReporter: {
+            reporters: [
+                { type:'html', dir:'coverage' },
+                // generates ./coverage/lcov.info
+                { type:'lcovonly', subdir: '.'},
+                // generates ./coverage/coverage-final.json
+                { type:'json', subdir: '.'}
+            ]
         }
 
     });
