@@ -45,7 +45,7 @@ module.exports = function (config) {
         junitReporter: {
             outputFile: 'test_out/unit.xml',
             suite: 'unit'
-		}
+		},
 
         // Code coverage report
         reporters: ['progress', 'coverage'],
