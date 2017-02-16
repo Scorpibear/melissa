@@ -1,6 +1,7 @@
 Melissa
 ======
 [![Build Status](https://travis-ci.org/Scorpibear/melissa.svg?branch=master)](https://travis-ci.org/Scorpibear/melissa)
+
 Memory interactive trainer
 
 Deployed on http://shahmaster.ru/melissa
@@ -8,8 +9,7 @@ Deployed on http://shahmaster.ru/melissa
 Positive side effect - knowing best answers on chess positions.
 
 MEmory Learning Interactive cheSS 
-
-==
+======
 
 1.	Program shows different opening positions and ask to make the best move.
 2.	When user makes move, it shows either it is the best move, or not.
@@ -27,3 +27,7 @@ MEmory Learning Interactive cheSS
 14.	Update mindmap with correct answer, evaluation and deepness.
 
 
+Code Coverage
+======
+
+[![Code coverage](https://codecov.io/gh/scorpibear/melissa/branch/master/graphs/sunburst.svg)](https://codecov.io/gh/scorpibear/melissa/branch/master)
