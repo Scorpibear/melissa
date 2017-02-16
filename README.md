@@ -1,6 +1,6 @@
 Melissa
 ======
-[![Build Status](https://travis-ci.org/Scorpibear/melissa.svg?branch=master)](https://travis-ci.org/Scorpibear/melissa)
+[![Build Status](https://travis-ci.org/Scorpibear/melissa.svg?branch=master)](https://travis-ci.org/Scorpibear/melissa)[![Coverage Status](https://coveralls.io/repos/github/Scorpibear/melissa/badge.svg?branch=master)](https://coveralls.io/github/Scorpibear/melissa?branch=master)
 
 Memory interactive trainer
 
@@ -25,9 +25,3 @@ MEmory Learning Interactive cheSS
 12.	You can specify game in fpn format and mind map will be updated with 3 additional not clarified nodes.
 13.	Send request to chess nodes balancer to analyze next unanalyzed.
 14.	Update mindmap with correct answer, evaluation and deepness.
-
-
-Code Coverage
-======
-
-[![Code coverage](https://codecov.io/gh/scorpibear/melissa/branch/master/graphs/sunburst.svg)](https://codecov.io/gh/scorpibear/melissa/branch/master)
