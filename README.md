@@ -1,6 +1,6 @@
 Melissa
 ======
-[![Build Status](https://travis-ci.org/Scorpibear/melissa.svg?branch=master)](https://travis-ci.org/Scorpibear/melissa)[![Coverage Status](https://coveralls.io/repos/github/Scorpibear/melissa/badge.svg?branch=master)](https://coveralls.io/github/Scorpibear/melissa?branch=master)
+[![Build Status](https://travis-ci.org/Scorpibear/melissa.svg?branch=master)](https://travis-ci.org/Scorpibear/melissa)[![Coverage Status](https://coveralls.io/repos/github/Scorpibear/melissa/badge.svg?branch=master)](https://codecov.io/gh/scorpibear/melissa)
 
 Memory interactive trainer
 
