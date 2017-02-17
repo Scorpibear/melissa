@@ -1,5 +1,5 @@
 angular.module("melissa.train")
-    .directive("melissaTrainBoard", ['chessGame', 'chessMoveConverter', function (chessGame, chessMoveConverter) {
+    .directive("melissaTrainBoard", ['chessGame', 'chessMoveConverter', '$window', function (chessGame, chessMoveConverter, $window) {
         var boardConfig = {
             draggable: true,
             pieceTheme: 'js/bower_components/chessboardjs/img/chesspieces/wikipedia/{piece}.png',
@@ -47,8 +47,8 @@ angular.module("melissa.train")
                     chessGame.move(scope.training.puzzle.answer)
                     scope.board.position(chessGame.fen());
                 };
-                if (window['ChessBoard'] !== undefined) {
-                    scope.board = new window.ChessBoard(id, boardConfig);
+                if ($window['ChessBoard'] !== undefined) {
+                    scope.board = new $window.ChessBoard(id, boardConfig);
                 }
                 scope.showNextPuzzle();
             }

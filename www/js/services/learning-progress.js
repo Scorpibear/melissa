@@ -1,12 +1,16 @@
 'use strict';
 
 angular.module("melissa.services")
-.factory("learningProgress", function() {
+.constant('storageKey', 'melissa.learntPuzzles')
+.factory("learningProgress", ['$window', 'storageKey', function($window, storageKey) {
         var learntPuzzles = [];
-        var learntPuzzlesJson = localStorage.getItem('melissa.learntPuzzles');
+        var learntPuzzlesJson = $window.localStorage.getItem(storageKey);
         if(learntPuzzlesJson) {
             try {
-                learntPuzzles = JSON.parse(learntPuzzlesJson)
+                var result = JSON.parse(learntPuzzlesJson);
+                if(Array.isArray(result)) {
+                    learntPuzzles = result.filter(function(puzzle){return (puzzle && puzzle.position && puzzle.answer);});
+                }
             } catch (err) {
                 console.error("Could not parse learntPuzzles from localStorage: " + err)
             }
@@ -18,7 +22,7 @@ angular.module("melissa.services")
             markAsLearnt: function (puzzle) {
                 if(!this.isLearnt(puzzle)) {
                     learntPuzzles.push(puzzle);
-                    localStorage.setItem('melissa.learntPuzzles', JSON.stringify(learntPuzzles))
+                    $window.localStorage.setItem(storageKey, JSON.stringify(learntPuzzles))
                 }
             },
             isLearnt: function (puzzle) {
@@ -40,4 +44,4 @@ angular.module("melissa.services")
                 learntPuzzles = []
             }
         }
-    });
+    }]);
