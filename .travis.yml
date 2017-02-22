@@ -7,8 +7,10 @@ before_script:
   - sh -e /etc/init.d/xvfb start
   - npm install
   - bower install
+  - nohup bash -c "./nodemodules/protractor/bin/webdriver-manager start 2>&1 &"
 script:
   - ./node_modules/.bin/karma start --browsers Firefox --single-run
   - codecov
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - (npm start > /dev/null &) && (npm run e2e)
 
