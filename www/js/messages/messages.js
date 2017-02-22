@@ -1,7 +1,6 @@
 angular.module("melissa.messages", [])
     .constant("defaultLocale", "en")
     .value("locale", "ru")
-
     .factory("messages", function (locale, defaultLocale) {
         var base = [];
         base["en"] = {
