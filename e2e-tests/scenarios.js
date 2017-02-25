@@ -14,6 +14,7 @@ describe('melissa', function () {
     });
 
     it('puzzle is showned', function () {
+        element(by.id("bestMoves")).click();
         expect(element(by.id("positionValue")).getText()).toEqual("");
     })
 });

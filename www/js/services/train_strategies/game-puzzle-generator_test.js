@@ -26,20 +26,25 @@ describe('gamePuzzleGenerator service', function () {
   }));
 
   describe('getNew', function () {
-    beforeEach(function() {
+    it('should get the first position', function () {
       spyOn(gameCreator, 'create').and.returnValue([{pgn: ""}, {pgn: "1.e4 e6"}]);
       gamePuzzleGenerator.reset();
-    })
-    it('should get the first position', function () {
       spyOn(puzzleBuilder, 'buildFromPositionObject').and.returnValue({position: ""});
       var puzzle = gamePuzzleGenerator.getNew();
       expect(puzzle.position).toEqual("");
     });
     it('should get the next position', function () {
+      spyOn(gameCreator, 'create').and.returnValue([{pgn: ""}, {pgn: "1.e4 e6"}]);
+      gamePuzzleGenerator.reset();
       spyOn(puzzleBuilder, 'buildFromPositionObject').and.returnValue({position: "1.e4 e6"});
       gamePuzzleGenerator.getNew();
       var puzzle = gamePuzzleGenerator.getNew();
       expect(puzzle.position).toEqual("1.e4 e6");
+    });
+    it('returns null if no active game', function() {
+      spyOn(gameCreator, 'create').and.returnValue([]);
+      gamePuzzleGenerator.reset();
+      expect(gamePuzzleGenerator.getNew()).toEqual(null);
     });
   });
   describe('start', function() {
@@ -49,7 +54,7 @@ describe('gamePuzzleGenerator service', function () {
     }));
     it('should check what game is better if there are several', function() {
       spyOn(gameCreator, 'isBetter');
-      spyOn(baseProvider, 'getBestSubPositions').and.returnValue([{},{}]);
+      spyOn(baseProvider, 'getBestSubPositions').and.returnValues([{},{}]);
       gamePuzzleGenerator.start();
       expect(gameCreator.isBetter).toHaveBeenCalled();
     });
@@ -61,6 +66,18 @@ describe('gamePuzzleGenerator service', function () {
       );
       gamePuzzleGenerator.start();
       expect(baseProvider.getBestSubPositions).toHaveBeenCalledWith({pgn: '1.e4 d5'});
+    });
+    it('replace active game if better was found', function() {
+      var positionObject = {m: 'e4'};
+      spyOn(gameCreator, 'isBetter').and.returnValues(true);
+      spyOn(gameCreator, 'create').and.returnValues([],[positionObject]);
+      spyOn(baseProvider, 'getBestSubPositions').and.returnValues([{}, positionObject]);
+      spyOn(puzzleBuilder, 'buildFromPositionObject');
+
+      gamePuzzleGenerator.start();
+
+      gamePuzzleGenerator.getNew();
+      expect(puzzleBuilder.buildFromPositionObject).toHaveBeenCalledWith(positionObject);
     })
   })
   describe('reset', function() {

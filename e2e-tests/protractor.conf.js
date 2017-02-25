@@ -1,10 +1,9 @@
 exports.config = {
     allScriptsTimeout: 11000,
-
     specs: [
         '*.js'
     ],
-
+    rootElement: '[ng-app]',
     capabilities: {
         'browserName': 'chrome'
     },

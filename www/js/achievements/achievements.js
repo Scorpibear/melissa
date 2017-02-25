@@ -9,9 +9,6 @@ angular.module('melissa.achievements', ['ngRoute','melissa.messages','melissa.se
     }])
 
     .controller('AchievementsController', ['$scope', 'learningProgress', function ($scope, learningProgress) {
-        $scope.getPositionLearnt = function() {
-            return learningProgress.getPuzzlesLearnt()
-        };
         $scope.getLevel = function() {
             var puzzlesLeft = learningProgress.getPuzzlesLearnt();
             var level = 0;

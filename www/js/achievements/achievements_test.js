@@ -68,8 +68,19 @@ describe('melissa.achievements module', function () {
                 spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(3);
                 expect($scope.getToLearnForNextLevel()).toEqual(3);
             })
+        });
 
-        })
-
+        describe('resetProgress', function() {
+            var $scope = {};
+            var learningProgress = {reset: function(){}};
+            beforeEach(function() {
+                $controller('AchievementsController', {$scope: $scope, learningProgress: learningProgress});
+            });
+            it('resets learning progress', function() {
+                spyOn(learningProgress, 'reset');
+                $scope.resetProgress();
+                expect(learningProgress.reset).toHaveBeenCalled();
+            });
+        });
     });
 });

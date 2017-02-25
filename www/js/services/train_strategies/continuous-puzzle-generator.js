@@ -2,8 +2,14 @@
 
 angular.module("melissa.services")
   .factory("continuousPuzzleGenerator", function (baseProvider, puzzleBuilder) {
-    var activePositionList = [], nextPositionList = [], activeIndex = 0;
-    activePositionList.push(baseProvider.getStart());
+    var activePositionList, nextPositionList, activeIndex;
+    var init = function() {
+      activePositionList = [];
+      nextPositionList = [];
+      activeIndex = 0;
+      activePositionList.push(baseProvider.getStart());
+    }
+    init();
     return {
       getNew: function() {
         if (activeIndex < activePositionList.length) {
@@ -22,6 +28,9 @@ angular.module("melissa.services")
         } else {
           return null;
         }
+      },
+      init: function() {
+        init();
       }
     }
   });

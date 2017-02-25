@@ -1,14 +1,23 @@
+sudo: required
+dist: xenial
 language: node_js
 node_js:
   - "6"
-
+install:
+  - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+  - sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+  - sudo apt-get update -q
+  - sudo apt-get install -q google-chrome-stable
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
   - npm install
   - bower install
+  - npm run pree2e
+  - nohup bash -c "./nodemodules/protractor/bin/webdriver-manager start 2>&1 &"
 script:
   - ./node_modules/.bin/karma start --browsers Firefox --single-run
   - codecov
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - (npm start > /dev/null &) && (npm run e2e)
 

@@ -3,9 +3,7 @@ angular.module("melissa.analyze")
         var boardConfig = {
             draggable: true,
             pieceTheme: 'js/bower_components/chessboardjs/img/chesspieces/wikipedia/{piece}.png',
-            position: 'start',
-            onDragStart: function (source, piece, position, orientation) {
-            }
+            position: 'start'
         };        
         return {
             link: function (scope, element, attrs) {
