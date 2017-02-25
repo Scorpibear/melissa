@@ -141,8 +141,15 @@ describe('melissa.analyze module', function () {
         expect($scope.board.orientation).toHaveBeenCalledWith('white');
       });
     });
+    describe('getBetterMoveStr', function(){
+      it('returns bestMove with exclamation mark in brackets if bestMove is not equal to lastMove', function() {
+        var $scope = {$apply: function(){}};
+        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseProvider: baseProvider, trainMode: {}});
+        expect($scope.getBetterMoveStr('e4', 'a2')).toEqual('(e4!)');
+      });
+    });
     describe('trainBranch', function() {
       //TODO
-    })
+    });
   });
 });

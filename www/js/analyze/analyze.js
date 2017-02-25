@@ -36,10 +36,7 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
             if(evaluation && evaluation.v) {
                 str += evaluation.v;
                 if(evaluation.d) {
-                    if(str!="") {
-                        str += " "
-                    }
-                    str += evaluation.d;
+                    str += " " + evaluation.d;
                 }
             }
             return str;
@@ -72,8 +69,9 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
             return (bestMoveSan && bestMoveSan!=lastMoveSan) ? "("+bestMoveSan+"!)" : "";
         };
 
+        /*
         $scope.trainBranch = function() {
             var position = analyzeChessGame.history();
             trainMode.branch(position);
-        };
+        };*/
     }]);
