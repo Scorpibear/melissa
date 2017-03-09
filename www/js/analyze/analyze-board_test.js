@@ -8,9 +8,12 @@ describe('analyzeBoard', function() {
   beforeEach(inject(function(_$compile_, _$rootScope_, _$window_, _analyzeChessGame_){
     $compile = _$compile_;
     $rootScope = _$rootScope_;
-    $rootScope.registerPositionChange = function(){};
+    $rootScope.registerPositionChange = function(){/* a stub */};
     $window = _$window_;
-    $window.ChessBoard = function(id, boardConfigInput){boardConfig = boardConfigInput; return {position: function(){}}};
+    $window.ChessBoard = function(id, boardConfigInput){
+      boardConfig = boardConfigInput;
+      return jasmine.createSpyObj({},['position']);
+    };
     analyzeBoardElement = '<div><div id="analyze-board" melissa-analyze-board></div></div>';
     analyzeChessGame = _analyzeChessGame_;
   }));
@@ -18,12 +21,12 @@ describe('analyzeBoard', function() {
   describe('link function behavior', function(){
     it('Replaces the element with the appropriate content', function() {
       spyOn($window, 'ChessBoard');
-      var element = $compile(analyzeBoardElement)($rootScope);
+      $compile(analyzeBoardElement)($rootScope);
       expect($window.ChessBoard).toHaveBeenCalled();
     });
     it('does not define board if no ChessBoard', function() {
       $window['ChessBoard'] = undefined;
-      var element = $compile(analyzeBoardElement)($rootScope);
+      $compile(analyzeBoardElement)($rootScope);
       expect($rootScope.board).toBe(undefined);
     });
   });

@@ -19,7 +19,7 @@ describe('melissa.achievements module', function () {
             var $scope = {};
             var learningProgress = {getPuzzlesLearnt: function() {}};
             beforeEach(function() {
-                var achievementsCtrl = $controller('AchievementsController', {$scope: $scope, learningProgress: learningProgress});
+                $controller('AchievementsController', {$scope: $scope, learningProgress: learningProgress});
             });
             it('returns 0 for 0 positions learnt', function() {
                 spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(0);
@@ -50,7 +50,7 @@ describe('melissa.achievements module', function () {
             var $scope = {};
             var learningProgress = {getPuzzlesLearnt: function() {}};
             beforeEach(function() {
-                var achievementsCtrl = $controller('AchievementsController', {$scope: $scope, learningProgress: learningProgress});
+                $controller('AchievementsController', {$scope: $scope, learningProgress: learningProgress});
             });
             it('returns 1 for 0 positions learnt', function() {
                 spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(0);

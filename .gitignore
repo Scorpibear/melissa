@@ -51,3 +51,4 @@ local.properties
 /platforms
 /plugins
 /.vscode
+.sonar

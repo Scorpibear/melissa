@@ -1,5 +1,5 @@
 sudo: required
-dist: xenial
+dist: trusty
 language: node_js
 node_js:
   - "6"
@@ -15,9 +15,14 @@ before_script:
   - bower install
   - npm run pree2e
   - nohup bash -c "./nodemodules/protractor/bin/webdriver-manager start 2>&1 &"
+addons:
+  sonarqube:
+    token:
+      secure: "OWrFTtkqAgukMMOlY5dtbfxw25H9bnXnZB89KCc4x3MDt71ISu7PYCw4Wnca/LQtxMUuw4INtoSQXVe2Nqon/KmG1LXzTE3hnPnsklPisjEdrzthUqoPNK5F32Jq9qHYBABnwxUESkLBy83RV3RHCqHjCpBEAOlch8h7WV3FXGw="
 script:
   - ./node_modules/.bin/karma start --browsers Firefox --single-run
   - codecov
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
   - (npm start > /dev/null &) && (npm run e2e)
+  - sonar-scanner
 
