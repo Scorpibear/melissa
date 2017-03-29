@@ -1,27 +1,33 @@
-Melissa
-======
-[![Build Status](https://travis-ci.org/Scorpibear/melissa.svg?branch=master)](https://travis-ci.org/Scorpibear/melissa)[![Coverage Status](https://coveralls.io/repos/github/Scorpibear/melissa/badge.svg?branch=master)](https://codecov.io/gh/scorpibear/melissa)
+# Melissa
 
-Memory interactive trainer
+[![Build Status](https://travis-ci.org/Scorpibear/melissa.svg?branch=master)](https://travis-ci.org/Scorpibear/melissa)[![Coverage Status](https://codecov.io/gh/Scorpibear/melissa/coverage.svg)](https://codecov.io/gh/Scorpibear/melissa)
+
+Memory and intuition trainer based on chess game positions.
 
 Deployed on http://shahmaster.ru/melissa
 
-Positive side effect - knowing best answers on chess positions.
+Primary effect of training - good memory. Positive side effect - knowing and feeling the best answers on the most used chess positions.
 
-MEmory Learning Interactive cheSS 
-======
+## How it works
 
-1.	Program shows different opening positions and ask to make the best move.
-2.	When user makes move, it shows either it is the best move, or not.
-3.	In case of wrong answer, there is a possibility to retry.
-4.	Program takes positions from analyzed branches in ChessUberman mind map.
-5.	Program reminds to train positions.
-6.	Program tracks history of correct answers by time.
-7.	Program shows notifications right after the correct answer, in 20min, in 8 hours, in a day, in 7 days, in a month.
-8.	Application is available at mobile in offline mode.
-9.	Application is available in web.
-10.	There is possibility to change mind map with which you are working on.
-11.	Program shows in notation shortest moves to achieve the position.
-12.	You can specify game in fpn format and mind map will be updated with 3 additional not clarified nodes.
-13.	Send request to chess nodes balancer to analyze next unanalyzed.
-14.	Update mindmap with correct answer, evaluation and deepness.
+1. Program shows different opening positions and ask to make the best move.
+2. When user makes move, it shows either it is the best move, or not.
+3. In case of wrong answer, there is a possibility to retry.
+4. Program takes positions from the best positions base.
+5. Program tracks history of correct answers by time.
+6. Application is available at mobile in offline mode.
+7. Application is available in web.
+8. Program shows in notation shortest moves to achieve the position.
+9. You can specify new position in analysis mode and base will be updated with the best answers on the position in several days.
+10. The best answers are provided by the strongest chess engine for today.
+
+## Future
+
+1. Program reminds to train positions.
+2. Learning curve algorithm of revising learnt positions - in 20min, in 8 hours, in a day, in 7 days, in a month.
+3. Custom base of positions to learn.
+
+See more and submit at [Melissa Issues](https://github.com/Scorpibear/melissa/issues) page
+
+## Contribution
+Take issue to address, make a fork and submit pull request.

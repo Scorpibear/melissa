@@ -22,7 +22,6 @@ addons:
 script:
   - ./node_modules/.bin/karma start --browsers Firefox --single-run
   - codecov
-  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
   - (npm start > /dev/null &) && (npm run e2e)
   - sonar-scanner
 
