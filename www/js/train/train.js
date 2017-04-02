@@ -9,14 +9,14 @@ angular.module('melissa.train', ['ngRoute', 'melissa.messages', 'melissa.service
     .constant('chessGame', new Chess())
     .constant("TIMEOUT_BETWEEN_PUZZLES", 1000)
     .controller('TrainController', ['$scope', '$timeout', 'puzzleProvider', 'chessGame', 'messages', 'learningProgress', 'trainingSession',
-            'TIMEOUT_BETWEEN_PUZZLES',
-            function ($scope, $timeout, puzzleProvider, chessGame, messages, learningProgress, trainingSession, TIMEOUT_BETWEEN_PUZZLES) {
-        $scope.training = {};
+            'pgnConverter', 'TIMEOUT_BETWEEN_PUZZLES',
+            function ($scope, $timeout, puzzleProvider, chessGame, messages, learningProgress, trainingSession,
+            pgnConverter, TIMEOUT_BETWEEN_PUZZLES) {
+        $scope.training = {compactPgn: "", numberOfCorrectAnswers: 0, numberOfAnswers: 0};
         $scope.showNextPuzzle = function () {
             var puzzle = puzzleProvider.getPuzzle();
             if (puzzle != null && trainingSession.isInProgress()) {
-                $scope.training.puzzle = puzzle;
-                $scope.training.solvedFromFirstTry = true;
+                $scope.registerPuzzle(puzzle);
                 // maybe that should be in trainBoard service, not there
                 if($scope.board) {
                     var pgn = $scope.training.puzzle.position;
@@ -33,6 +33,11 @@ angular.module('melissa.train', ['ngRoute', 'melissa.messages', 'melissa.service
             }
 
         };
+        $scope.registerPuzzle = function(puzzle) {
+            $scope.training.puzzle = puzzle;
+            $scope.training.solvedFromFirstTry = true;
+            $scope.training.compactPgn = pgnConverter.shortenPgn($scope.training.puzzle.position);
+        }
         $scope.registerCorrectAnswer = function () {
             $scope.training.status = messages.correctAnswer();
             if($scope.training.solvedFromFirstTry) {
@@ -41,6 +46,8 @@ angular.module('melissa.train', ['ngRoute', 'melissa.messages', 'melissa.service
             } else {
                 trainingSession.register({correct: false});
             }
+            $scope.training.numberOfCorrectAnswers = trainingSession.getNumberOfCorrectAnswers();
+            $scope.training.numberOfAnswers = trainingSession.getNumberOfAnswers();
             $scope.$apply();
             $timeout(function () {
                 $scope.showNextPuzzle();
