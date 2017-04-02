@@ -10,6 +10,10 @@ describe('TrainController', function () {
     }));
 
     describe("showNextPuzzle", function() {
+        var chessGame = null;
+        beforeEach(function(){
+            chessGame = {load_pgn: function() {}, turn: function(){}, fen: function(){}};
+        })
         it("update training status", function() {
             var $scope = {};
             var messages = {get: function() {}};
@@ -38,7 +42,6 @@ describe('TrainController', function () {
             var trainingSession = {isInProgress: function(){return true}};
             var position = '1.d4'
             var puzzleProvider = {getPuzzle: function(){return {position: position}}};
-            var chessGame = {load_pgn: function() {}, turn: function(){}, fen: function(){}};
             spyOn(chessGame, 'load_pgn');
             $controller('TrainController', {$scope: $scope, trainingSession: trainingSession, chessGame: chessGame, puzzleProvider: puzzleProvider});
 
@@ -51,19 +54,33 @@ describe('TrainController', function () {
             var trainingSession = {isInProgress: function(){return true}};
             var position = '1.d4'
             var puzzleProvider = {getPuzzle: function(){return {position: position}}};
-            var chessGame = {load_pgn: function() {}, turn: function(){return 'black'}, fen: function(){}};
+            spyOn(chessGame, 'turn').and.returnValue('black');
             spyOn($scope.board, 'orientation');
             $controller('TrainController', {$scope: $scope, trainingSession: trainingSession, chessGame: chessGame, puzzleProvider: puzzleProvider});
 
             $scope.showNextPuzzle();
 
             expect($scope.board.orientation).toHaveBeenCalledWith('black');
-        })
+        });
+        it('registers puzzle', function() {
+            var puzzle = {position: 'a', answer: 'b'};
+            var $scope = {board: {orientation: function(){}, position: function(){}}};
+            var puzzleProvider = {getPuzzle: function(){return puzzle;}};
+            $controller('TrainController', {$scope: $scope, trainingSession: {isInProgress: function(){return true;}}, chessGame: chessGame, puzzleProvider: puzzleProvider});
+            spyOn($scope, 'registerPuzzle').and.callThrough();
+
+            $scope.showNextPuzzle();
+
+            expect($scope.registerPuzzle).toHaveBeenCalledWith(puzzle);
+        });
     });
     describe("registerCorrectAnswer", function() {
+        var trainingSession = null;
+        beforeEach(function() {
+            trainingSession = {register: function(){}, isInProgress: function(){}, getNumberOfCorrectAnswers: function(){}, getNumberOfAnswers: function(){}};
+        })
         it("register result in trainingSession", function() {
             var $scope = {$apply: function() {}};
-            var trainingSession = {register: function () {}};
             spyOn(trainingSession, 'register');
             $controller('TrainController', {$scope: $scope, trainingSession: trainingSession})
             $scope.training.solvedFromFirstTry = true;
@@ -73,7 +90,6 @@ describe('TrainController', function () {
         it('register negative result if solves from second attempt', function() {
             var $scope = {$apply: function(){}};
             var learningProgress = {};
-            var trainingSession = {register: function(){}};
             $controller('TrainController', {$scope: $scope, learningProgress: learningProgress, trainingSession: trainingSession})
             spyOn(trainingSession, 'register');
 
@@ -84,7 +100,6 @@ describe('TrainController', function () {
         it('schedule the next puzzle to show', function() {
             var $scope = {$apply: function(){}, showNextPuzzle: function(){}};
             var learningProgress = {};
-            var trainingSession = {register: function(){}, isInProgress: function(){}};
             var timeoutFn;
             var ng = {$timeout: function(fn){timeoutFn = fn}};
             $controller('TrainController', {$scope: $scope, learningProgress: learningProgress, trainingSession: trainingSession, $timeout: ng.$timeout})
