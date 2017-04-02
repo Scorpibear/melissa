@@ -9,8 +9,9 @@ angular.module('melissa.train', ['ngRoute', 'melissa.messages', 'melissa.service
     .constant('chessGame', new Chess())
     .constant("TIMEOUT_BETWEEN_PUZZLES", 1000)
     .controller('TrainController', ['$scope', '$timeout', 'puzzleProvider', 'chessGame', 'messages', 'learningProgress', 'trainingSession',
-            'TIMEOUT_BETWEEN_PUZZLES',
-            function ($scope, $timeout, puzzleProvider, chessGame, messages, learningProgress, trainingSession, TIMEOUT_BETWEEN_PUZZLES) {
+            'pgnConverter', 'TIMEOUT_BETWEEN_PUZZLES',
+            function ($scope, $timeout, puzzleProvider, chessGame, messages, learningProgress, trainingSession,
+            pgnConverter, TIMEOUT_BETWEEN_PUZZLES) {
         $scope.training = {compactPgn: "", numberOfCorrectAnswers: 0, numberOfAnswers: 0};
         $scope.showNextPuzzle = function () {
             var puzzle = puzzleProvider.getPuzzle();
@@ -35,13 +36,8 @@ angular.module('melissa.train', ['ngRoute', 'melissa.messages', 'melissa.service
         $scope.registerPuzzle = function(puzzle) {
             $scope.training.puzzle = puzzle;
             $scope.training.solvedFromFirstTry = true;
-            $scope.training.compactPgn = shortenPgn($scope.training.puzzle.position);
+            $scope.training.compactPgn = pgnConverter.shortenPgn($scope.training.puzzle.position);
         }
-        // TODO:
-        function shortenPgn(position) {
-            var shortenedPgn;
-            return shortenedPgn;
-        };
         $scope.registerCorrectAnswer = function () {
             $scope.training.status = messages.correctAnswer();
             if($scope.training.solvedFromFirstTry) {
