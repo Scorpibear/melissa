@@ -6,7 +6,7 @@ angular.module("melissa.services")
     return {
       shortenPgn: function(position) {
         var startMoves = 7;
-        var spacesInOneMove = 3;
+        var spacesInOneMove = 2;
         var shortenedSymbol = " <...> ";
         var endMoves = startMoves;
         var maxParts = (startMoves + endMoves) * spacesInOneMove;

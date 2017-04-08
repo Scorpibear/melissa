@@ -15,7 +15,11 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
         analyzeChessGame.reset();
 
         $scope.registerPositionChange = function (move) {
-            var numStr = (move.color == "w") ? "" + (++$scope.moveNumber) + ". " : "";
+            var numStr = "";
+            if(move.color == "w") {
+                $scope.moveNumber++;
+                numStr = String($scope.moveNumber) + ".";
+            }
             $scope.$apply();
             var moves = analyzeChessGame.history();
             var bestMoveSan = baseProvider.getBestMove(moves.slice(0, -1));
