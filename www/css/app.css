@@ -29,7 +29,6 @@ button {
 }
 
 .header {
-    border-bottom: 0.1em solid black;
     margin-bottom: 2em;
 }
 
@@ -78,16 +77,16 @@ body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-    background-color:#E4E4E4;
-    background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-    background-image:-webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
-    background-image:-ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-color:#E7E9BB;
+    background-image:linear-gradient(top, #DBD4B4 0%, #E7E9BB 51%);
+    background-image:-webkit-linear-gradient(top, #DBD4B4 0%, #E7E9BB 51%);
+    background-image:-ms-linear-gradient(top, #DBD4B4 0%, #E7E9BB 51%);
     background-image:-webkit-gradient(
         linear,
         left top,
         left bottom,
-        color-stop(0, #A7A7A7),
-        color-stop(0.51, #E4E4E4)
+        color-stop(0, #DBD4B4),
+        color-stop(0.51, #E7E9BB)
     );
     background-attachment:fixed;
     font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
