@@ -14,9 +14,10 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
         $scope.pgnElements = [];
         analyzeChessGame.reset();
 
-        $scope.registerPositionChange = function (move) {
-            var numStr = (move.color == "w") ? "" + (++$scope.moveNumber) + ". " : "";
-            $scope.$apply();
+        $scope.registerPositionChange = function(move) {
+            if(move.color == "w") {
+                $scope.moveNumber++;
+            }
             var moves = analyzeChessGame.history();
             var bestMoveSan = baseProvider.getBestMove(moves.slice(0, -1));
             var lastMoveSan = moves[moves.length-1];
@@ -24,10 +25,15 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
             var typeStr = $scope.getType(moves);
             var className = typeStr + "-move";
             var evaluationAndDepthStr = $scope.getEvaluationAndDepthStr(moves);
+            var numStr = $scope.getMoveNumberStr(move.color, $scope.moveNumber);
             var moveEl = $(document.createElement('span')).addClass(className).html(numStr + move.san + betterMoveStr +' ')
             	.attr('title', evaluationAndDepthStr);
             $scope.pgnElements.push(moveEl);
             $('#analyzed-pgn').append(moveEl);
+        };
+
+        $scope.getMoveNumberStr = function(moveColor, moveNumber) {
+            return (moveColor == "w") ? (moveNumber + ".") : "";
         };
         
         $scope.getEvaluationAndDepthStr = function(moves) {
