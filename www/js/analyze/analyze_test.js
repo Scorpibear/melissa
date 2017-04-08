@@ -143,9 +143,21 @@ describe('melissa.analyze module', function () {
     });
     describe('getBetterMoveStr', function(){
       it('returns bestMove with exclamation mark in brackets if bestMove is not equal to lastMove', function() {
-        var $scope = {$apply: function(){}};
+        var $scope = {};
         $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseProvider: baseProvider, trainMode: {}});
         expect($scope.getBetterMoveStr('e4', 'a2')).toEqual('(e4!)');
+      });
+    });
+    describe('getMoveNumberStr', function() {
+      var $scope = {};
+      beforeAll(function() {
+        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseProvider: baseProvider, trainMode: {}});
+      })
+      it('returns number with point just after it for white', function() {
+        expect($scope.getMoveNumberStr("w", 17)).toEqual("17.");
+      });
+      it('returns empty string for black', function() {
+        expect($scope.getMoveNumberStr("b", 5)).toEqual("");
       });
     });
     describe('trainBranch', function() {
