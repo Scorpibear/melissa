@@ -12,7 +12,6 @@ module.exports = function (config) {
             'www/js/bower_components/chessboardjs/js/chessboard-0.3.0.js',
             'www/js/bower_components/jquery/dist/jquery.js',
             'www/js/messages/*.js',
-            'www/js/services/base.js',
             'www/js/services/services.js',
             'www/js/services/teacher/*.js',
             'www/js/services/train_strategies/game-creator.js',

@@ -5,7 +5,7 @@ describe('melissa.analyze module', function () {
   beforeEach(module('melissa.analyze'));
 
   describe('analyze controller', function () {
-    var baseProvider = { 
+    var baseUpdater = { 
       validateMoves: function() {},
       getEvaluation: function() {
         return {v: 0.06, d: 32};
@@ -27,44 +27,44 @@ describe('melissa.analyze module', function () {
     });
     describe('getType', function() {
       beforeEach(function () {
-        spyOn(baseProvider, 'validateMoves');
+        spyOn(baseUpdater, 'validateMoves');
       });
-      it("uses baseProvider.validateMoves", function() {
+      it("uses baseUpdater.validateMoves", function() {
         var $scope = {};
-        var analyzeCtrl = $controller('AnalyzeController', {$scope: $scope, baseProvider: baseProvider});
+        var analyzeCtrl = $controller('AnalyzeController', {$scope: $scope, baseUpdater: baseUpdater});
         $scope.getType([]);
-        expect(baseProvider.validateMoves).toHaveBeenCalled();
+        expect(baseUpdater.validateMoves).toHaveBeenCalled();
       });
     });
     describe('getEvaluationAndDepthStr', function() {
       it("get evaluation by move", function() {
         var $scope = {};
-        $controller('AnalyzeController', {$scope: $scope, baseProvider: baseProvider});
+        $controller('AnalyzeController', {$scope: $scope, baseUpdater: baseUpdater});
         expect($scope.getEvaluationAndDepthStr()).toEqual("0.06 32");
       });
       it("get empty string if evaluation is undefined", function() {
         var $scope = {};
-        $controller('AnalyzeController', {$scope: $scope, baseProvider: baseProvider});
-        spyOn(baseProvider, 'getEvaluation').and.returnValue(undefined);
+        $controller('AnalyzeController', {$scope: $scope, baseUpdater: baseUpdater});
+        spyOn(baseUpdater, 'getEvaluation').and.returnValue(undefined);
         expect($scope.getEvaluationAndDepthStr()).toEqual("");
       });
       it("provide only existing value if only it is known", function() {
         var $scope = {};
-        $controller('AnalyzeController', {$scope: $scope, baseProvider: baseProvider});
-        spyOn(baseProvider, 'getEvaluation').and.returnValue({v: 0.23});
+        $controller('AnalyzeController', {$scope: $scope, baseUpdater: baseUpdater});
+        spyOn(baseUpdater, 'getEvaluation').and.returnValue({v: 0.23});
         expect($scope.getEvaluationAndDepthStr()).toEqual("0.23");
       });
       it("if evaluation is unknown, depth is useless so provide empty string", function() {
         var $scope = {};
-        $controller('AnalyzeController', {$scope: $scope, baseProvider: baseProvider});
-        spyOn(baseProvider, 'getEvaluation').and.returnValue({d: 30});
+        $controller('AnalyzeController', {$scope: $scope, baseUpdater: baseUpdater});
+        spyOn(baseUpdater, 'getEvaluation').and.returnValue({d: 30});
         expect($scope.getEvaluationAndDepthStr()).toEqual("");
       });
     });
     describe('registerPositionChange', function() {
       it('add new html element to pgn', function() {
         var $scope = {$apply: function(){}};
-        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseProvider: baseProvider, trainMode: {}});
+        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
 
         $scope.registerPositionChange({color: 'b'});
 
@@ -72,7 +72,7 @@ describe('melissa.analyze module', function () {
       });
       it('white color increases move number', function() {
         var $scope = {$apply: function(){}};
-        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseProvider: baseProvider, trainMode: {}});
+        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
 
         $scope.registerPositionChange({color: 'w'});
 
@@ -82,7 +82,7 @@ describe('melissa.analyze module', function () {
     describe('back', function() {
       it('removes the last pgnElement', function() {
         var $scope = {$apply: function(){}, board: {position: function(){}}};
-        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseProvider: baseProvider, trainMode: {}});
+        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
         $scope.registerPositionChange({color: 'w', san: 'e4'});
         
         $scope.back();
@@ -91,7 +91,7 @@ describe('melissa.analyze module', function () {
       });
       it('does not modify game if on start position', function(){
         var $scope = {$apply: function(){}, board: {position: function(){}}};
-        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseProvider: baseProvider, trainMode: {}});
+        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
         spyOn(analyzeChessGame, 'undo');
 
         $scope.back();
@@ -100,7 +100,7 @@ describe('melissa.analyze module', function () {
       });
       it('does not change moveNumber if last move was black', function() {
         var $scope = {$apply: function(){}, board: {position: function(){}}};
-        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseProvider: baseProvider, trainMode: {}});
+        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
         $scope.registerPositionChange({color: 'w', san: 'e4'});
         $scope.registerPositionChange({color: 'b', san: 'e6'});
         spyOn(analyzeChessGame, 'undo').and.returnValue({color: 'b'});
@@ -113,7 +113,7 @@ describe('melissa.analyze module', function () {
     describe('reload', function() {
       it('calls back() if moveNumber is non zero', function() {
         var $scope = {$apply: function(){}, board: {position: function(){}}};
-        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseProvider: baseProvider, trainMode: {}});
+        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
         $scope.moveNumber = 1;
         spyOn($scope, 'back').and.callThrough();
         $scope.reload();
@@ -124,7 +124,7 @@ describe('melissa.analyze module', function () {
     describe('switchOrientation', function() {
       it('sets board orientation to black if it was white', function() {
         var $scope = {$apply: function(){}, board: {position: function(){}, orientation: function(){}}};
-        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseProvider: baseProvider, trainMode: {}});
+        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
         spyOn($scope.board, 'orientation').and.returnValue('white');
 
         $scope.switchOrientation();
@@ -133,7 +133,7 @@ describe('melissa.analyze module', function () {
       });
       it('sets board orientation to white if it was black', function() {
         var $scope = {$apply: function(){}, board: {position: function(){}, orientation: function(){}}};
-        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseProvider: baseProvider, trainMode: {}});
+        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
         spyOn($scope.board, 'orientation').and.returnValue('black');
 
         $scope.switchOrientation();
@@ -144,14 +144,14 @@ describe('melissa.analyze module', function () {
     describe('getBetterMoveStr', function(){
       it('returns bestMove with exclamation mark in brackets if bestMove is not equal to lastMove', function() {
         var $scope = {};
-        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseProvider: baseProvider, trainMode: {}});
+        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
         expect($scope.getBetterMoveStr('e4', 'a2')).toEqual('(e4!)');
       });
     });
     describe('getMoveNumberStr', function() {
       var $scope = {};
       beforeAll(function() {
-        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseProvider: baseProvider, trainMode: {}});
+        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
       })
       it('returns number with point just after it for white', function() {
         expect($scope.getMoveNumberStr("w", 17)).toEqual("17.");

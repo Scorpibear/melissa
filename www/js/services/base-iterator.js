@@ -1,16 +1,16 @@
 'use strict';
 
 angular.module("melissa.services")
-  // interface for base to iterate through it. Depends on baseProvider and positionSelector
+  // interface for base to iterate through it. Depends on baseUpdater and positionSelector
   // Should be used instead of any other baseXXX services for base positions iteration.
   // operates with pgn as array of moves, moves as strings in algebraic notation
-  .factory("baseIterator", ['baseProvider', 'positionSelector', function (baseProvider, positionSelector) {
+  .factory("baseIterator", ['baseUpdater', 'positionSelector', function (baseUpdater, positionSelector) {
     return {
       // input: pgn
       // output: pgn, extended with best known moves
       getBestPgn: function(startPgn) {
         var result = startPgn.slice();
-        var position = positionSelector.getPositionByMoves(baseProvider.getStart(), startPgn);
+        var position = positionSelector.getPositionByMoves(baseUpdater.getStart(), startPgn);
         while(position && position.s && position.s.length) {
           position = position.s[0];
           if(position.m) {
@@ -28,7 +28,7 @@ angular.module("melissa.services")
       // input: pgn
       // output: move
       getBestAnswer: function(pgn) {
-        var position = positionSelector.getPositionByMoves(baseProvider.getStart(), pgn);
+        var position = positionSelector.getPositionByMoves(baseUpdater.getStart(), pgn);
         var result = (position && position.s && position.s.length) ? position.s[0].m : undefined;
         return result;
       },
@@ -37,7 +37,7 @@ angular.module("melissa.services")
       getSubPgns: function(pgn) {
         var result = [];
         if(Array.isArray(pgn)) {
-          var position = positionSelector.getPositionByMoves(baseProvider.getStart(), pgn);
+          var position = positionSelector.getPositionByMoves(baseUpdater.getStart(), pgn);
           if(position && position.s && position.s.length) {
             position.s.forEach(function(subPosition) {
               var subPgn = pgn.slice();
