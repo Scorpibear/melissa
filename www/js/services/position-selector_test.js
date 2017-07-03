@@ -78,6 +78,11 @@ describe("positionSelector", function () {
         var result = positionSelector.getNextPositionOfTheColor(positionObject);
         result = positionSelector.getNextPositionOfTheColor(result);
         expect(result).toEqual(null);
-      })
-    })
+      });
+    });
+    describe("getPositionByMoves", function (){
+        it("returns null if no subposition for the move", function() {
+            expect(positionSelector.getPositionByMoves({}, ['a4'])).toBeNull();
+        });
+    });
 });
