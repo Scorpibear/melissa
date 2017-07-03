@@ -11,12 +11,12 @@ describe('gamePuzzleGenerator service', function () {
       ]}
     ]}  
   ]};
-  var baseProvider = {getStart: function() {return base;}, getBestSubPositions: function() {}}
+  var baseUpdater = {getStart: function() {return base;}, getBestSubPositions: function() {}}
 
   beforeEach(module('melissa.services'));
 
   beforeEach(module(function($provide) {
-    $provide.value("baseProvider", baseProvider);
+    $provide.value("baseUpdater", baseUpdater);
     $provide.value("gameCreator", gameCreator);
     $provide.value("puzzleBuilder", puzzleBuilder);
   }));
@@ -48,30 +48,30 @@ describe('gamePuzzleGenerator service', function () {
     });
   });
   describe('start', function() {
-    var realBaseProvider = null;
-    beforeEach(inject(function (_baseProvider_) {
-      realBaseProvider = _baseProvider_;
+    var realbaseUpdater = null;
+    beforeEach(inject(function (_baseUpdater_) {
+      realbaseUpdater = _baseUpdater_;
     }));
     it('should check what game is better if there are several', function() {
       spyOn(gameCreator, 'isBetter');
-      spyOn(baseProvider, 'getBestSubPositions').and.returnValues([{},{}]);
+      spyOn(baseUpdater, 'getBestSubPositions').and.returnValues([{},{}]);
       gamePuzzleGenerator.start();
       expect(gameCreator.isBetter).toHaveBeenCalled();
     });
     it('should request game generation for not the best first move of black', function() {
       spyOn(gameCreator, 'create');
-      spyOn(baseProvider, 'getBestSubPositions').and.returnValues(
+      spyOn(baseUpdater, 'getBestSubPositions').and.returnValues(
         [{pgn: "1.e4"}, {pgn: "1.d4"}],
         [{pgn: "1.e4 e6"}, {pgn: "1.e4 d5"}]
       );
       gamePuzzleGenerator.start();
-      expect(baseProvider.getBestSubPositions).toHaveBeenCalledWith({pgn: '1.e4 d5'});
+      expect(baseUpdater.getBestSubPositions).toHaveBeenCalledWith({pgn: '1.e4 d5'});
     });
     it('replace active game if better was found', function() {
       var positionObject = {m: 'e4'};
       spyOn(gameCreator, 'isBetter').and.returnValues(true);
       spyOn(gameCreator, 'create').and.returnValues([],[positionObject]);
-      spyOn(baseProvider, 'getBestSubPositions').and.returnValues([{}, positionObject]);
+      spyOn(baseUpdater, 'getBestSubPositions').and.returnValues([{}, positionObject]);
       spyOn(puzzleBuilder, 'buildFromPositionObject');
 
       gamePuzzleGenerator.start();

@@ -8,7 +8,7 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
         });
     }])
     .constant('analyzeChessGame', new Chess())
-    .controller('AnalyzeController', ['$scope', 'analyzeChessGame', 'baseProvider', 'trainMode', function ($scope, analyzeChessGame, baseProvider, trainMode) {
+    .controller('AnalyzeController', ['$scope', 'analyzeChessGame', 'baseUpdater', 'trainMode', function ($scope, analyzeChessGame, baseUpdater, trainMode) {
         $('#analyzed-pgn').html("");
         $scope.moveNumber = 0;
         $scope.pgnElements = [];
@@ -19,7 +19,7 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
                 $scope.moveNumber++;
             }
             var moves = analyzeChessGame.history();
-            var bestMoveSan = baseProvider.getBestMove(moves.slice(0, -1));
+            var bestMoveSan = baseUpdater.getBestMove(moves.slice(0, -1));
             var lastMoveSan = moves[moves.length-1];
             var betterMoveStr = $scope.getBetterMoveStr(bestMoveSan, lastMoveSan);
             var typeStr = $scope.getType(moves);
@@ -37,7 +37,7 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
         };
         
         $scope.getEvaluationAndDepthStr = function(moves) {
-        	var evaluation = baseProvider.getEvaluation(moves);
+        	var evaluation = baseUpdater.getEvaluation(moves);
             var str = "";
             if(evaluation && evaluation.v) {
                 str += evaluation.v;
@@ -50,7 +50,7 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
 
         /* returns "unknown"/"best"/"wrong"*/
         $scope.getType = function (moves) {
-            return baseProvider.validateMoves(moves);
+            return baseUpdater.validateMoves(moves);
         };
 
         $scope.back = function() {

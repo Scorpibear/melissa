@@ -2,7 +2,7 @@
 
 describe('continuousPuzzleGenerator service', function () {
   var continuousPuzzleGenerator;
-  var baseProvider = {
+  var baseUpdater = {
     getStart: function () {
       return {m: '', s: [
         {m: "p1", s: [
@@ -33,7 +33,7 @@ describe('continuousPuzzleGenerator service', function () {
 
   beforeEach(module(function ($provide) {
     
-    $provide.value("baseProvider", baseProvider);
+    $provide.value("baseUpdater", baseUpdater);
     $provide.value("puzzleBuilder", puzzleBuilder);
   }));
 
@@ -60,9 +60,9 @@ describe('continuousPuzzleGenerator service', function () {
       expect(puzzle).toEqual({position: "p3"});
     });
     it('return null if nothing to return', function() {
-      spyOn(baseProvider, 'getStart').and.returnValue(null);
+      spyOn(baseUpdater, 'getStart').and.returnValue(null);
       spyOn(puzzleBuilder, 'buildFromPositionObject').and.returnValue(null);
-      spyOn(baseProvider, 'getBestSubPositions').and.returnValue([]);
+      spyOn(baseUpdater, 'getBestSubPositions').and.returnValue([]);
       continuousPuzzleGenerator.init();
       continuousPuzzleGenerator.getNew();
       expect(continuousPuzzleGenerator.getNew()).toBe(null);

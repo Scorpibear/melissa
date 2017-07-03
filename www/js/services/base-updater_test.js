@@ -1,7 +1,7 @@
 'use strict';
 
-describe("baseProvider", function () {
-    var baseProvider;
+describe("baseUpdater", function () {
+    var baseUpdater;
     var myBase = {pgn: ''};
     var moveValidator = {
         called: false,
@@ -13,15 +13,20 @@ describe("baseProvider", function () {
             return this.validateResult;
         }};
     var queueToAnalyze = [];
+    var positionSelector = {
+        getBestSubPositions: function() {},
+        getPositionByMoves: function() {}
+    };
 
     beforeEach(module("melissa.services"));
     beforeEach(module(function ($provide) {
         $provide.value("baseManager", {restoreBase: function(){return myBase}});
         $provide.value("moveValidator", moveValidator);
         $provide.value("queueToAnalyze", queueToAnalyze);
+        $provide.value("positionSelector", positionSelector);
     }));
-    beforeEach(inject(function (_baseProvider_) {
-        baseProvider = _baseProvider_;
+    beforeEach(inject(function (_baseUpdater_) {
+        baseUpdater = _baseUpdater_;
     }));
 
     describe("getStart", function () {
@@ -30,51 +35,63 @@ describe("baseProvider", function () {
         });
         it("returns base with subnodes", function () {
             myBase.s.push({m: "d4", n: 1});
-            var returnedBase = baseProvider.getStart();
+            var returnedBase = baseUpdater.getStart();
             expect(returnedBase).toEqual({pgn : '', s : [ { m : 'd4', n : 1 } ]});
         });
     });
     describe("validateMoves", function() {
         it("uses move validator", function() {
             moveValidator.called = false;
-            baseProvider.validateMoves(["d4", "Nf6"]);
+            baseUpdater.validateMoves(["d4", "Nf6"]);
             expect(moveValidator.called).toBeTruthy();
         });
         it("pass correct parameters", function() {
             moveValidator.validateParams = null;
-            baseProvider.validateMoves(["d4", "Nf6"]);
+            baseUpdater.validateMoves(["d4", "Nf6"]);
             expect(moveValidator.validateParams).toEqual([["d4", "Nf6"],myBase]);
         });
         it("unanalyzed moves added to queue without last", function() {
             queueToAnalyze.length = 0;
-            baseProvider.validateMoves(["Nf6", "h4"]);
+            baseUpdater.validateMoves(["Nf6", "h4"]);
             expect(queueToAnalyze).toEqual([["Nf6"]]);
         });
         it("returns result", function() {
             moveValidator.validateResult = "returns result as is";
-            var result = baseProvider.validateMoves([]);
+            var result = baseUpdater.validateMoves([]);
             expect(result).toEqual("returns result as is");
         })
     });
     describe("getBestMove", function() {
         it("does not send for analysis", function() {
             spyOn(queueToAnalyze, 'push')
-            baseProvider.getBestMove(["d4", "a5", "c4"])
+            baseUpdater.getBestMove(["d4", "a5", "c4"])
             expect(queueToAnalyze.push).not.toHaveBeenCalled()
+        });
+        it("returns first move from submoves", function() {
+            spyOn(positionSelector, 'getPositionByMoves').and.returnValue({s: [{m: 'Nf6'}, {m: 'something else'}]});
+            expect(baseUpdater.getBestMove(['d4'])).toEqual("Nf6");
         })
     });
     describe("getEvaluation", function() {
     	it("returns evaluation", function() {
-    		var evaluation = {v: 0.3, d: 31};
-            myBase.e = evaluation;
-            var moves = [];
-            var outputEvaluation = baseProvider.getEvaluation(moves);
-    		expect(outputEvaluation.v).toEqual(0.3);
+            spyOn(positionSelector, 'getPositionByMoves').and.returnValue({e: {v: 0.3, d: 31}})
+    		
+            var outputEvaluation = baseUpdater.getEvaluation([]);
+    		
+            expect(outputEvaluation.v).toEqual(0.3);
     		expect(outputEvaluation.d).toEqual(31);
     	});
         it("returns null if position is null", function() {
-            expect(baseProvider.getEvaluation(["h4", "h5", "a4"])).toEqual(null);
-        })
+            expect(baseUpdater.getEvaluation(["h4", "h5", "a4"])).toEqual(null);
+        });
     });
+    describe("getBestSubPositions", function() {
+        it("returns positionSelector.getBestSubPositions", function() {
+            spyOn(positionSelector, 'getBestSubPositions');
 
+            baseUpdater.getBestSubPositions({m: 'd4'});
+
+            expect(positionSelector.getBestSubPositions).toHaveBeenCalledWith({m: 'd4'});
+        });
+    });
 });

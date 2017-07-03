@@ -3,7 +3,7 @@
 angular.module("melissa.services")
     .value("queueToAnalyze", [])
     .constant("sendForAnalysisTimeout", 2000)
-    .factory("baseProvider", [
+    .factory("baseUpdater", [
         '$http', 'baseManager', 'positionSelector', 'moveValidator', 'queueToAnalyze', 'sendForAnalysisTimeout', 'userService', 'connectionIndicator',
         function ($http, baseManager, positionSelector, moveValidator, queueToAnalyze, sendForAnalysisTimeout, userService, connectionIndicator) {
             var baseUpdated = false;
