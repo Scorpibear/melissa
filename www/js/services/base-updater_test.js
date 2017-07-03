@@ -13,12 +13,17 @@ describe("baseUpdater", function () {
             return this.validateResult;
         }};
     var queueToAnalyze = [];
+    var positionSelector = {
+        getBestSubPositions: function() {},
+        getPositionByMoves: function() {}
+    };
 
     beforeEach(module("melissa.services"));
     beforeEach(module(function ($provide) {
         $provide.value("baseManager", {restoreBase: function(){return myBase}});
         $provide.value("moveValidator", moveValidator);
         $provide.value("queueToAnalyze", queueToAnalyze);
+        $provide.value("positionSelector", positionSelector);
     }));
     beforeEach(inject(function (_baseUpdater_) {
         baseUpdater = _baseUpdater_;
@@ -61,20 +66,32 @@ describe("baseUpdater", function () {
             spyOn(queueToAnalyze, 'push')
             baseUpdater.getBestMove(["d4", "a5", "c4"])
             expect(queueToAnalyze.push).not.toHaveBeenCalled()
+        });
+        it("returns first move from submoves", function() {
+            spyOn(positionSelector, 'getPositionByMoves').and.returnValue({s: [{m: 'Nf6'}, {m: 'something else'}]});
+            expect(baseUpdater.getBestMove(['d4'])).toEqual("Nf6");
         })
     });
     describe("getEvaluation", function() {
     	it("returns evaluation", function() {
-    		var evaluation = {v: 0.3, d: 31};
-            myBase.e = evaluation;
-            var moves = [];
-            var outputEvaluation = baseUpdater.getEvaluation(moves);
-    		expect(outputEvaluation.v).toEqual(0.3);
+            spyOn(positionSelector, 'getPositionByMoves').and.returnValue({e: {v: 0.3, d: 31}})
+    		
+            var outputEvaluation = baseUpdater.getEvaluation([]);
+    		
+            expect(outputEvaluation.v).toEqual(0.3);
     		expect(outputEvaluation.d).toEqual(31);
     	});
         it("returns null if position is null", function() {
             expect(baseUpdater.getEvaluation(["h4", "h5", "a4"])).toEqual(null);
-        })
+        });
     });
+    describe("getBestSubPositions", function() {
+        it("returns positionSelector.getBestSubPositions", function() {
+            spyOn(positionSelector, 'getBestSubPositions');
 
+            baseUpdater.getBestSubPositions({m: 'd4'});
+
+            expect(positionSelector.getBestSubPositions).toHaveBeenCalledWith({m: 'd4'});
+        });
+    });
 });
