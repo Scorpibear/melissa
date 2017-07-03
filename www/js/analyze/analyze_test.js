@@ -77,7 +77,16 @@ describe('melissa.analyze module', function () {
         $scope.registerPositionChange({color: 'w'});
 
         expect($scope.moveNumber).toBe(1);
-      })
+      });
+      it('apply changes to scope when move number changes', function() {
+        var $scope = {$apply: function() {}};
+        spyOn($scope, '$apply');
+        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
+
+        $scope.registerPositionChange({color: 'w'});
+
+        expect($scope.$apply).toHaveBeenCalled();
+      });
     });
     describe('back', function() {
       it('removes the last pgnElement', function() {
