@@ -1,19 +1,21 @@
 'use strict';
 
 describe('trainBoard', function() {
-  var $compile, $rootScope, $window, trainBoardElement, boardConfig;
+  var $compile, $rootScope, $window, trainBoardElement, boardConfig, highlighter;
 
   beforeEach(module('melissa.train'));
 
-  beforeEach(inject(function(_$compile_, _$rootScope_, _$window_){
+  beforeEach(inject(function(_$compile_, _$rootScope_, _$window_, _highlighter_){
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $rootScope.showNextPuzzle = function(){};
     $rootScope.training = {puzzle:{answer: ''}};
     $window = _$window_;
+    highlighter = _highlighter_;
     $window.ChessBoard = function(id, boardConfigInput){boardConfig = boardConfigInput; return {position: function(){}}};
     trainBoardElement = '<div><div id="train-board" melissa-train-board></div></div>';
   }));
+
   describe('link function behavior', function(){
     it('Replaces the element with the appropriate content', function() {
       spyOn($window, 'ChessBoard');
@@ -60,6 +62,15 @@ describe('trainBoard', function() {
       $rootScope.training.puzzle.answer = 'e6';
       $compile(trainBoardElement)($rootScope);
       expect(boardConfig.onDrop('e7', 'e5')).toBe('snapback');
+    });
+    it('highlights source square', function() {
+      spyOn(highlighter, 'highlightSquares');
+      $rootScope.training.puzzle.answer = 'e4';
+      $compile(trainBoardElement)($rootScope);
+
+      boardConfig.onDrop('a2', 'a4');
+
+      expect(highlighter.highlightSquares).toHaveBeenCalledWith(['e4', 'e2'], jasmine.anything());
     });
   });
 

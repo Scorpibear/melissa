@@ -1,5 +1,6 @@
 angular.module("melissa.train")
-    .directive("melissaTrainBoard", ['chessGame', 'chessMoveConverter', '$window', function (chessGame, chessMoveConverter, $window) {
+    .directive("melissaTrainBoard", ['chessGame', 'chessMoveConverter', '$window', 'highlighter', 
+        function (chessGame, chessMoveConverter, $window, highlighter) {
         var boardConfig = {
             draggable: true,
             pieceTheme: 'js/bower_components/chessboardjs/img/chesspieces/wikipedia/{piece}.png',
@@ -14,13 +15,6 @@ angular.module("melissa.train")
         return {
             link: function (scope, element, attrs) {
                 var id = attrs["id"];
-                var highlightSquare = function (square) {
-                    var squareEl = $('#' + id + ' .square-' + square);
-                    squareEl.css('background', '#FFFF80');
-                };
-                var highlightSquares = function (squares) {
-                    squares.forEach(function(item) {highlightSquare(item)});
-                }
                 boardConfig.onDrop = function (source, target) {
                 	if(source == target) {
                 		// it means that user returned piece to the same place, so need to do nothing, just give him another chance
@@ -37,7 +31,12 @@ angular.module("melissa.train")
                     if (!isCorrect) {
                         scope.training.solvedFromFirstTry = false;
                         var squares = chessMoveConverter.sanToSquares(scope.training.puzzle.answer, chessGame.turn());
-                        highlightSquares(squares);
+                        move = chessGame.move(scope.training.puzzle.answer);
+                        if(move) {
+                          squares.push(move.from);
+                        }
+                        chessGame.undo();
+                        highlighter.highlightSquares(squares, id);
                         return 'snapback';
                     } else {
                         scope.registerCorrectAnswer();
