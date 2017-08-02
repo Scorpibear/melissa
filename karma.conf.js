@@ -25,6 +25,7 @@ module.exports = function (config) {
             'www/js/train/train.js',
             'www/js/train/highlighter.js',
             'www/js/train/*.js',
+            'www/js/reset-progress/*.js',
             'www/js/achievements/*.js'
         ],
 

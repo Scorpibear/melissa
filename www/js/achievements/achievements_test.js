@@ -73,13 +73,33 @@ describe('melissa.achievements module', function () {
         describe('resetProgress', function() {
             var $scope = {};
             var learningProgress = {reset: function(){}};
+            var resetProgressConfirmation = {show: function() {}};
             beforeEach(function() {
-                $controller('AchievementsController', {$scope: $scope, learningProgress: learningProgress});
+                $controller('AchievementsController', {$scope, learningProgress, resetProgressConfirmation});
             });
-            it('resets learning progress', function() {
+            it('resets learning progress', function(done) {
                 spyOn(learningProgress, 'reset');
+                var showPromise = new Promise(function(resolve) {resolve(true)}, function(error){console.error(error)});
+                spyOn(resetProgressConfirmation, 'show').and.returnValue(showPromise);
+
                 $scope.resetProgress();
-                expect(learningProgress.reset).toHaveBeenCalled();
+
+                showPromise.then(function() {
+                    expect(learningProgress.reset).toHaveBeenCalled();
+                    done();
+                },function error(){console.error(error); done()});
+            });
+            it('does not reset progress if not confirmed', function(done) {
+                spyOn(learningProgress, 'reset');
+                var showPromise = new Promise(function(resolve) {resolve(false)}, function(error){console.error(error)});
+                spyOn(resetProgressConfirmation, 'show').and.returnValue(showPromise);
+
+                $scope.resetProgress();
+
+                showPromise.then(function() {
+                    expect(learningProgress.reset).not.toHaveBeenCalled();
+                    done();
+                },function error(){console.error(error); done()});
             });
         });
 

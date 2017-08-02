@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('melissa.achievements', ['ngRoute','melissa.messages','melissa.services'])
+angular.module('melissa.achievements', 
+    ['ngRoute', 'melissa.messages', 'melissa.services', 'melissa.resetProgress'])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/js/achievements', {
@@ -8,7 +9,9 @@ angular.module('melissa.achievements', ['ngRoute','melissa.messages','melissa.se
         });
     }])
 
-    .controller('AchievementsController', ['$scope', 'learningProgress', function ($scope, learningProgress) {
+    .controller('AchievementsController', [
+        '$scope', 'learningProgress', 'resetProgressConfirmation',
+        function ($scope, learningProgress, resetProgressConfirmation) {
         $scope.getPositionLearnt = function() {
             return learningProgress.getPuzzlesLearnt();
         };
@@ -40,6 +43,18 @@ angular.module('melissa.achievements', ['ngRoute','melissa.messages','melissa.se
             return toLearn;
         };
         $scope.resetProgress = function() {
-            learningProgress.reset();
+            var confirmed = false;
+            // show message
+            // if no - return
+            // show message message.get("Type CONFIRM if you really want to reset all your achievements")
+            // if cancelled - return
+            var promise = resetProgressConfirmation.show();
+            confirmed = promise.then(function(confirmed) {
+                if(confirmed) {
+                    learningProgress.reset();
+                }
+            }, function(error) {
+                console.error(error)
+            })
         }
     }]);
