@@ -21,7 +21,14 @@ angular.module("melissa.messages", [])
             "Best Moves": "Best Moves",
             "Best Games": "Best Games",
             "Watch & Remember": "Watch & Remember",
-            "Training progress (learnt / total):": "Progress (learnt / total):"
+            "Training progress (learnt / total):": "Progress (learnt / total):",
+            "Do you really want to reset all progress you have made and start from the very beginning?": "Do you really want to reset all progress you have made and start from the very beginning?",
+            "YES": "YES",
+            "NO": "NO",
+            "Type CONFIRM if you really want to reset all your achievements": "Type CONFIRM if you really want to reset all your achievements",
+            "CONFIRM": "CONFIRM",
+            "OK": "OK",
+            "CANCEL": "CANCEL"
         };
         base["ru"] = {
             correctAnswers: ["Верно!", "Правильно!", "Точно!", "Да!", "Да, это самый лучший ход в этой позиции!",
@@ -42,7 +49,14 @@ angular.module("melissa.messages", [])
             "Best Moves": "Лучшие ходы",
             "Best Games": "Лучшие партии",
             "Watch & Remember": "Смотри и запоминай",
-            "Training progress (learnt / total):": "Прогресс тренировки (изучено / всего):"
+            "Training progress (learnt / total):": "Прогресс тренировки (изучено / всего):",
+            "Do you really want to reset all progress you have made and start from the very beginning?": "Вы действительно хотите сбросить все свои достижения и начать с самого начала?",
+            "YES": "ДА",
+            "NO": "НЕТ",
+            "Type CONFIRM if you really want to reset all your achievements": "Напишите ПОДТВЕРДИТЬ если вы действительно хотите сбросить все свои достижения",
+            "CONFIRM": "ПОДТВЕРДИТЬ",
+            "ОK": "OK",
+            "CANCEL": "ОТМЕНА"
         };
         var getBase = function () {
             var out = base[locale];
