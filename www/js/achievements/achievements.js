@@ -51,9 +51,6 @@ angular.module('melissa.achievements',
                         $scope.$apply();
                     }
                     resolve(confirmed);
-                })
-                .catch(function(error) {
-                    reject(error);
                 });
             });
         }
