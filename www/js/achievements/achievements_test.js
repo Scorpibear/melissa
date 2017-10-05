@@ -71,27 +71,32 @@ describe('melissa.achievements module', function () {
         });
 
         describe('resetProgress', function() {
-            var $scope = {};
+            var $scope = {$apply:function(){}};
             var learningProgress = {reset: function(){}};
             var resetProgressConfirmation = {show: function() {}};
             beforeEach(function() {
                 $controller('AchievementsController', {$scope, learningProgress, resetProgressConfirmation});
             });
-            it('resets learning progress', function(done) {
+            it('resets learning progress and display refreshed stats', function(done) {
                 spyOn(learningProgress, 'reset');
-                var showPromise = new Promise(function(resolve) {resolve(true)}, function(error){console.error(error)});
+                spyOn($scope, '$apply');
+                var showPromise = Promise.resolve(true);
                 spyOn(resetProgressConfirmation, 'show').and.returnValue(showPromise);
 
                 $scope.resetProgress();
 
                 showPromise.then(function() {
                     expect(learningProgress.reset).toHaveBeenCalled();
+                    expect($scope.$apply).toHaveBeenCalled(); // to display refreshed stats
                     done();
-                },function error(){console.error(error); done()});
+                }).catch(function error(){
+                    console.error(error);
+                    done()
+                });
             });
             it('does not reset progress if not confirmed', function(done) {
                 spyOn(learningProgress, 'reset');
-                var showPromise = new Promise(function(resolve) {resolve(false)}, function(error){console.error(error)});
+                var showPromise = Promise.resolve(false);
                 spyOn(resetProgressConfirmation, 'show').and.returnValue(showPromise);
 
                 $scope.resetProgress();
@@ -99,7 +104,10 @@ describe('melissa.achievements module', function () {
                 showPromise.then(function() {
                     expect(learningProgress.reset).not.toHaveBeenCalled();
                     done();
-                },function error(){console.error(error); done()});
+                }).catch(function error(){
+                    console.error(error);
+                    done()
+                });
             });
         });
 

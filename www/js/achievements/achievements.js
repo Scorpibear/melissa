@@ -43,18 +43,18 @@ angular.module('melissa.achievements',
             return toLearn;
         };
         $scope.resetProgress = function() {
-            var confirmed = false;
-            // show message
-            // if no - return
-            // show message message.get("Type CONFIRM if you really want to reset all your achievements")
-            // if cancelled - return
-            var promise = resetProgressConfirmation.show();
-            confirmed = promise.then(function(confirmed) {
-                if(confirmed) {
-                    learningProgress.reset();
-                }
-            }, function(error) {
-                console.error(error)
-            })
+            return new Promise(function(resolve, reject) {
+                resetProgressConfirmation.show()
+                .then(function(confirmed) {
+                    if(confirmed) {
+                        learningProgress.reset();
+                        $scope.$apply();
+                    }
+                    resolve(confirmed);
+                })
+                .catch(function(error) {
+                    reject(error);
+                });
+            });
         }
     }]);
