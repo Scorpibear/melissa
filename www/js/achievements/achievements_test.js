@@ -89,9 +89,9 @@ describe('melissa.achievements module', function () {
                     expect(learningProgress.reset).toHaveBeenCalled();
                     expect($scope.$apply).toHaveBeenCalled(); // to display refreshed stats
                     done();
-                }).catch(function error(){
+                }).catch(function(error){
                     console.error(error);
-                    done()
+                    done();
                 });
             });
             it('does not reset progress if not confirmed', function(done) {
@@ -104,7 +104,7 @@ describe('melissa.achievements module', function () {
                 showPromise.then(function() {
                     expect(learningProgress.reset).not.toHaveBeenCalled();
                     done();
-                }).catch(function error(){
+                }).catch(function(error){
                     console.error(error);
                     done()
                 });
