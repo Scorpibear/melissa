@@ -51,13 +51,32 @@ describe('teacherIdeas', function() {
       teacherIdeas.getIdea(ideasContainer);
       expect(ideasContainer.pushIdea).not.toHaveBeenCalled();
     });
+    it('push white ideas', function() {
+      spyOn(ideasContainer, 'isEmpty').and.returnValue(false);
+      spyOn(ideasContainer, 'getIdea').and.returnValue(null);
+      spyOn(ideasContainer, 'popIdeas').and.returnValue([{pgn:[]}]);
+      spyOn(baseIterator, 'getBestAnswer').and.returnValue('e4');
+      spyOn(baseIterator, 'getSubPgns').and.returnValue([['e4', 'e5']]);
+      spyOn(ideasContainer, 'pushIdea');
+      teacherIdeas.getIdea(ideasContainer);
+      expect(ideasContainer.pushIdea).toHaveBeenCalledWith({pgn:['e4','e5']});
+    });
   });
   describe('areEqual', function() {
     it('returns false if pgns are different', function() {
       expect(teacherIdeas.areEqual({pgn: []}, {pgn: ['e4']})).toBeFalsy();
     });
-    it('return true for same pgns', function() {
+    it('returns false if same length pgns are different', function() {
+      expect(teacherIdeas.areEqual({pgn: ['d4']}, {pgn: ['e4']})).toBeFalsy();
+    });
+    it('returns false if pgns are diverged later', function() {
+      expect(teacherIdeas.areEqual({pgn: ['e4', 'c4']}, {pgn: ['e4', 'd4']})).toBeFalsy();
+    });
+    it('returns true for same pgns', function() {
       expect(teacherIdeas.areEqual({pgn: ['d4']}, {pgn: ['d4']})).toBeTruthy();
     });
+    it('returns true for root', function() {
+      expect(teacherIdeas.areEqual({pgn: []}, {pgn: []})).toBeTruthy();
+    })
   });
 });
