@@ -23,18 +23,16 @@ angular.module("melissa.services")
           ideasContainer.pushIdea(newIdea);
           ideasContainer.addIdea(newIdea);
         }
-      });  
+      });
     };
     function extendIdeas(ideasContainer) {
       var ideas = ideasContainer.popIdeas();
       ideas.forEach(function(idea) {
         var bestMove = baseIterator.getBestAnswer(idea.pgn);
-        if(idea.pgn && idea.pgn.length) {
-          var newPgn = idea.pgn.slice();
-          newPgn.push(bestMove);
-          var subIdea = {pgn: newPgn};
-          addSubIdeas(ideasContainer, subIdea);
-        }
+        var newPgn = idea.pgn.slice();
+        newPgn.push(bestMove);
+        var subIdea = {pgn: newPgn};
+        addSubIdeas(ideasContainer, subIdea);
       });  
     };
     return {
