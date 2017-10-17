@@ -26,8 +26,15 @@ describe("learningProgressSynchronizer", function() {
     });
     it('allow to load root position', function() {
       spyOn($window.localStorage, 'getItem').and.returnValue('[{"position": "", "answer": "e4"}]');
-      synchronizer.load();
       expect(synchronizer.load()).toEqual([{position: '', answer: 'e4'}]);
-    })
+    });
+    it('use default value, if could not parse from storage', function() {
+      spyOn($window.localStorage, 'getItem').and.returnValue('{}bad json');
+      expect(synchronizer.load([])).toEqual([]);
+    });
+    it('returns default value, if there is no array in storage', function() {
+      spyOn($window.localStorage, 'getItem').and.returnValue('{"data": "is no an array, but object"}');
+      expect(synchronizer.load([])).toEqual([]);
+    });
   });
 });

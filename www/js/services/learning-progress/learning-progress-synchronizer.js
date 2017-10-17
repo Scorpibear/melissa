@@ -17,6 +17,8 @@ angular.module("melissa.services")
             result = result.filter(function(puzzle){
               return (puzzle && puzzle.hasOwnProperty('position') && puzzle.answer);
             });
+          } else {
+            return defaultValue;
           }
         } catch (err) {
           console.error("Could not parse learntPuzzles from localStorage: " + err)
