@@ -1,20 +1,8 @@
 'use strict';
 
 angular.module("melissa.services")
-.constant('storageKey', 'melissa.learntPuzzles')
-.factory("learningProgress", ['$window', 'storageKey', function($window, storageKey) {
-        var learntPuzzles = [];
-        var learntPuzzlesJson = $window.localStorage.getItem(storageKey);
-        if(learntPuzzlesJson) {
-            try {
-                var result = JSON.parse(learntPuzzlesJson);
-                if(Array.isArray(result)) {
-                    learntPuzzles = result.filter(function(puzzle){return (puzzle && puzzle.position && puzzle.answer);});
-                }
-            } catch (err) {
-                console.error("Could not parse learntPuzzles from localStorage: " + err)
-            }
-        }
+.factory("learningProgress", ['learningProgressSynchronizer', function(synchronizer) {
+        var learntPuzzles = synchronizer.load([]);
         return {
             getPuzzlesLearnt: function () {
                 return learntPuzzles.length;
@@ -22,7 +10,7 @@ angular.module("melissa.services")
             markAsLearnt: function (puzzle) {
                 if(!this.isLearnt(puzzle)) {
                     learntPuzzles.push(puzzle);
-                    $window.localStorage.setItem(storageKey, JSON.stringify(learntPuzzles))
+                    synchronizer.save(learntPuzzles);
                 }
             },
             isLearnt: function (puzzle) {
