@@ -1,6 +1,6 @@
 angular.module("melissa.messages", [])
     .constant("defaultLocale", "en")
-    .value("locale", "ru")
+    .value("locale", "en")
     .factory("messages", function (locale, defaultLocale) {
         var base = [];
         base["en"] = {
@@ -16,7 +16,7 @@ angular.module("melissa.messages", [])
             "Train branch": "Train branch",
             "Reset progress": "Reset progress",
             "Level": "Level",
-            "Positions left for next level": "Positions left for next level",
+            "Positions left for the next level": "Positions left for the next level",
             "Choose the way how to train your memory and chess intuition": "Choose the way how to train your memory and chess intuition",
             "Best Moves": "Best Moves",
             "Best Games": "Best Games",
@@ -44,7 +44,7 @@ angular.module("melissa.messages", [])
             "Train branch": "Тренировать ветку",
             "Reset progress": "Сброс",
             "Level": "Уровень",
-            "Positions left for next level": "Осталось изучить до следующего уровня",
+            "Positions left for the next level": "Осталось изучить до следующего уровня",
             "Choose the way how to train your memory and chess intuition": "Выберите способ тренировки своей памяти и шахматной интуиции",
             "Best Moves": "Лучшие ходы",
             "Best Games": "Лучшие партии",

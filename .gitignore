@@ -45,10 +45,12 @@ Android/assets/
 bin/
 gen/
 coverage/
+build/
 
 # Local configuration file (sdk path, etc)
 local.properties
 /platforms
+/platform
 /plugins
 /.vscode
 .sonar

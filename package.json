@@ -1,7 +1,7 @@
 {
   "name": "melissa",
   "private": true,
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "Chess Uberman Memory Trainer",
   "repository": "https://github.com/Scorpibear/melissa",
   "license": "MIT",
@@ -34,5 +34,23 @@
     "release-android": "cordova build android --release -- --keystore=\"..\\Keys\\melissa.jks\" --alias=melissa",
     "release-web": "cordova build browser",
     "release": "npm run release-web && npm run release-android"
+  },
+  "cordova": {
+    "platforms": [
+      "android",
+      "windows",
+      "browser"
+    ],
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-game": {}
+    }
+  },
+  "dependencies": {
+    "cordova-android": "6.3.0",
+    "cordova-browser": "5.0.0",
+    "cordova-plugin-game": "1.0.120",
+    "cordova-plugin-whitelist": "1",
+    "cordova-windows": "~4.4.2"
   }
 }
