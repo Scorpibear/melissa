@@ -1,7 +1,7 @@
 angular.module("melissa.messages", [])
     .constant("defaultLocale", "en")
-    .value("locale", "en")
-    .factory("messages", function (locale, defaultLocale) {
+    .factory("messages", ["$window", "defaultLocale", function ($window, defaultLocale) {
+        var locale = $window.navigator.language;
         var base = [];
         base["en"] = {
             correctAnswers: ["Yes!", "Great!", "Perfect!", "Right!", "Excellent!", "You are right!", "Correct!",
@@ -82,7 +82,7 @@ angular.module("melissa.messages", [])
                 return correctAnswers[Math.round(Math.random() * correctAnswers.length)];
             }
         }
-    })
+    }])
     .filter("localize", function (messages) {
         return function (input) {
             input = input || '';

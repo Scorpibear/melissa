@@ -4,14 +4,13 @@ describe('messages', function() {
   beforeEach(module('melissa.messages'));
   describe('localize filter', function() {
     var localize;
-    var locale = 'ru';
     
+    beforeEach(module(function($provide) {
+      $provide.value("$window", {navigator: {language: 'ru'}});
+    }));
     beforeEach(inject(function(_localizeFilter_) {
       localize = _localizeFilter_;
     }));
-    beforeEach(function() {
-      locale = 'ru';
-    })
     it('translates messages', function() {
       expect(localize('Position')).toEqual('Позиция');
     });
@@ -23,7 +22,7 @@ describe('messages', function() {
     var messages;
 
     beforeEach(module(function($provide) {
-      $provide.value("locale", 'unsupported');
+      $provide.value("$window", {navigator: {language: 'unsupported'}});
     }));
     beforeEach(inject(function(_messages_) {
       messages = _messages_;
