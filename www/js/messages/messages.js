@@ -1,7 +1,6 @@
 angular.module("melissa.messages", [])
     .constant("defaultLocale", "en")
     .factory("messages", ["$window", "defaultLocale", function ($window, defaultLocale) {
-        var locale = $window.navigator.language;
         var base = [];
         base["en"] = {
             correctAnswers: ["Yes!", "Great!", "Perfect!", "Right!", "Excellent!", "You are right!", "Correct!",
@@ -10,7 +9,7 @@ angular.module("melissa.messages", [])
             "What is the best move?": "What is the best move?",
             "Position": "Position",
             "Train": "Train",
-            "Achievements": "Achievements",
+            "Achievements": "Stats",
             "Analyze": "Analyze",
             "Positions learnt": "Positions learnt",
             "Train branch": "Train branch",
@@ -59,7 +58,7 @@ angular.module("melissa.messages", [])
             "CANCEL": "ОТМЕНА"
         };
         var getBase = function () {
-            var out = base[locale];
+            var out = base[$window.navigator.language];
             if (out == undefined) {
                 out = base[defaultLocale];
             }
