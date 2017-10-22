@@ -1,8 +1,7 @@
 angular.module("melissa.messages", [])
-    .constant("defaultLocale", "en")
-    .factory("messages", ["$window", "defaultLocale", function ($window, defaultLocale) {
-        var base = [];
-        base["en"] = {
+    .factory("messages", ["language", function (language) {
+        var base = {en:{}, ru:{}};
+        base.en = {
             correctAnswers: ["Yes!", "Great!", "Perfect!", "Right!", "Excellent!", "You are right!", "Correct!",
                 "Brilliant!"],
             "Good job, no more puzzles, have a rest!": "Good job, no more puzzles, have a rest!",
@@ -29,7 +28,7 @@ angular.module("melissa.messages", [])
             "OK": "OK",
             "CANCEL": "CANCEL"
         };
-        base["ru"] = {
+        base.ru = {
             correctAnswers: ["Верно!", "Правильно!", "Точно!", "Да!", "Да, это самый лучший ход в этой позиции!",
                 "Верно, это самый лучший ход в этой позиции!", "Отлично!", "Супер!", "Так точно!", "Именно!",
                 "Именно так!", "Превосходно!"],
@@ -57,10 +56,12 @@ angular.module("melissa.messages", [])
             "ОK": "OK",
             "CANCEL": "ОТМЕНА"
         };
+        var availableTranslations = [];
+        for(key in base) {availableTranslations.push(key)};
         var getBase = function () {
-            var out = base[$window.navigator.language];
-            if (out == undefined) {
-                out = base[defaultLocale];
+            var out = base[language.getCode(availableTranslations)];
+            if(out == undefined) {
+                out = base[availableTranslations[0]];
             }
             return out;
         };
