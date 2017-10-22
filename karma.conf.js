@@ -11,6 +11,7 @@ module.exports = function (config) {
             'www/js/bower_components/chess.js/index.js',
             'www/js/bower_components/chessboardjs/js/chessboard-0.3.0.js',
             'www/js/bower_components/jquery/dist/jquery.js',
+            'www/js/messages/messages.js',
             'www/js/messages/*.js',
             'www/js/services/services.js',
             'www/js/services/learning-progress/*',
