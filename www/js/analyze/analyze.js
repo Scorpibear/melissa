@@ -40,7 +40,7 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
         $scope.getEvaluationAndDepthStr = function(moves) {
         	var evaluation = baseUpdater.getEvaluation(moves);
             var str = "";
-            if(evaluation && evaluation.v) {
+            if(evaluation && evaluation.hasOwnProperty('v')) {
                 str += evaluation.v;
                 if(evaluation.d) {
                     str += " " + evaluation.d;
