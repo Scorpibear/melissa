@@ -48,6 +48,12 @@ describe('melissa.analyze module', function () {
         spyOn(baseUpdater, 'getEvaluation').and.returnValue(undefined);
         expect($scope.getEvaluationAndDepthStr()).toEqual("");
       });
+      it("shows evaluation if it's zero", () => {
+        var $scope = {};
+        $controller('AnalyzeController', {$scope: $scope, baseUpdater: baseUpdater});
+        spyOn(baseUpdater, 'getEvaluation').and.returnValue({v: 0, d: 100});
+        expect($scope.getEvaluationAndDepthStr()).toEqual("0 100");
+      });
       it("provide only existing value if only it is known", function() {
         var $scope = {};
         $controller('AnalyzeController', {$scope: $scope, baseUpdater: baseUpdater});
