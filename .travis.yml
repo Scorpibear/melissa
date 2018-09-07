@@ -16,7 +16,8 @@ before_script:
   - npm run pree2e
   - nohup bash -c "./nodemodules/protractor/bin/webdriver-manager start 2>&1 &"
 addons:
-  sonarqube:
+  sonarcloud:
+    organization: "scorpibear-github"
     token:
       secure: "OWrFTtkqAgukMMOlY5dtbfxw25H9bnXnZB89KCc4x3MDt71ISu7PYCw4Wnca/LQtxMUuw4INtoSQXVe2Nqon/KmG1LXzTE3hnPnsklPisjEdrzthUqoPNK5F32Jq9qHYBABnwxUESkLBy83RV3RHCqHjCpBEAOlch8h7WV3FXGw="
 script:
