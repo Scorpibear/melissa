@@ -25,24 +25,28 @@ describe('melissa.achievements module', function () {
                 spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(0);
                 expect($scope.getLevel()).toEqual(0)
             });
-            it('returns 1 for 1 position learnt', function() {
-                spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(1);
+            it('returns 0 for 9 positions learnt', () => {
+                spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(9);
+                expect($scope.getLevel()).toEqual(0);
+            });
+            it('returns 1 for 10 position learnt', function() {
+                spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(10);
                 expect($scope.getLevel()).toEqual(1);
             });
-            it('returns 1 for 2 position learnt', function() {
-                spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(2);
+            it('returns 1 for 24 position learnt', function() {
+                spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(24);
                 expect($scope.getLevel()).toEqual(1);
             });
-            it('returns 2 for 3 position learnt', function() {
-                spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(3);
+            it('returns 2 for 25 position learnt', function() {
+                spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(25);
                 expect($scope.getLevel()).toEqual(2);
             });
-            it('returns 2 for 5 position learnt', function() {
-                spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(5);
+            it('returns 2 for 44 position learnt', function() {
+                spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(44);
                 expect($scope.getLevel()).toEqual(2);
             });
-            it('returns 3 for 6 position learnt', function() {
-                spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(6);
+            it('returns 3 for 45 position learnt', function() {
+                spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(45);
                 expect($scope.getLevel()).toEqual(3);
             });
         });
@@ -52,21 +56,21 @@ describe('melissa.achievements module', function () {
             beforeEach(function() {
                 $controller('AchievementsController', {$scope: $scope, learningProgress: learningProgress});
             });
-            it('returns 1 for 0 positions learnt', function() {
+            it('returns 10 for 0 positions learnt', function() {
                 spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(0);
-                expect($scope.getToLearnForNextLevel()).toEqual(1);
+                expect($scope.getToLearnForNextLevel()).toEqual(10);
             });
-            it('returns 2 for 1 positions learnt', function() {
+            it('returns 9 for 1 positions learnt', function() {
                 spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(1);
-                expect($scope.getToLearnForNextLevel()).toEqual(2);
+                expect($scope.getToLearnForNextLevel()).toEqual(9);
             });
-            it('returns 1 for 2 positions learnt', function() {
-                spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(2);
-                expect($scope.getToLearnForNextLevel()).toEqual(1);
+            it('returns 15 for 10 positions learnt', function() {
+                spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(10);
+                expect($scope.getToLearnForNextLevel()).toEqual(15);
             });
-            it('returns 3 for 3 positions learnt', function() {
-                spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(3);
-                expect($scope.getToLearnForNextLevel()).toEqual(3);
+            it('returns 20 for 25 positions learnt', function() {
+                spyOn(learningProgress, 'getPuzzlesLearnt').and.returnValue(25);
+                expect($scope.getToLearnForNextLevel()).toEqual(20);
             })
         });
 

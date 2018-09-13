@@ -16,28 +16,22 @@ angular.module('melissa.achievements',
             return learningProgress.getPuzzlesLearnt();
         };
         $scope.getLevel = function() {
-            var puzzlesLeft = learningProgress.getPuzzlesLearnt();
-            var level = 0;
-            var prevStep = 1;
-            var step = prevStep;
+            let puzzlesLeft = learningProgress.getPuzzlesLearnt();
+            let level = 0;
+            let step = 10;
             while(puzzlesLeft >= step) {
                 level++;
                 puzzlesLeft -= step;
-                var oldStep = step;
-                step += prevStep;
-                prevStep = oldStep;
+                step += 5;
             }
             return level;
         };
         $scope.getToLearnForNextLevel = function() {
             var puzzlesLeft = learningProgress.getPuzzlesLearnt();
-            var prevStep = 1;
-            var step = prevStep;
-            var toLearn = step - puzzlesLeft;
+            let step = 10;
+            let toLearn = step - puzzlesLeft;
             while(toLearn <= 0) {
-                var oldStep = step;
-                step += prevStep;
-                prevStep = oldStep;
+                step += 5;
                 toLearn = toLearn + step;
             }
             return toLearn;
