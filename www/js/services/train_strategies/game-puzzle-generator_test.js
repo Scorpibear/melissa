@@ -40,6 +40,7 @@ describe('gamePuzzleGenerator service', function () {
       gamePuzzleGenerator.getNew();
       var puzzle = gamePuzzleGenerator.getNew();
       expect(puzzle.position).toEqual("1.e4 e6");
+      expect(puzzleBuilder.buildFromPositionObject).toHaveBeenCalledWith({pgn: '1.e4 e6'});
     });
     it('returns null if no active game', function() {
       spyOn(gameCreator, 'create').and.returnValue([]);
