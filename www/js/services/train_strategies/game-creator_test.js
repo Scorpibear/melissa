@@ -17,15 +17,9 @@ describe('gameCreator', function() {
   }));
 
   describe('create', function() {
-    it('should build positions in the same color', function() {
-      spyOn(positionSelector, 'getNextPositionOfTheColor').and.returnValues({m: "h5", s:[{}]});
-      var game = gameCreator.create({s:[{}]});
-      expect(positionSelector.getNextPositionOfTheColor).toHaveBeenCalled();
-      expect(game[1].m).toEqual("h5");
-    });
-    it('ignores positions without answer', function() {
-      var game = gameCreator.create({s:[]});
-      expect(game).toEqual([]);
+    it('ignores games with less than 10 moves', () => {
+      var game = gameCreator.create({});
+      expect(game).toEqual(null);
     });
   })
 
