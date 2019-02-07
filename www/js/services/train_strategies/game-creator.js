@@ -10,7 +10,7 @@ angular.module("melissa.services")
           game.push(positionObject);
           positionObject = positionSelector.getNextPositionOfTheColor(positionObject);
         }
-        return game;
+        return game.length < 10 ? null : game;
       },
       isBetter: function(game1, game2) {
         var game1NotLearntPositions = this.getNotLearntPositionsCount(game1);
@@ -19,16 +19,18 @@ angular.module("melissa.services")
       },
       getNotLearntPositionsCount: function(game) {
         var count = 0;
-        game.forEach(function(positionObject) {
-          if(learningProgress && learningProgress.isLearnt) {
-            var puzzle = puzzleBuilder.buildFromPositionObject(positionObject);
-            if(!learningProgress.isLearnt(puzzle)) {
+        if(game) {
+          game.forEach(function(positionObject) {
+            if(learningProgress && learningProgress.isLearnt) {
+              var puzzle = puzzleBuilder.buildFromPositionObject(positionObject);
+              if(!learningProgress.isLearnt(puzzle)) {
+                count++;
+              }
+            } else {
               count++;
-            }
-          } else {
-            count++;
-          }  
-        });
+            }  
+          });
+        }
         return count;
       }
     }
