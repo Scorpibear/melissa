@@ -20,31 +20,21 @@ button {
     font-size: large;
     text-transform: uppercase;
     width: 100px;
+    padding: 5px 10px;
+    text-decoration: none;
+    margin-top: 10px;
+    display: inline-block;
+    background-color: #eee;
+    border-radius: 4px;
 }
 
-.menu {
-    list-style: none;
-    font-size: large;
-    padding: 0 0 0.5em;
+button:hover {
+    color: #039be5;
+    background-color: #cfd8dc;
 }
 
 .header {
     margin-bottom: 2em;
-}
-
-.menu > li {
-    display: inline;
-    text-transform: uppercase;
-}
-
-.menu > li:before {
-    content: "|";
-    padding-right: 0.3em;
-}
-
-.menu > li:nth-child(1):before {
-    content: "";
-    padding: 0;
 }
 
 .version {
@@ -165,4 +155,24 @@ h1 {
 .blink {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
+}
+
+nav a {
+    padding: 5px 10px;
+    text-decoration: none;
+    margin-top: 10px;
+    display: inline-block;
+    background-color: #eee;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+nav a:visited, a:link {
+    color: #607d8b;
+}
+nav a:hover {
+    color: #039be5;
+    background-color: #cfd8dc;
+}
+nav a.active {
+    color: #039be5;
 }
