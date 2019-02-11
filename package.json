@@ -50,6 +50,7 @@
   "dependencies": {
     "cordova-android": "^7.1.2",
     "cordova-browser": "5.0.4",
+    "cordova-ios": "^4.5.5",
     "cordova-plugin-game": "1.0.120",
     "cordova-plugin-whitelist": "1",
     "cordova-windows": "~4.4.2"
