@@ -11,8 +11,8 @@ angular.module('melissa.bestGames', ['ngRoute', 'melissa.messages', 'melissa.ser
   .controller('BestGamesController', ['$scope', 'chessGame', '$timeout', 'gamesToLearn', 'movesInterval', 'puzzleBuilder', 'messages',
     'learningProgress', 'trainingSession', 'pgnConverter', function(
     $scope, chessGame, $timeout, gamesToLearn, movesInterval, puzzleBuilder, messages, learningProgress, trainingSession, pgnConverter) {
-    const movesToReplay = 2;
-    const plyToReplay = movesToReplay*2;
+    const movesToTrain = 10;
+    const plyToTrain = movesToTrain * 2;
     $scope.training = {compactPgn: "", numberOfCorrectAnswers: 0, numberOfAnswers: 0};
     $scope.makeMove = function() {
       var nextMove = $scope.getNextMove();
@@ -42,7 +42,8 @@ angular.module('melissa.bestGames', ['ngRoute', 'melissa.messages', 'melissa.ser
     let replayIndex = 0;
     $scope.start = function() {
       chessGame.reset();
-      const game = gamesToLearn.getGame({minMoves: movesToReplay, hasUnlearnt: true});
+      const game = gamesToLearn.getGame({minPly: plyToTrain, hasUnlearnt: true});
+      let plyToReplay = game.moves.length > plyToTrain ? game.moves.length - plyToTrain : 0;
       replayGame = {moves: game.moves.slice(0, plyToReplay), color: game.color};
       trainGame = {moves: game.moves.slice(), color: game.color};
       replayIndex = 0;
@@ -64,7 +65,6 @@ angular.module('melissa.bestGames', ['ngRoute', 'melissa.messages', 'melissa.ser
         const thePuzzle = puzzleBuilder.buildFromPgn(moves, trainGame.moves[trainIndex]);
         $scope.training.status = messages.get("What is the best move?");
         $scope.training.puzzle = thePuzzle;
-        console.log('thePuzzle', thePuzzle);
       } else {
         $scope.training.puzzle = null;
         $scope.training.status = messages.get("Good job, no more puzzles, have a rest!");
