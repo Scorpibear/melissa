@@ -1,6 +1,6 @@
 angular.module("melissa.bestGames")
-    .directive("melissaBestGamesBoard", ['chessGame', '$window', 'chessMoveConverter', 'highlighter',
-    function (chessGame, $window, chessMoveConverter, highlighter) {
+    .directive("melissaBestGamesBoard", ['chessGame', '$window', 'highlighter',
+    function (chessGame, $window, highlighter) {
         var boardConfig = {
             draggable: true,
             pieceTheme: 'js/bower_components/chessboardjs/img/chesspieces/wikipedia/{piece}.png',
@@ -32,9 +32,14 @@ angular.module("melissa.bestGames")
                     var isCorrect = (move != null) && (move.san === scope.training.puzzle.answer);
                     if (!isCorrect) {
                         scope.training.solvedFromFirstTry = false;
-                        var squares = chessMoveConverter.sanToSquares(scope.training.puzzle.answer, chessGame.turn());
+                        let squares = [];
                         if(move) {
-                          squares.push(move.from);
+                            chessGame.undo();
+                            const move = chessGame.move(scope.training.puzzle.answer);
+                            if(move) {
+                                squares.push(move.from);
+                                squares.push(move.to);
+                            }
                         }
                         chessGame.undo();
                         highlighter.highlightSquares(squares, id);
