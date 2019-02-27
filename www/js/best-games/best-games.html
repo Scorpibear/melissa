@@ -1,3 +1,6 @@
 <div id="best-games" ng-controller="BestGamesController">
   <div id="best-games-board" class="chess-board" melissa-best-games-board></div>
+  <p>{{training.status}}</p>
+  <p>{{('Position' | localize) + ':' }} <span id="positionValue">{{training.compactPgn}}</span></p>
+  <p>{{('Training progress (learnt / total):' | localize)}} <span id="progress">{{training.numberOfCorrectAnswers}} / {{training.numberOfAnswers}}</span></p>
 </div>

@@ -8,35 +8,92 @@ angular.module('melissa.bestGames', ['ngRoute', 'melissa.messages', 'melissa.ser
   }])
   .constant('chessGame', new Chess())
   .value('movesInterval', 500)
-  .controller('BestGamesController', ['$scope', 'chessGame', '$timeout', 'gamesToLearn', 'movesInterval', 
-    function($scope, chessGame, $timeout, gamesToLearn, movesInterval) {
+  .controller('BestGamesController', ['$scope', 'chessGame', '$timeout', 'gamesToLearn', 'movesInterval', 'puzzleBuilder', 'messages',
+    'learningProgress', 'trainingSession', 'pgnConverter', function(
+    $scope, chessGame, $timeout, gamesToLearn, movesInterval, puzzleBuilder, messages, learningProgress, trainingSession, pgnConverter) {
+    const movesToReplay = 2;
+    const plyToReplay = movesToReplay*2;
+    $scope.training = {compactPgn: "", numberOfCorrectAnswers: 0, numberOfAnswers: 0};
     $scope.makeMove = function() {
       var nextMove = $scope.getNextMove();
       if(nextMove) {
         chessGame.move(nextMove);
         try {
-          $scope.board.orientation(game.color);
-          $scope.board.position(chessGame.fen());
+          $scope.displayPosition();
           $scope.next();
         } catch(err) {
           // just stop there, as we could be on another page now, no need to proceed
         }
       } else {
-        $scope.start();
+        $scope.train();
       }
+    }
+    $scope.displayPosition = () => {
+      $scope.board.orientation(replayGame.color);
+      $scope.board.position(chessGame.fen());
+      $scope.training.compactPgn = pgnConverter.shortenPgn(chessGame.pgn());
     }
     $scope.next = function() {
       $timeout($scope.makeMove, movesInterval);
     }
-    var game = null;
+    let replayGame = null;
+    let trainGame = null;
+    let trainIndex = 0;
+    let replayIndex = 0;
     $scope.start = function() {
       chessGame.reset();
-      game = gamesToLearn.getGame();
+      const game = gamesToLearn.getGame({minMoves: movesToReplay, hasUnlearnt: true});
+      replayGame = {moves: game.moves.slice(0, plyToReplay), color: game.color};
+      trainGame = {moves: game.moves.slice(), color: game.color};
+      replayIndex = 0;
+      trainIndex = plyToReplay + ((game.color==='black') ? 1 : 0);
       $scope.next();
     };
     $scope.getNextMove = function() {
-      var move = game.moves.shift();
+      var move = replayGame.moves[replayIndex++];
       return move;
+    }
+    $scope.train = () => {
+      Object.assign($scope.training,  {numberOfCorrectAnswers: 0, numberOfAnswers: 0});
+      $scope.createPuzzle();
+      $scope.showPuzzle();
+    }
+    $scope.createPuzzle = () => {
+      if(trainIndex < trainGame.moves.length) {
+        const moves = trainGame.moves.slice(0, trainIndex)
+        const thePuzzle = puzzleBuilder.buildFromPgn(moves, trainGame.moves[trainIndex]);
+        $scope.training.status = messages.get("What is the best move?");
+        $scope.training.puzzle = thePuzzle;
+        console.log('thePuzzle', thePuzzle);
+      } else {
+        $scope.training.puzzle = null;
+        $scope.training.status = messages.get("Good job, no more puzzles, have a rest!");
+      }
+    }
+    $scope.showPuzzle = () => {
+      if($scope.training.puzzle) {
+        chessGame.load_pgn($scope.training.puzzle.position);
+        $scope.displayPosition();
+        $scope.training.solvedFromFirstTry = true;
+      }
+    }
+    $scope.registerCorrectAnswer = () => {
+      $scope.training.status = messages.correctAnswer();
+      if($scope.training.solvedFromFirstTry) {
+        learningProgress.markAsLearnt($scope.training.puzzle);
+        trainingSession.register({correct: true});
+      } else {
+        trainingSession.register({correct: false});
+      }
+      $scope.training.numberOfCorrectAnswers = trainingSession.getNumberOfCorrectAnswers();
+      $scope.training.numberOfAnswers = trainingSession.getNumberOfAnswers();
+      $scope.$apply();
+      $timeout($scope.showTheNextPuzzle, movesInterval);
+    }
+    $scope.showTheNextPuzzle = () => {
+      trainIndex+=2;
+      $scope.createPuzzle();
+      $scope.showPuzzle();
     }
     $scope.start();
   }]);
