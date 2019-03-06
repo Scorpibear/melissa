@@ -42,13 +42,18 @@ angular.module('melissa.bestGames', ['ngRoute', 'melissa.messages', 'melissa.ser
     let replayIndex = 0;
     $scope.start = function() {
       chessGame.reset();
-      const game = gamesToLearn.getGame({minPly: plyToTrain, hasUnlearnt: true});
-      let plyToReplay = game.moves.length > plyToTrain ? game.moves.length - plyToTrain : 0;
-      replayGame = {moves: game.moves.slice(0, plyToReplay), color: game.color};
-      trainGame = {moves: game.moves.slice(), color: game.color};
-      replayIndex = 0;
-      trainIndex = plyToReplay + ((game.color==='black') ? 1 : 0);
-      $scope.next();
+      const game = gamesToLearn.getGame({minPly: plyToTrain});
+      if(game) {
+        trainIndex = (game.moves.length - game.trainIndex >= plyToTrain) ? game.trainIndex : 
+          game.moves.length - plyToTrain - (game.trainIndex + game.moves.length)%2;
+        const start = trainIndex;
+        replayGame = {moves: game.moves.slice(0, trainIndex - 1), color: game.color};
+        trainGame = {moves: game.moves.slice(0, trainIndex + plyToTrain - 1), color: game.color};
+        replayIndex = 0;
+        $scope.next();
+      } else {
+        $scope.training.status = messages.get("Good job, no more puzzles, have a rest!");
+      }
     };
     $scope.getNextMove = function() {
       var move = replayGame.moves[replayIndex++];
