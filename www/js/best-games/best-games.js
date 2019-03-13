@@ -45,8 +45,7 @@ angular.module('melissa.bestGames', ['ngRoute', 'melissa.messages', 'melissa.ser
       const game = gamesToLearn.getGame({minPly: plyToTrain});
       if(game) {
         trainIndex = (game.moves.length - game.trainIndex >= plyToTrain) ? game.trainIndex : 
-          game.moves.length - plyToTrain - (game.trainIndex + game.moves.length)%2;
-        const start = trainIndex;
+          game.moves.length - plyToTrain + (game.trainIndex + game.moves.length)%2;
         replayGame = {moves: game.moves.slice(0, trainIndex - 1), color: game.color};
         trainGame = {moves: game.moves.slice(0, trainIndex + plyToTrain - 1), color: game.color};
         replayIndex = 0;
