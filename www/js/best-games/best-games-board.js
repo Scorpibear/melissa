@@ -45,8 +45,13 @@ angular.module("melissa.bestGames")
                         highlighter.highlightSquares(squares, id);
                         return 'snapback';
                     } else {
+                        chessGame.undo(); // make board to display correctly such things like castling and promotion, so do that on snapEnd
                         scope.registerCorrectAnswer();
                     }
+                };
+                boardConfig.onSnapEnd = () => {
+                    chessGame.move(scope.training.puzzle.answer)
+                    scope.board.position(chessGame.fen());
                 };
             }
         };
