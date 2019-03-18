@@ -4,20 +4,21 @@ angular.module("melissa.bestGames")
         var boardConfig = {
             draggable: true,
             pieceTheme: 'js/bower_components/chessboardjs/img/chesspieces/wikipedia/{piece}.png',
-            position: 'start',
-            onDragStart: function (source, piece, position, orientation) {
-                // only pick up pieces for the side to move
-                if ((orientation === 'white' && piece.search(/^b/) !== -1) ||
-                    (orientation === 'black' && piece.search(/^w/) !== -1)) {
-                    return false;
-                }
-            }
+            position: 'start'
         };        
         return {
             link: function (scope, element, attrs) {
                 var id = attrs["id"];
                 if ($window['ChessBoard'] !== undefined) {
                     scope.board = new $window.ChessBoard(id, boardConfig);
+                }
+                boardConfig.onDragStart = function (source, piece, position, orientation) {
+                    // only pick up pieces for the side to move
+                    if ((orientation === 'white' && piece.search(/^b/) !== -1) ||
+                        (orientation === 'black' && piece.search(/^w/) !== -1) ||
+                        !scope.training.puzzle) {
+                        return false;
+                    }
                 }
                 boardConfig.onDrop = function (source, target) {
                 	if(source == target || !scope.training.puzzle) {

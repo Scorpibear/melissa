@@ -14,13 +14,13 @@ angular.module('melissa.bestGames', ['ngRoute', 'melissa.messages', 'melissa.ser
     const movesToTrain = 10;
     const plyToTrain = movesToTrain * 2;
     $scope.training = {compactPgn: "", numberOfCorrectAnswers: 0, numberOfAnswers: 0};
-    $scope.makeMove = function() {
+    $scope.replayMove = function() {
       var nextMove = $scope.getNextMove();
       if(nextMove) {
         chessGame.move(nextMove);
         try {
           $scope.displayPosition();
-          $scope.next();
+          $scope.replayGame();
         } catch(err) {
           // just stop there, as we could be on another page now, no need to proceed
         }
@@ -33,8 +33,8 @@ angular.module('melissa.bestGames', ['ngRoute', 'melissa.messages', 'melissa.ser
       $scope.board.position(chessGame.fen());
       $scope.training.compactPgn = pgnConverter.shortenPgn(chessGame.pgn());
     }
-    $scope.next = function() {
-      $timeout($scope.makeMove, movesInterval);
+    $scope.replayGame = function() {
+      $timeout($scope.replayMove, movesInterval);
     }
     let replayGame = null;
     let trainGame = null;
@@ -49,7 +49,7 @@ angular.module('melissa.bestGames', ['ngRoute', 'melissa.messages', 'melissa.ser
         replayGame = {moves: game.moves.slice(0, trainIndex - 1), color: game.color};
         trainGame = {moves: game.moves.slice(0, trainIndex + plyToTrain - 1), color: game.color};
         replayIndex = 0;
-        $scope.next();
+        $scope.replayGame();
       } else {
         $scope.training.status = messages.get("Good job, no more puzzles, have a rest!");
       }
