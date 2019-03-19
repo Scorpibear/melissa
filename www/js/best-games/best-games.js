@@ -65,21 +65,22 @@ angular.module('melissa.bestGames', ['ngRoute', 'melissa.messages', 'melissa.ser
       $scope.showPuzzle();
     }
     $scope.createPuzzle = () => {
-      if(trainIndex < trainGame.moves.length) {
+      if(trainingSession.isInProgress()) {
         const moves = trainGame.moves.slice(0, trainIndex)
         const thePuzzle = puzzleBuilder.buildFromPgn(moves, trainGame.moves[trainIndex]);
-        $scope.training.status = messages.get("What is the best move?");
         $scope.training.puzzle = thePuzzle;
       } else {
         $scope.training.puzzle = null;
-        $scope.training.status = messages.get("Good job, no more puzzles, have a rest!");
       }
     }
     $scope.showPuzzle = () => {
       if($scope.training.puzzle) {
         chessGame.load_pgn($scope.training.puzzle.position);
         $scope.displayPosition();
+        $scope.training.status = messages.get("What is the best move?");
         $scope.training.solvedFromFirstTry = true;
+      } else {
+        $scope.training.status = messages.get("Good job, no more puzzles, have a rest!");
       }
     }
     $scope.registerCorrectAnswer = () => {

@@ -1,12 +1,15 @@
 describe('BestGamesController', function() {
-  let $controller, chessGame;
-  let $scope = {board: {orientation: () => {}, position: () => {}}};
+  let $controller, chessGame, messages, trainingSession, gamesToLearn;
+  let $scope = {$apply: () => {}, board: {orientation: () => {}, position: () => {}}};
 
   beforeEach(module('melissa.bestGames'));
 
-  beforeEach(inject(function (_$controller_, _chessGame_) {
+  beforeEach(inject(function (_$controller_, _chessGame_, _messages_, _trainingSession_, _gamesToLearn_) {
       $controller = _$controller_;
       chessGame = _chessGame_;
+      messages = _messages_;
+      trainingSession = _trainingSession_;
+      gamesToLearn = _gamesToLearn_;
       $controller('BestGamesController', {$scope});
   }));
 
@@ -16,6 +19,11 @@ describe('BestGamesController', function() {
       $scope.start();
       expect($scope.replayGame).toHaveBeenCalled();
     });
+    it('displays message that no more puzzles if no games to train found', () => {
+      spyOn(gamesToLearn, 'getGame').and.returnValue(null);
+      $scope.start();
+      expect($scope.training.status).toBe(messages.get("Good job, no more puzzles, have a rest!"));
+    })
   });
   describe('replayMove', () => {
     const move = {san: 'Nf6'};
@@ -49,4 +57,30 @@ describe('BestGamesController', function() {
       expect($scope.train).toHaveBeenCalled();
     })
   });
+  describe('registerCorrectAnswer', () => {
+    it('displays message that answer is correct', () => {
+      spyOn(messages, 'correctAnswer').and.returnValue('Good!');
+      $scope.registerCorrectAnswer();
+      expect($scope.training.status).toBe('Good!');
+    })
+  });
+  describe('showTheNextPuzzle', () => {
+    it('creates puzzle', () => {
+      spyOn($scope, 'createPuzzle').and.stub();
+      $scope.showTheNextPuzzle();
+      expect($scope.createPuzzle).toHaveBeenCalled();
+    });
+    it('shows puzzle', () => {
+      spyOn($scope, 'showPuzzle').and.stub();
+      $scope.showTheNextPuzzle();
+      expect($scope.showPuzzle).toHaveBeenCalled();
+    })
+  });
+  describe('createPuzzle', () => {
+    it('set training puzzle to null when training is finished', () => {
+      spyOn(trainingSession, 'isInProgress').and.returnValue(false);
+      $scope.createPuzzle();
+      expect($scope.training.puzzle).toBe(null);
+    })
+  })
 });
