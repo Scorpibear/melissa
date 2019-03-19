@@ -9,9 +9,6 @@ angular.module("melissa.bestGames")
         return {
             link: function (scope, element, attrs) {
                 var id = attrs["id"];
-                if ($window['ChessBoard'] !== undefined) {
-                    scope.board = new $window.ChessBoard(id, boardConfig);
-                }
                 boardConfig.onDragStart = function (source, piece, position, orientation) {
                     // only pick up pieces for the side to move
                     if ((orientation === 'white' && piece.search(/^b/) !== -1) ||
@@ -30,23 +27,25 @@ angular.module("melissa.bestGames")
                         to: target,
                         promotion: 'q'
                     });
+                    if(move) {
+                        // make board to display correctly such things like castling and promotion, so do real move on snapEnd only
+                        chessGame.undo(); 
+                    }
                     var isCorrect = (move != null) && (move.san === scope.training.puzzle.answer);
                     if (!isCorrect) {
                         scope.training.solvedFromFirstTry = false;
                         let squares = [];
                         if(move) {
-                            chessGame.undo();
                             const move = chessGame.move(scope.training.puzzle.answer);
                             if(move) {
                                 squares.push(move.from);
                                 squares.push(move.to);
+                                chessGame.undo();
                             }
                         }
-                        chessGame.undo();
                         highlighter.highlightSquares(squares, id);
                         return 'snapback';
                     } else {
-                        chessGame.undo(); // make board to display correctly such things like castling and promotion, so do that on snapEnd
                         scope.registerCorrectAnswer();
                     }
                 };
@@ -54,6 +53,9 @@ angular.module("melissa.bestGames")
                     chessGame.move(scope.training.puzzle.answer)
                     scope.board.position(chessGame.fen());
                 };
+                if ($window['ChessBoard'] !== undefined) {
+                    scope.board = new $window.ChessBoard(id, boardConfig);
+                }
             }
         };
     }]);
