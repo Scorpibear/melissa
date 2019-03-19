@@ -3,7 +3,8 @@ angular.module("melissa.messages", [])
         var base = {en:{}, ru:{}};
         base.en = {
             correctAnswers: ["Yes!", "Great!", "Perfect!", "Right!", "Excellent!", "You are right!", "Correct!",
-                "Brilliant!"],
+                "Brilliant!", "Godlike!", "Good!", "Very good!", "Superb!", "Outstanding!", "Marvelous!",
+                "Magnificent!", "Well done!", "Very well!"],
             "Good job, no more puzzles, have a rest!": "Good job, no more puzzles, have a rest!",
             "What is the best move?": "What is the best move?",
             "Position": "Position",
@@ -26,12 +27,13 @@ angular.module("melissa.messages", [])
             "Type CONFIRM if you really want to reset all your achievements": "Type CONFIRM if you really want to reset all your achievements",
             "CONFIRM": "CONFIRM",
             "OK": "OK",
-            "CANCEL": "CANCEL"
+            "CANCEL": "CANCEL",
+            "Give me more!": "Give me more!"
         };
         base.ru = {
             correctAnswers: ["Верно!", "Правильно!", "Точно!", "Да!", "Да, это самый лучший ход в этой позиции!",
                 "Верно, это самый лучший ход в этой позиции!", "Отлично!", "Супер!", "Так точно!", "Именно!",
-                "Именно так!", "Превосходно!"],
+                "Именно так!", "Превосходно!", "Божественно!"],
             "Good job, no more puzzles, have a rest!": "Хорошо потренировались, теперь можно отдохнуть!",
             "What is the best move?": "Какой самый лучший ход в этой позиции? Попробуй угадать и сделай его!",
             "Position": "Позиция",
@@ -54,7 +56,8 @@ angular.module("melissa.messages", [])
             "Type CONFIRM if you really want to reset all your achievements": "Напишите ПОДТВЕРДИТЬ если вы действительно хотите сбросить все свои достижения",
             "CONFIRM": "ПОДТВЕРДИТЬ",
             "ОK": "OK",
-            "CANCEL": "ОТМЕНА"
+            "CANCEL": "ОТМЕНА",
+            "Give me more!": "Ещё!"
         };
         var availableTranslations = [];
         for(key in base) {availableTranslations.push(key)};

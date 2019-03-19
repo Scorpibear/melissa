@@ -28,6 +28,13 @@ button {
     border-radius: 4px;
 }
 
+.inline-button {
+    font-size: small;
+    margin-top: 0px;
+    padding: 5px 12px;
+    color: #607d8b;
+}
+
 button:hover {
     color: #039be5;
     background-color: #cfd8dc;

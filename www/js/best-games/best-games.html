@@ -1,6 +1,7 @@
 <div id="best-games" ng-controller="BestGamesController">
   <div id="best-games-board" class="chess-board" melissa-best-games-board></div>
-  <p>{{training.status}}</p>
   <p>{{('Position' | localize) + ':' }} <span id="positionValue">{{training.compactPgn}}</span></p>
   <p>{{('Training progress (learnt / total):' | localize)}} <span id="progress">{{training.numberOfCorrectAnswers}} / {{training.numberOfAnswers}}</span></p>
+  <p>{{training.status}}</p>
+  <button id="more" class="inline-button" ng-click="start()" ng-show="!training.session.isInProgress()">{{'Give me more!' | localize}}</button>
 </div>

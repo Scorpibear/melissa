@@ -13,7 +13,7 @@ angular.module('melissa.bestGames', ['ngRoute', 'melissa.messages', 'melissa.ser
     $scope, chessGame, $timeout, gamesToLearn, movesInterval, puzzleBuilder, messages, learningProgress, trainingSession, pgnConverter) {
     const movesToTrain = 10;
     const plyToTrain = movesToTrain * 2;
-    $scope.training = {compactPgn: "", numberOfCorrectAnswers: 0, numberOfAnswers: 0};
+    $scope.training = {compactPgn: "", numberOfCorrectAnswers: 0, numberOfAnswers: 0, session: trainingSession};
     $scope.replayMove = function() {
       var nextMove = $scope.getNextMove();
       if(nextMove) {
@@ -42,6 +42,7 @@ angular.module('melissa.bestGames', ['ngRoute', 'melissa.messages', 'melissa.ser
     let replayIndex = 0;
     $scope.start = function() {
       chessGame.reset();
+      trainingSession.start(movesToTrain);
       const game = gamesToLearn.getGame({minPly: plyToTrain});
       if(game) {
         trainIndex = (game.moves.length - game.trainIndex >= plyToTrain) ? game.trainIndex : 
