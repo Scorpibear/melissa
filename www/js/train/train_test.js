@@ -2,6 +2,11 @@
 
 describe('TrainController', function () {
     var $controller;
+    const trainingSession = {register: function(){}, isInProgress: () => true, start: () => {},
+        getNumberOfCorrectAnswers: function(){}, getNumberOfAnswers: function(){}
+    };
+    const $scope = {board: {orientation: function(){}, position: function(){}}, $apply: () => {}};
+    const chessGame = {load_pgn: function() {}, turn: function(){}, fen: function(){}};
 
     beforeEach(module('melissa.train'));
 
@@ -10,53 +15,42 @@ describe('TrainController', function () {
     }));
 
     describe("showNextPuzzle", function() {
-        var chessGame = null;
-        beforeEach(function(){
-            chessGame = {load_pgn: function() {}, turn: function(){}, fen: function(){}};
-        })
         it("update training status", function() {
-            var $scope = {};
             var messages = {get: function() {}};
             spyOn(messages, 'get').and.returnValue('no more');
-            $controller('TrainController', {$scope: $scope, messages: messages});
+            $controller('TrainController', {$scope, messages});
             $scope.showNextPuzzle();
             expect($scope.training.status).toEqual('no more');
         });
         it("stops when session limit is reached", function() {
-            var $scope = {};
             var puzzleProvider = {getPuzzle: function() {return {position: ''}}};
-            $controller('TrainController', {$scope: $scope, puzzleProvider: puzzleProvider});
+            spyOn(trainingSession, 'isInProgress').and.returnValue(false);
+            $controller('TrainController', {$scope, puzzleProvider, trainingSession});
             expect($scope.showNextPuzzle()).toBeFalsy();
         });
         it("set solvedFromFirstTry to true", function() {
-            var $scope = {};
-            var trainingSession = {isInProgress: function(){return true}};
-            $controller('TrainController', {$scope: $scope, trainingSession: trainingSession});
+            $controller('TrainController', {$scope, trainingSession});
 
             $scope.showNextPuzzle();
 
             expect($scope.training.solvedFromFirstTry).toBeTruthy();
         });
         it('chessGame loads pgn from puzzle position', function() {
-            var $scope = {board: {orientation: function(){}, position: function(){}}};
-            var trainingSession = {isInProgress: function(){return true}};
             var position = '1.d4'
             var puzzleProvider = {getPuzzle: function(){return {position: position}}};
             spyOn(chessGame, 'load_pgn');
-            $controller('TrainController', {$scope: $scope, trainingSession: trainingSession, chessGame: chessGame, puzzleProvider: puzzleProvider});
+            $controller('TrainController', {$scope, trainingSession, chessGame, puzzleProvider});
 
             $scope.showNextPuzzle();
 
             expect(chessGame.load_pgn).toHaveBeenCalledWith(position);
         });
         it('sets orientation based on turn from chessGame', function() {
-            var $scope = {board: {orientation: function(){}, position: function(){}}};
-            var trainingSession = {isInProgress: function(){return true}};
             var position = '1.d4'
-            var puzzleProvider = {getPuzzle: function(){return {position: position}}};
+            var puzzleProvider = {getPuzzle: function(){return {position}}};
             spyOn(chessGame, 'turn').and.returnValue('black');
             spyOn($scope.board, 'orientation');
-            $controller('TrainController', {$scope: $scope, trainingSession: trainingSession, chessGame: chessGame, puzzleProvider: puzzleProvider});
+            $controller('TrainController', {$scope, trainingSession, chessGame, puzzleProvider});
 
             $scope.showNextPuzzle();
 
@@ -64,9 +58,9 @@ describe('TrainController', function () {
         });
         it('registers puzzle', function() {
             var puzzle = {position: 'a', answer: 'b'};
-            var $scope = {board: {orientation: function(){}, position: function(){}}};
             var puzzleProvider = {getPuzzle: function(){return puzzle;}};
-            $controller('TrainController', {$scope: $scope, trainingSession: {isInProgress: function(){return true;}}, chessGame: chessGame, puzzleProvider: puzzleProvider});
+            spyOn(trainingSession, 'isInProgress').and.returnValue(true);
+            $controller('TrainController', {$scope, trainingSession, chessGame, puzzleProvider});
             spyOn($scope, 'registerPuzzle').and.callThrough();
 
             $scope.showNextPuzzle();
@@ -75,14 +69,9 @@ describe('TrainController', function () {
         });
     });
     describe("registerCorrectAnswer", function() {
-        var trainingSession = null;
-        beforeEach(function() {
-            trainingSession = {register: function(){}, isInProgress: function(){}, getNumberOfCorrectAnswers: function(){}, getNumberOfAnswers: function(){}};
-        })
         it("register result in trainingSession", function() {
-            var $scope = {$apply: function() {}};
             spyOn(trainingSession, 'register');
-            $controller('TrainController', {$scope: $scope, trainingSession: trainingSession})
+            $controller('TrainController', {$scope, trainingSession})
             $scope.training.solvedFromFirstTry = true;
             $scope.registerCorrectAnswer();
             expect(trainingSession.register).toHaveBeenCalledWith({correct: true});
@@ -90,7 +79,7 @@ describe('TrainController', function () {
         it('register negative result if solves from second attempt', function() {
             var $scope = {$apply: function(){}};
             var learningProgress = {};
-            $controller('TrainController', {$scope: $scope, learningProgress: learningProgress, trainingSession: trainingSession})
+            $controller('TrainController', {$scope: $scope, learningProgress, trainingSession})
             spyOn(trainingSession, 'register');
 
             $scope.registerCorrectAnswer();
@@ -102,7 +91,7 @@ describe('TrainController', function () {
             var learningProgress = {};
             var timeoutFn;
             var ng = {$timeout: function(fn){timeoutFn = fn}};
-            $controller('TrainController', {$scope: $scope, learningProgress: learningProgress, trainingSession: trainingSession, $timeout: ng.$timeout})
+            $controller('TrainController', {$scope, learningProgress, trainingSession, $timeout: ng.$timeout})
             $scope.registerCorrectAnswer();
             spyOn($scope, 'showNextPuzzle');
 
