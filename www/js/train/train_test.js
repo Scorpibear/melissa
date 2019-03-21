@@ -100,4 +100,13 @@ describe('TrainController', function () {
             expect($scope.showNextPuzzle).toHaveBeenCalled();
         })
     });
+    describe('start', () => {
+        it('schedules to show the next puzzle', () => {
+            const $timeout = fn => fn();
+            $controller('TrainController', {$scope, trainingSession, $timeout});
+            spyOn($scope, 'showNextPuzzle').and.stub();
+            $scope.start();
+            expect($scope.showNextPuzzle).toHaveBeenCalled();
+        })
+    })
 });
