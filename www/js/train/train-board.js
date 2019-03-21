@@ -4,6 +4,7 @@ angular.module("melissa.train")
         var boardConfig = {
             draggable: true,
             pieceTheme: 'js/bower_components/chessboardjs/img/chesspieces/wikipedia/{piece}.png',
+            position: 'start',
             onDragStart: function (source, piece, position, orientation) {
                 // only pick up pieces for the side to move
                 if ((orientation === 'white' && piece.search(/^b/) !== -1) ||
@@ -49,7 +50,6 @@ angular.module("melissa.train")
                 if ($window['ChessBoard'] !== undefined) {
                     scope.board = new $window.ChessBoard(id, boardConfig);
                 }
-                scope.showNextPuzzle();
             }
         };
     }])
