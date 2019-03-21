@@ -1,5 +1,5 @@
 <div id="best-games" ng-controller="BestGamesController">
-  <div id="best-games-board" class="chess-board" melissa-best-games-board></div>
+  <div id="train-board" class="chess-board" melissa-train-board></div>
   <p>{{('Position' | localize) + ':' }} <span id="positionValue">{{training.compactPgn}}</span></p>
   <p>{{('Training progress (learnt / total):' | localize)}} <span id="progress">{{training.numberOfCorrectAnswers}} / {{training.numberOfAnswers}}</span></p>
   <p>{{training.status}}</p>

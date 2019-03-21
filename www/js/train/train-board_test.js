@@ -69,7 +69,7 @@ describe('trainBoard', function() {
 
       boardConfig.onDrop('a2', 'a4');
 
-      expect(highlighter.highlightSquares).toHaveBeenCalledWith(['e4', 'e2'], jasmine.anything());
+      expect(highlighter.highlightSquares).toHaveBeenCalledWith(['e2', 'e4'], jasmine.anything());
     });
   });
 
