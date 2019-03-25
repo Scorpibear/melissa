@@ -7,7 +7,7 @@ angular.module('melissa.watchGames', ['ngRoute', 'melissa.messages', 'melissa.se
     });
   }])
   .constant('chessGame', new Chess())
-  .value('movesInterval', 500)
+  .value('movesInterval', 1000)
   .controller('WatchGamesController', ['$scope', 'chessGame', '$timeout', 'gamesToLearn', 'movesInterval', 
     function($scope, chessGame, $timeout, gamesToLearn, movesInterval) {
     $scope.makeMove = function() {
@@ -31,7 +31,7 @@ angular.module('melissa.watchGames', ['ngRoute', 'melissa.messages', 'melissa.se
     var game = null;
     $scope.start = function() {
       chessGame.reset();
-      game = gamesToLearn.getGame();
+      game = gamesToLearn.getGame({minPly: 10});
       $scope.next();
     };
     $scope.getNextMove = function() {
