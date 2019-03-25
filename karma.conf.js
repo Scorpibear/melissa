@@ -27,6 +27,10 @@ module.exports = function (config) {
             'www/js/train/train.js',
             'www/js/train/highlighter.js',
             'www/js/train/*.js',
+            'www/js/best-games/best-games.js',
+            'www/js/best-games/*.js',
+            'www/js/watch-games/watch-games.js',
+            'www/js/watch-games/*.js',
             'www/js/reset-progress/*.js',
             'www/js/achievements/*.js'
         ],
@@ -64,7 +68,8 @@ module.exports = function (config) {
             'www/js/services/**/!(*_test).js': ['coverage'],
             'www/js/train/!(*_test).js': ['coverage'],
             'www/js/train-mode-selection/!(*_test).js': ['coverage'],
-            'www/js/watch-games/!(*_test).js': ['coverage']
+            'www/js/watch-games/!(*_test).js': ['coverage'],
+            'www/js/best-games/!(*_test).js': ['coverage']
         },
         coverageReporter: {
             reporters: [

@@ -1,22 +1,24 @@
 angular.module("melissa.train")
-    .directive("melissaTrainBoard", ['chessGame', 'chessMoveConverter', '$window', 'highlighter', 
-        function (chessGame, chessMoveConverter, $window, highlighter) {
+    .directive("melissaTrainBoard", ['chessGame', '$window', 'highlighter', 
+        function (chessGame, $window, highlighter) {
         var boardConfig = {
             draggable: true,
             pieceTheme: 'js/bower_components/chessboardjs/img/chesspieces/wikipedia/{piece}.png',
-            onDragStart: function (source, piece, position, orientation) {
-                // only pick up pieces for the side to move
-                if ((orientation === 'white' && piece.search(/^b/) !== -1) ||
-                    (orientation === 'black' && piece.search(/^w/) !== -1)) {
-                    return false;
-                }
-            }
+            position: 'start'
         };
         return {
             link: function (scope, element, attrs) {
                 var id = attrs["id"];
+                boardConfig.onDragStart = function (source, piece, position, orientation) {
+                    // only pick up pieces for the side to move
+                    if ((orientation === 'white' && piece.search(/^b/) !== -1) ||
+                        (orientation === 'black' && piece.search(/^w/) !== -1) ||
+                        !scope.training.puzzle) {
+                        return false;
+                    }
+                }
                 boardConfig.onDrop = function (source, target) {
-                	if(source == target) {
+                	if(source == target || !scope.training.puzzle) {
                 		// it means that user returned piece to the same place, so need to do nothing, just give him another chance
                 		return 'snapback';
                 	}
@@ -25,17 +27,22 @@ angular.module("melissa.train")
                         to: target,
                         promotion: 'q'
                     });
+                    if(move) {
+                        // make board to display correctly such things like castling and promotion, so do real move on snapEnd only
+                        chessGame.undo(); 
+                    }
                     var isCorrect = (move != null) && (move.san === scope.training.puzzle.answer);
-                    if (move)
-                        chessGame.undo();
                     if (!isCorrect) {
                         scope.training.solvedFromFirstTry = false;
-                        var squares = chessMoveConverter.sanToSquares(scope.training.puzzle.answer, chessGame.turn());
-                        move = chessGame.move(scope.training.puzzle.answer);
+                        let squares = [];
                         if(move) {
-                          squares.push(move.from);
+                            const move = chessGame.move(scope.training.puzzle.answer);
+                            if(move) {
+                                squares.push(move.from);
+                                squares.push(move.to);
+                                chessGame.undo();
+                            }
                         }
-                        chessGame.undo();
                         highlighter.highlightSquares(squares, id);
                         return 'snapback';
                     } else {
@@ -49,7 +56,6 @@ angular.module("melissa.train")
                 if ($window['ChessBoard'] !== undefined) {
                     scope.board = new $window.ChessBoard(id, boardConfig);
                 }
-                scope.showNextPuzzle();
             }
         };
     }])

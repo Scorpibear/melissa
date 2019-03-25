@@ -19,31 +19,30 @@ describe('trainBoard', function() {
   describe('link function behavior', function(){
     it('Replaces the element with the appropriate content', function() {
       spyOn($window, 'ChessBoard');
-      var element = $compile(trainBoardElement)($rootScope);
+      $compile(trainBoardElement)($rootScope);
       expect($window.ChessBoard).toHaveBeenCalled();
     });
     it('does not define board if no ChessBoard', function() {
       $window['ChessBoard'] = undefined;
-      var element = $compile(trainBoardElement)($rootScope);
+      $compile(trainBoardElement)($rootScope);
       expect($rootScope.board).toBe(undefined);
     });
   });
 
   describe('onDragStart', function() {
+    beforeEach(() => {
+      $compile(trainBoardElement)($rootScope);
+    })
     it('returns undefined by default', function() {
-      var element = $compile(trainBoardElement)($rootScope);
       expect(boardConfig.onDragStart()).toBe(undefined); // exact match
     })
     it('returns false if orientation is white but piece is black', function() {
-      var element = $compile(trainBoardElement)($rootScope);
       expect(boardConfig.onDragStart('source','black','position','white')).toBe(false); // exact match
     });
     it('returns false if orientation is black but piece is white', function() {
-      var element = $compile(trainBoardElement)($rootScope);
       expect(boardConfig.onDragStart('source','white','position','black')).toBe(false); // exact match
     });
     it('returns undefined if orientation is black but piece is black', function() {
-      $compile(trainBoardElement)($rootScope);
       expect(boardConfig.onDragStart('source','black','position','black')).toBe(undefined); // exact match
     });
   });
@@ -70,7 +69,7 @@ describe('trainBoard', function() {
 
       boardConfig.onDrop('a2', 'a4');
 
-      expect(highlighter.highlightSquares).toHaveBeenCalledWith(['e4', 'e2'], jasmine.anything());
+      expect(highlighter.highlightSquares).toHaveBeenCalledWith(['e2', 'e4'], jasmine.anything());
     });
   });
 

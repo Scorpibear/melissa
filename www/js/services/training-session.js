@@ -7,7 +7,7 @@ angular.module('melissa.services')
       var numberOfAnswers = 0;
       var limit = undefined;
       return {
-        start: function(sessionLimit) {
+        start: function(sessionLimit = 10) {
           isInProgress = true;
           numberOfCorrectAnswers = 0;
           numberOfAnswers = 0;

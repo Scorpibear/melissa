@@ -33,5 +33,12 @@ describe('gamesToLearn', function() {
       var game2 = gamesToLearn.getGame();
       expect(game2).not.toEqual(game1);
     });
+    it('supports minPly parameter', () => {
+      spyOn(baseIterator, 'getBestPgn').and.returnValues(
+        ['e4','e6','d4'],
+        ['e4','e5','Nf3','Nf6']
+      );
+      expect(gamesToLearn.getGame({minPly: 4}).moves).toEqual(['e4','e5','Nf3','Nf6']);
+    });
   });
 });
