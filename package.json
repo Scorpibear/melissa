@@ -39,8 +39,7 @@
   "cordova": {
     "platforms": [
       "windows",
-      "browser",
-      "android"
+      "browser"
     ],
     "plugins": {
       "cordova-plugin-whitelist": {},
@@ -48,7 +47,7 @@
     }
   },
   "dependencies": {
-    "cordova-android": "^7.1.2",
+    "cordova-android": "^8.0.0",
     "cordova-browser": "5.0.4",
     "cordova-plugin-game": "1.0.120",
     "cordova-plugin-whitelist": "1",
