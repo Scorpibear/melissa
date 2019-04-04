@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="org.lifeidea.melissa" version="1.8.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="org.lifeidea.melissa" version="1.8.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Melissa</name>
     <description>
         Train memory via chess best moves memorizing.
@@ -18,6 +18,20 @@
     <allow-intent href="geo:*" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <!--
+            ldpi    : 36x36 px
+            mdpi    : 48x48 px
+            hdpi    : 72x72 px
+            xhdpi   : 96x96 px
+            xxhdpi  : 144x144 px
+            xxxhdpi : 192x192 px
+        -->
+        <icon src="res/ldpi.png" density="ldpi" />
+        <icon src="res/mdpi.png" density="mdpi" />
+        <icon src="res/hdpi.png" density="hdpi" />
+        <icon src="res/xhdpi.png" density="xhdpi" />
+        <icon src="res/xxhdpi.png" density="xxhdpi" />
+        <icon src="res/xxxhdpi.png" density="xxxhdpi" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
