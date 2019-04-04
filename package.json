@@ -1,7 +1,7 @@
 {
   "name": "melissa",
   "private": true,
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "Chess Uberman Memory Trainer",
   "repository": "https://github.com/Scorpibear/melissa",
   "license": "MIT",
@@ -32,7 +32,7 @@
     "e2e": "protractor e2e-tests/protractor.conf.js",
     "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + sed(/sourceMappingURL=angular-loader.min.js.map/,'sourceMappingURL=bower_components/angular-loader/angular-loader.min.js.map','app/bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\"",
     "report-coverage": "codecov",
-    "release-android": "cordova build android --release -- --keystore=\"../docs/Keys/melissa.jks\" --alias=melissa",
+    "release-android": "read -p 'Enter keystore password:' sp && read -p 'Enter key password:' kp && cordova build android --release -- --keystore=../docs/Keys/melissa.jks --alias=melissa --storePassword=$sp --password=$kp",
     "release-web": "cordova build browser",
     "release": "npm run release-web && npm run release-android"
   },
