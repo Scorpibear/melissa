@@ -6,27 +6,33 @@ angular.module("melissa.services")
     .factory("baseUpdater", [
         '$http', 'baseManager', 'positionSelector', 'moveValidator', 'queueToAnalyze', 'sendForAnalysisTimeout', 'userService', 'connectionIndicator',
         function ($http, baseManager, positionSelector, moveValidator, queueToAnalyze, sendForAnalysisTimeout, userService, connectionIndicator) {
-            var baseUpdated = false;
-            var base = baseManager.restoreBase();
-            var backendUrl = 'http://umain-02.cloudapp.net:9966';
+            let baseUpdated = false;
+            let base = baseManager.restoreBase();
+            let backendUrl = 'http://umain-02.cloudapp.net:9966';
             //backendUrl = 'http://localhost:9966';
-            var user = userService.getUser();
-            connectionIndicator.startSending();
-            $http({method: 'GET', url: backendUrl + '/api/getbase?userid=' + user.id, transformResponse: false}).
-                then(
-                    function success(response){
-                        console.log("new base received, ", response.data.length, " bytes");
-                        base = JSON.parse(response.data);
-                        base.pgn = '';
-                        baseUpdated = true;
-                        baseManager.saveBase(base);
-                        connectionIndicator.success();
-                    },
-                    function error(response) {
-                        console.error("could not update base from server: ", response);
-                        connectionIndicator.error();
-                    }
-                );
+            let retryTimeout = 1000;
+            const updateBase = () => {
+                const user = userService.getUser();
+                connectionIndicator.startSending();
+                $http({method: 'GET', url: backendUrl + '/api/getbase?userid=' + user.id, transformResponse: false}).
+                    then(
+                        function success(response){
+                            console.log("new base received, ", response.data.length, " bytes");
+                            base = JSON.parse(response.data);
+                            base.pgn = '';
+                            baseUpdated = true;
+                            baseManager.saveBase(base);
+                            connectionIndicator.success();
+                        },
+                        function error(response) {
+                            console.error("could not update base from server: ", response);
+                            connectionIndicator.error();
+                            setTimeout(updateBase, retryTimeout+=retryTimeout);
+                        }
+                    );
+            }
+            setTimeout(updateBase, 0);
+            
             var sendForAnalysisInProgress = false;
             var sendForAnalysis = function() {
                 if(queueToAnalyze.length > 0) {
