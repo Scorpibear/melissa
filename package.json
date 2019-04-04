@@ -42,14 +42,12 @@
       "browser"
     ],
     "plugins": {
-      "cordova-plugin-whitelist": {},
-      "cordova-plugin-game": {}
+      "cordova-plugin-whitelist": {}
     }
   },
   "dependencies": {
     "cordova-android": "^8.0.0",
     "cordova-browser": "5.0.4",
-    "cordova-plugin-game": "1.0.120",
     "cordova-plugin-whitelist": "1",
     "cordova-windows": "^6.0.1"
   }
