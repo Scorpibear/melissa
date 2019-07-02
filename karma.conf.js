@@ -79,7 +79,8 @@ module.exports = function (config) {
                 // generates ./coverage/coverage-final.json
                 { type:'json', subdir: '.'}
             ]
-        }
+        },
+        concurrency: 1
 
     });
 };
