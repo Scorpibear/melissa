@@ -11,7 +11,7 @@ install:
   - sudo apt-get install -q google-chrome-stable
 services:
   - xvfb
-  before_script:
+before_script:
   - npm install
   - bower install
   - npm run pree2e
