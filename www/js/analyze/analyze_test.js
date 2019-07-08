@@ -1,9 +1,7 @@
 'use strict';
 
 describe('melissa.analyze module', function () {
-
   beforeEach(module('melissa.analyze'));
-
   describe('analyze controller', function () {
     var baseUpdater = { 
       validateMoves: function() {},
@@ -14,7 +12,7 @@ describe('melissa.analyze module', function () {
     };
     var analyzeChessGame = {reset: function(){}, history: function(){return [];},
       undo: function(){return {color: 'w'};}, fen: function(){}};
-    var $controller;
+    let $controller;
     beforeEach(inject(function (_$controller_) {
       $controller = _$controller_;
     }));
@@ -164,14 +162,13 @@ describe('melissa.analyze module', function () {
       });
     });
     describe('getMoveNumberStr', function() {
-      var $scope = {};
-      beforeAll(function() {
-        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
-      })
+      let $scope = {};
       it('returns number with point just after it for white', function() {
+        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
         expect($scope.getMoveNumberStr("w", 17)).toEqual("17.");
       });
       it('returns empty string for black', function() {
+        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
         expect($scope.getMoveNumberStr("b", 5)).toEqual("");
       });
     });

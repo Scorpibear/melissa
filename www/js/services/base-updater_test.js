@@ -3,7 +3,7 @@
 describe("baseUpdater", function () {
     var baseUpdater;
     var myBase = {pgn: ''};
-    var moveValidator = {
+    const moveValidatorDefaults = {
         called: false,
         validateParams: null,
         validateResult: "unknown",
@@ -12,7 +12,8 @@ describe("baseUpdater", function () {
             this.validateParams = [moves, base];
             return this.validateResult;
         }};
-    var queueToAnalyze = [];
+    let moveValidator = new Object(moveValidatorDefaults);
+    const queueToAnalyze = [];
     var positionSelector = {
         getBestSubPositions: function() {},
         getPositionByMoves: function() {}
@@ -40,6 +41,9 @@ describe("baseUpdater", function () {
         });
     });
     describe("validateMoves", function() {
+        beforeEach(() => {
+            moveValidator = new Object(moveValidatorDefaults);
+        })
         it("uses move validator", function() {
             moveValidator.called = false;
             baseUpdater.validateMoves(["d4", "Nf6"]);
@@ -52,6 +56,7 @@ describe("baseUpdater", function () {
         });
         it("unanalyzed moves added to queue without last", function() {
             queueToAnalyze.length = 0;
+            spyOn(moveValidator, 'validate').and.returnValue('unknown');
             baseUpdater.validateMoves(["Nf6", "h4"]);
             expect(queueToAnalyze).toEqual([["Nf6"]]);
         });
