@@ -56,6 +56,7 @@ describe("baseUpdater", function () {
         });
         it("unanalyzed moves added to queue without last", function() {
             queueToAnalyze.length = 0;
+            spyOn(moveValidator, 'validate').and.returnValue('unknown');
             baseUpdater.validateMoves(["Nf6", "h4"]);
             expect(queueToAnalyze).toEqual([["Nf6"]]);
         });
