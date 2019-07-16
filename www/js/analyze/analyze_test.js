@@ -66,36 +66,41 @@ describe('melissa.analyze module', function () {
       });
     });
     describe('registerPositionChange', function() {
-      it('add new html element to pgn', function() {
-        var $scope = {$apply: function(){}};
+      const $scope = {$apply: () => {}};
+      beforeEach(() => {
         $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
-
+      });
+      it('add new html element to pgn', function() {
         $scope.registerPositionChange({color: 'b'});
 
         expect($scope.pgnElements.length).toBe(1);
       });
       it('white color increases move number', function() {
-        var $scope = {$apply: function(){}};
-        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
-
         $scope.registerPositionChange({color: 'w'});
 
         expect($scope.moveNumber).toBe(1);
       });
       it('apply changes to scope when move number changes', function() {
-        var $scope = {$apply: function() {}};
         spyOn($scope, '$apply');
-        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
 
         $scope.registerPositionChange({color: 'w'});
 
         expect($scope.$apply).toHaveBeenCalled();
       });
+      it('updates url', () => {
+        spyOn($scope, 'updateUrl').and.stub();
+
+        $scope.registerPositionChange({color: 'b'});
+
+        expect($scope.updateUrl).toHaveBeenCalled();
+      });
     });
     describe('back', function() {
-      it('removes the last pgnElement', function() {
-        var $scope = {$apply: function(){}, board: {position: function(){}}};
+      const $scope = {$apply: function(){}, board: {position: function(){}}};
+      beforeEach(() => {
         $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
+      })
+      it('removes the last pgnElement', function() {
         $scope.registerPositionChange({color: 'w', san: 'e4'});
         
         $scope.back();
@@ -103,8 +108,6 @@ describe('melissa.analyze module', function () {
         expect($scope.pgnElements.length).toBe(0);
       });
       it('does not modify game if on start position', function(){
-        var $scope = {$apply: function(){}, board: {position: function(){}}};
-        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
         spyOn(analyzeChessGame, 'undo');
 
         $scope.back();
@@ -112,8 +115,6 @@ describe('melissa.analyze module', function () {
         expect(analyzeChessGame.undo).not.toHaveBeenCalled();
       });
       it('does not change moveNumber if last move was black', function() {
-        var $scope = {$apply: function(){}, board: {position: function(){}}};
-        $controller('AnalyzeController', {$scope: $scope, analyzeChessGame: analyzeChessGame, baseUpdater: baseUpdater, trainMode: {}});
         $scope.registerPositionChange({color: 'w', san: 'e4'});
         $scope.registerPositionChange({color: 'b', san: 'e6'});
         spyOn(analyzeChessGame, 'undo').and.returnValue({color: 'b'});
@@ -121,6 +122,17 @@ describe('melissa.analyze module', function () {
         $scope.back();
 
         expect($scope.moveNumber).toBe(1);
+      })
+      it('updates url', () => {
+        spyOn($scope, 'updateUrl').and.stub();
+        $scope.moveNumber = 1;
+
+        $scope.back();
+
+        expect($scope.updateUrl).toHaveBeenCalled();
+      });
+      afterEach(() => {
+        $scope.moveNumber = 0;
       })
     });
     describe('reload', function() {
@@ -172,8 +184,40 @@ describe('melissa.analyze module', function () {
         expect($scope.getMoveNumberStr("b", 5)).toEqual("");
       });
     });
-    describe('trainBranch', function() {
-      //TODO
+    describe('applyUrlParams', () => {
+      let $scope;
+      beforeEach(() => {
+        $scope = {board: {position: () => {}}}
+        $controller('AnalyzeController', {$scope});
+      });
+      it('register position change', () => {
+        spyOn($scope, 'registerPositionChange').and.stub();
+        spyOn($scope, 'getMovesFromUrl').and.returnValue(['d4']);
+
+        $scope.applyUrlParams();
+
+        expect($scope.registerPositionChange).toHaveBeenCalled();
+      });
+      it('does not register position change if moveList is empty', () => {
+        spyOn($scope, 'registerPositionChange').and.stub();
+        spyOn($scope, 'getMovesFromUrl').and.returnValue([]);
+
+        $scope.applyUrlParams();
+
+        expect($scope.registerPositionChange).not.toHaveBeenCalled();
+      });
     });
+    describe('updateUrl', () => {
+      const $scope = {}
+      const $location = {search: () => ({moveList: ''})};
+      it('updates moveList param of url', () => {
+        $controller('AnalyzeController', {$scope, $location});
+        spyOn($location, 'search').and.stub();
+
+        $scope.updateUrl();
+
+        expect($location.search).toHaveBeenCalled();
+      });
+    })
   });
 });
