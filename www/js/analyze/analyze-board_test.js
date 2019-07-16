@@ -32,6 +32,9 @@ describe('analyzeBoard', function() {
   });
 
   describe('onDrop', function() {
+    beforeEach(() => {
+      analyzeChessGame.reset();
+    })
     it('returns undefined if answer is correct', function() {
       $compile(analyzeBoardElement)($rootScope);
       expect(boardConfig.onDrop('e2','e4')).toBe(undefined);
