@@ -55,6 +55,7 @@ describe('trainBoard', function() {
       expect(boardConfig.onDrop('e2','e4')).toBe(undefined);
     });
     it('returns snapback if source equals target', function() {
+      $compile(trainBoardElement)($rootScope);
       expect(boardConfig.onDrop('e2', 'e2')).toBe('snapback');
     });
     it('returns snapback if answer does not match', function() {

@@ -1,24 +1,31 @@
 'use strict';
 
+const moveListUrlParam = "moveList";
+
 angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.services'])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/js/analyze', {
-            templateUrl: 'js/analyze/analyze.html'
+            templateUrl: 'js/analyze/analyze.html',
+            reloadOnSearch: false
         });
     }])
     .constant('analyzeChessGame', new Chess())
-    .controller('AnalyzeController', ['$scope', 'analyzeChessGame', 'baseUpdater', 'trainMode', function ($scope, analyzeChessGame, baseUpdater, trainMode) {
+    .controller('AnalyzeController', ['$scope', 'analyzeChessGame', 'baseUpdater', 'trainMode', '$location',
+        function ($scope, analyzeChessGame, baseUpdater, trainMode, $location) {
         $('#analyzed-pgn').html("");
         $scope.moveNumber = 0;
         $scope.pgnElements = [];
         analyzeChessGame.reset();
 
-        $scope.registerPositionChange = function(move) {
+        $scope.registerPositionChange = function(move, updateUrl = true) {
+            if (updateUrl) {
+                $scope.updateUrl();
+            }
             if(move.color == "w") {
                 $scope.moveNumber++;
-                $scope.$apply();
             }
+            $scope.$apply();
             var moves = analyzeChessGame.history();
             var bestMoveSan = baseUpdater.getBestMove(moves.slice(0, -1));
             var lastMoveSan = moves[moves.length-1];
@@ -57,6 +64,7 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
         $scope.back = function() {
             if($scope.moveNumber == 0) return;
             var move = analyzeChessGame.undo();
+            $scope.updateUrl();
             if(move.color == 'w') $scope.moveNumber--;
             $scope.board.position(analyzeChessGame.fen());
             $($scope.pgnElements.pop()).remove();
@@ -76,9 +84,32 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
             return (bestMoveSan && bestMoveSan!=lastMoveSan) ? "("+bestMoveSan+"!)" : "";
         };
 
-        /*
-        $scope.trainBranch = function() {
-            var position = analyzeChessGame.history();
-            trainMode.branch(position);
-        };*/
+        $scope.getMovesFromUrl = () => {
+            const params = $location.search();
+            const moveListStr = params[moveListUrlParam];
+            return moveListStr ? moveListStr.split(/[+ ]/) : [];
+        }
+
+        $scope.applyUrlParams = () => {
+            const moveList = $scope.getMovesFromUrl();
+            moveList.forEach(sanMove => {
+                const move = analyzeChessGame.move(sanMove);
+                if(move != null) {
+                    $scope.registerPositionChange(move, false);
+                    $scope.board.position(analyzeChessGame.fen())
+                }
+            });
+            $scope.updateUrl();
+        }
+
+        $scope.updateUrl = () => {
+            const moves = analyzeChessGame.history();
+            const movesStr = moves.join('+');
+            const original = window.encodeURIComponent;
+            window.encodeURIComponent = str => decodeURI(str);
+            $location.search(moveListUrlParam, movesStr);
+            window.encodeURIComponent = original;
+        }
+
+        setTimeout($scope.applyUrlParams, 0);
     }]);
