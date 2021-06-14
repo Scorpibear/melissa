@@ -12,11 +12,11 @@ let training = function () {
     const trainBoardPalette = element(by.id("train-board"));
 
 
-    this.ClickOnTrainingButton =function (){
+    this.clickOnTrainingButton =function (){
         trainingButton.click();
    }
 
-   this.ValidateTrainModeSelection = () =>{
+   this.validateTrainModeSelection = () =>{
     browser.wait(function() {
         return trainModeSelection.getText().then(function(text) {
         return text === "Choose the way how to train your memory and chess intuition";
@@ -26,7 +26,7 @@ let training = function () {
    }
    
 
-   this.ValidateBestMovesText = () =>{
+   this.validateBestMovesText = () =>{
     browser.wait(function() {
         return bestMovesText.getText().then(function(text) {
         return text === "What is the best move?";
@@ -35,19 +35,19 @@ let training = function () {
     expect(bestMovesText.getText()).toEqual('What is the best move?');
 }
 
-   this.ClickOnBestButton = () => {
+   this.clickOnBestButton = () => {
         bestGamesButton.click();
    }
 
-   this.ClickOnWatchAndRememberButton = () => {
+   this.clickOnWatchAndRememberButton = () => {
         watchAndRememberButton.click();
    }
 
-   this.ClickOnBestMovesButton = () => {
+   this.clickOnBestMovesButton = () => {
         bestMovesButton.click();
    }
 
-   this.TrainBoardPatelleExists = () => {
+   this.trainBoardPatelleExists = () => {
         expect(trainBoardPalette.isPresent()).toBe(true);
    }
 
@@ -59,7 +59,7 @@ let training = function () {
         expect(achievementsButton.isPresent()).toBe(true);
    }
 
-   this.WatchGameBoardPalletteExists = () => {
+   this.watchGameBoardPalletteExists = () => {
         expect(watchGameBoardPallette.isPresent()).toBe(true);
    }
 }

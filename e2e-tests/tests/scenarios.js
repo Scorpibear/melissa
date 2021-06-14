@@ -21,40 +21,40 @@ describe('Training page tests', function () {
     })
 
     it('click on training button and validate main test', () => {
-        training.ClickOnTrainingButton();
-        training.ValidateTrainModeSelection();
+        training.clickOnTrainingButton();
+        training.validateTrainModeSelection();
     })
 
     it("Click on best games on training page and validate best games pallete shown", () => {
-        training.ClickOnTrainingButton();
-        training.ClickOnBestButton()
-        training.TrainBoardPatelleExists()
+        training.clickOnTrainingButton();
+        training.clickOnBestButton()
+        training.trainBoardPatelleExists()
     })
 
     it("Click on Watch and remember on training page and validate best games pallete shown", () => {
-        training.ClickOnTrainingButton();
-        training.ClickOnWatchAndRememberButton()
-        training.WatchGameBoardPalletteExists()
+        training.clickOnTrainingButton();
+        training.clickOnWatchAndRememberButton()
+        training.watchGameBoardPalletteExists()
     })
 
     it("Click on Best Moves on training page and validate best moves test shown", () => {
-        training.ClickOnTrainingButton();
-        training.ClickOnBestMovesButton()
-        training.ValidateBestMovesText()
+        training.clickOnTrainingButton();
+        training.clickOnBestMovesButton()
+        training.validateBestMovesText()
     })
 
     it("analyze button exists on main page", () => {
-        training.ClickOnTrainingButton();
+        training.clickOnTrainingButton();
         training.analyzeButtonExists();
     })
 
     it("analyze button exists on main page", () => {
-        training.ClickOnTrainingButton();
+        training.clickOnTrainingButton();
         training.analyzeButtonExists();
     })
 
     it("achievements Button Exists on main page", () => {
-        training.ClickOnTrainingButton();
+        training.clickOnTrainingButton();
         training.achievementsButtonExists();
     })
 });
