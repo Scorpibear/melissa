@@ -1,6 +1,7 @@
 'use strict';
 let training = require("../pageObjects/training");
-
+let analyze = require("../pageObjects/analyze");
+let achievements = require("../pageObjects/achievements");
 /* https://github.com/angular/protractor/blob/master/docs/toc.md */
 
 describe('Training page tests', function () {
@@ -43,18 +44,49 @@ describe('Training page tests', function () {
         training.validateBestMovesText()
     })
 
-    it("analyze button exists on main page", () => {
+    it("analyze,achievements,training buttons exist on main page", () => {
         training.clickOnTrainingButton();
         training.analyzeButtonExists();
-    })
-
-    it("analyze button exists on main page", () => {
-        training.clickOnTrainingButton();
-        training.analyzeButtonExists();
-    })
-
-    it("achievements Button Exists on main page", () => {
-        training.clickOnTrainingButton();
         training.achievementsButtonExists();
+        training.trainingButtonExists();
+    })
+});
+
+describe('analyzes page tests', function () {
+    browser.waitForAngularEnabled(false)
+
+    beforeEach(function() {
+    	browser.get('index.html');
+    });
+
+    it('click on training button and validate main test', () => {
+        analyze.analyzeButtonClick();
+        analyze.analyzeChessPaletteExists();
+    })
+
+    it('click on training button and validate that switch orientation button is clickable', () => {
+        analyze.analyzeButtonClick();
+        analyze.switchOrientationButtonIsClickable();
+    })
+
+});
+
+describe('achievements page tests', function () {
+    browser.waitForAngularEnabled(false)
+
+    beforeEach(function() {
+    	browser.get('index.html');
+    });
+
+    it('click on achievements button and validate achievements page fields', () => {
+        achievements.clickOnAchievementsButton();
+        achievements.validateLevelFieldInAchievementsPage();
+        achievements.validatePositionsLearnedInAchievementsPage();
+        achievements.validatetillNextlevelFieldInAchievementsPage();
+    })
+
+    it('click on achievements button and validate reset progress button is clickable', () => {
+        achievements.clickOnAchievementsButton();
+        achievements.resetProgressButtonExistsOnPage()
     })
 });

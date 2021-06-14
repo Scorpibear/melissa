@@ -59,6 +59,10 @@ let training = function () {
         expect(achievementsButton.isPresent()).toBe(true);
    }
 
+   this.trainingButtonExists = () => {
+        expect(trainingButton.isPresent()).toBe(true);
+   }
+
    this.watchGameBoardPalletteExists = () => {
         expect(watchGameBoardPallette.isPresent()).toBe(true);
    }
