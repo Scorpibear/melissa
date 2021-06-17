@@ -1,0 +1,1 @@
+const defaultWaiterForFiveSecond = 5000;
