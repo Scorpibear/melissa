@@ -1,92 +1,101 @@
 'use strict';
-let training = require("../pageObjects/training");
-let analyze = require("../pageObjects/analyze");
-let achievements = require("../pageObjects/achievements");
+const trainingInstance = require("../pageObjects/training");
+const analyzeInstance = require("../pageObjects/analyze");
+const achievementsInstance = require("../pageObjects/achievements");
 /* https://github.com/angular/protractor/blob/master/docs/toc.md */
 
-describe('Training page tests', function () {
-    browser.waitForAngularEnabled(false)
+describe('Training page tests', () => {
+    
+    beforeAll(() => {
+        browser.waitForAngularEnabled(false)
+    });
 
-    beforeEach(function() {
+    beforeEach(() => {
     	browser.get('index.html');
     });
 
-    it('title is Melissa', function () {
+    it('title is Melissa',() => {
         expect(browser.getTitle()).toEqual('Melissa');
 
     });
 
-    it('puzzle is showned', function () {
+    it('puzzle is showned',() => {
         element(by.id("bestMoves")).click();
         expect(element(by.id("positionValue")).getText()).toEqual("");
     })
 
     it('click on training button and validate main test', () => {
-        training.clickOnTrainingButton();
-        training.validateTrainModeSelection();
+        trainingInstance.clickOnTrainingButton();
+        trainingInstance.validateTrainModeSelection();
     })
 
     it("Click on best games on training page and validate best games pallete shown", () => {
-        training.clickOnTrainingButton();
-        training.clickOnBestButton()
-        training.trainBoardPatelleExists()
+        trainingInstance.clickOnTrainingButton();
+        trainingInstance.clickOnBestButton()
+        trainingInstance.trainBoardPatelleExists()
     })
 
     it("Click on Watch and remember on training page and validate best games pallete shown", () => {
-        training.clickOnTrainingButton();
-        training.clickOnWatchAndRememberButton()
-        training.watchGameBoardPalletteExists()
+        trainingInstance.clickOnTrainingButton();
+        trainingInstance.clickOnWatchAndRememberButton()
+        trainingInstance.watchGameBoardPalletteExists()
     })
 
     it("Click on Best Moves on training page and validate best moves test shown", () => {
-        training.clickOnTrainingButton();
-        training.clickOnBestMovesButton()
-        training.validateBestMovesText()
+        trainingInstance.clickOnTrainingButton();
+        trainingInstance.clickOnBestMovesButton()
+        trainingInstance.validateBestMovesText()
     })
 
     it("analyze,achievements,training buttons exist on main page", () => {
-        training.clickOnTrainingButton();
-        training.analyzeButtonExists();
-        training.achievementsButtonExists();
-        training.trainingButtonExists();
+        trainingInstance.clickOnTrainingButton();
+        trainingInstance.analyzeButtonExists();
+        trainingInstance.achievementsButtonExists();
+        trainingInstance.trainingButtonExists();
     })
 });
 
-describe('analyzes page tests', function () {
-    browser.waitForAngularEnabled(false)
+describe('analyzes page tests',() => {
 
-    beforeEach(function() {
+    beforeAll(() => {
+        browser.waitForAngularEnabled(false)
+    });
+
+    beforeEach(() => {
     	browser.get('index.html');
     });
 
     it('click on training button and validate main test', () => {
-        analyze.analyzeButtonClick();
-        analyze.analyzeChessPaletteExists();
+        analyzeInstance.analyzeButtonClick();
+        analyzeInstance.analyzeChessPaletteExists();
     })
 
     it('click on training button and validate that switch orientation button is clickable', () => {
-        analyze.analyzeButtonClick();
-        analyze.switchOrientationButtonIsClickable();
+        analyzeInstance.analyzeButtonClick();
+        analyzeInstance.switchOrientationButtonIsClickable();
     })
 
 });
 
-describe('achievements page tests', function () {
-    browser.waitForAngularEnabled(false)
+describe('achievements page tests',() => {
 
-    beforeEach(function() {
+    beforeAll(() => {
+        browser.waitForAngularEnabled(false)
+    });
+
+    beforeEach(() => {
     	browser.get('index.html');
     });
 
     it('click on achievements button and validate achievements page fields', () => {
-        achievements.clickOnAchievementsButton();
-        achievements.validateLevelFieldInAchievementsPage();
-        achievements.validatePositionsLearnedInAchievementsPage();
-        achievements.validatetillNextlevelFieldInAchievementsPage();
+        achievementsInstance.clickOnAchievementsButton();
+        achievementsInstance.validateLevelFieldInAchievementsPage();
+        achievementsInstance.validatePositionsLearnedInAchievementsPage();
+        achievementsInstance.validatetillNextlevelFieldInAchievementsPage();
     })
 
     it('click on achievements button and validate reset progress button is clickable', () => {
-        achievements.clickOnAchievementsButton();
-        achievements.resetProgressButtonExistsOnPage()
+        achievementsInstance.clickOnAchievementsButton();
+        achievementsInstance.resetProgressButtonExistsOnPage()
     })
 });

@@ -1,28 +1,26 @@
-let analyze = function() {
+const waiter = require("../dataObjects/timeManagementTool")
 
-    const analyzeButton = element(by.css('[href="#!/js/analyze"]'));
-    const switchOrientationButton = element(by.css('[ng-click="switchOrientation()"]'));
-    const analyzeChessPalette = element(by.id('analyze'))
+class Analyze {
 
+    analyzeButton = element(by.css('[href="#!/js/analyze"]'));
+    switchOrientationButton = element(by.css('[ng-click="switchOrientation()"]'));
+    analyzeChessPalette = element(by.id('analyze'))
 
-    this.analyzeButtonExists = () => {
-    expect(analyzeButton.isPresent()).toBe(true);
+    analyzeButtonExists = () => {
+        expect(this.analyzeButton.isPresent()).toBe(true);
    }
 
-   this.analyzeButtonClick = () => {
-    analyzeButton.click();
+    analyzeButtonClick = () => {
+        this.analyzeButton.click();
    }
 
-   this.switchOrientationButtonIsClickable = () => {
-    var EC = protractor.ExpectedConditions;
-    browser.wait(EC.elementToBeClickable(analyzeButton), 5000);
+    switchOrientationButtonIsClickable = () => {
+        browser.wait(protractor.ExpectedConditions.elementToBeClickable(this.switchOrientationButton), waiter.defaultWaiterForFiveSecond);
    }
 
-    this.analyzeChessPaletteExists = () => {
-    expect(analyzeChessPalette.isPresent()).toBe(true);
+    analyzeChessPaletteExists = () => {
+        expect(this.analyzeChessPalette.isPresent()).toBe(true);
    }
-
-
 }
 
-module.exports = new analyze();
+module.exports = new Analyze();

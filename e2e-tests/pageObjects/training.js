@@ -1,71 +1,72 @@
-let training = function () {
+const waiter = require("../dataObjects/timeManagementTool")
 
-    const trainingButton = element(by.css('[href="#!/js/train-mode-selection"]'));
-    const analyzeButton = element(by.css('[href="#!/js/analyze"]'));
-    const achievementsButton = element(by.css('[href="#!/js/achievements"]'));
-    const trainModeSelection = element(by.xpath('//*[@id="trainModeSelection"]/h1'));
-    const bestMovesText = element(by.xpath('//*[@id="train"]/p[1]'));
-    const bestGamesButton = element(by.id("bestGames"));
-    const watchGameBoardPallette = element(by.id("watch-games-board"));
-    const watchAndRememberButton = element(by.id("watchAndRemember"));
-    const bestMovesButton = element(by.id("bestMoves"));
-    const trainBoardPalette = element(by.id("train-board"));
+class Training {
 
-
-    this.clickOnTrainingButton =function (){
-        trainingButton.click();
+     trainingButton = element(by.css('[href="#!/js/train-mode-selection"]'));
+     analyzeButton = element(by.css('[href="#!/js/analyze"]'));
+     achievementsButton = element(by.css('[href="#!/js/achievements"]'));
+     trainModeSelection = element(by.xpath('//*[@id="trainModeSelection"]/h1'));
+     bestMovesText = element(by.xpath('//*[@id="train"]/p[1]'));
+     bestGamesButton = element(by.id("bestGames"));
+     watchGameBoardPallette = element(by.id("watch-games-board"));
+     watchAndRememberButton = element(by.id("watchAndRemember"));
+     bestMovesButton = element(by.id("bestMoves"));
+     trainBoardPalette = element(by.id("train-board"));
+    
+    clickOnTrainingButton = () =>{
+        this.trainingButton.click();
    }
 
-   this.validateTrainModeSelection = () =>{
-    browser.wait(function() {
-        return trainModeSelection.getText().then(function(text) {
+   validateTrainModeSelection = () =>{
+    browser.wait(() => {
+        return this.trainModeSelection.getText().then((text) => {
         return text === "Choose the way how to train your memory and chess intuition";
         });
-    }, 5000);
-        expect(trainModeSelection.getText()).toEqual('Choose the way how to train your memory and chess intuition');
+    }, waiter.defaultWaiterForFiveSecond);
+        expect(this.trainModeSelection.getText()).toEqual('Choose the way how to train your memory and chess intuition');
    }
    
 
-   this.validateBestMovesText = () =>{
-    browser.wait(function() {
-        return bestMovesText.getText().then(function(text) {
+   validateBestMovesText = () =>{
+    browser.wait(() => {
+        return this.bestMovesText.getText().then((text) => {
         return text === "What is the best move?";
         });
-    }, 5000);
-    expect(bestMovesText.getText()).toEqual('What is the best move?');
+    }, waiter.defaultWaiterForFiveSecond);
+    expect(this.bestMovesText.getText()).toEqual('What is the best move?');
 }
 
-   this.clickOnBestButton = () => {
-        bestGamesButton.click();
+   clickOnBestButton = () => {
+     this.bestGamesButton.click();
    }
 
-   this.clickOnWatchAndRememberButton = () => {
-        watchAndRememberButton.click();
+   clickOnWatchAndRememberButton = () => {
+     this.watchAndRememberButton.click();
    }
 
-   this.clickOnBestMovesButton = () => {
-        bestMovesButton.click();
+   clickOnBestMovesButton = () => {
+     this.bestMovesButton.click();
    }
 
-   this.trainBoardPatelleExists = () => {
-        expect(trainBoardPalette.isPresent()).toBe(true);
+   trainBoardPatelleExists = () => {
+        expect(this.trainBoardPalette.isPresent()).toBe(true);
    }
 
-   this.analyzeButtonExists = () => {
-        expect(analyzeButton.isPresent()).toBe(true);
+   analyzeButtonExists = () => {
+        expect(this.analyzeButton.isPresent()).toBe(true);
    }
 
-   this.achievementsButtonExists = () => {
-        expect(achievementsButton.isPresent()).toBe(true);
+   achievementsButtonExists = () => {
+        expect(this.achievementsButton.isPresent()).toBe(true);
    }
 
-   this.trainingButtonExists = () => {
-        expect(trainingButton.isPresent()).toBe(true);
+   trainingButtonExists = () => {
+        expect(this.trainingButton.isPresent()).toBe(true);
    }
 
-   this.watchGameBoardPalletteExists = () => {
-        expect(watchGameBoardPallette.isPresent()).toBe(true);
+   watchGameBoardPalletteExists = () => {
+        expect(this.watchGameBoardPallette.isPresent()).toBe(true);
    }
 }
 
-module.exports = new training();
+module.exports = new Training();
