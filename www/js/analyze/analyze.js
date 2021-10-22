@@ -26,19 +26,23 @@ angular.module('melissa.analyze', ['ngRoute', 'melissa.messages', 'melissa.servi
                 $scope.moveNumber++;
             }
             $scope.$apply();
-            var moves = analyzeChessGame.history();
-            var bestMoveSan = baseUpdater.getBestMove(moves.slice(0, -1));
-            var lastMoveSan = moves[moves.length-1];
-            var betterMoveStr = $scope.getBetterMoveStr(bestMoveSan, lastMoveSan);
-            var typeStr = $scope.getType(moves);
-            var className = typeStr + "-move";
-            var evaluationAndDepthStr = $scope.getEvaluationAndDepthStr(moves);
-            var numStr = $scope.getMoveNumberStr(move.color, $scope.moveNumber);
-            var moveEl = $(document.createElement('span')).addClass(className).html(numStr + move.san + betterMoveStr +' ')
-            	.attr('title', evaluationAndDepthStr);
+            const movesBefore = analyzeChessGame.history();
+            const bestMoveSan = baseUpdater.getBestMove(movesBefore.slice(0, -1));
+            const moveEl = $scope.generateMoveEl(move, bestMoveSan, movesBefore);
             $scope.pgnElements.push(moveEl);
             $('#analyzed-pgn').append(moveEl);
         };
+
+        $scope.generateMoveEl = (move, bestMoveSan, movesBefore) => {
+            const typeStr = $scope.getType(movesBefore);
+            const className = typeStr + "-move";
+            const numStr = $scope.getMoveNumberStr(move.color, $scope.moveNumber);
+            const lastMoveSan = movesBefore[movesBefore.length-1];
+            const betterMoveStr = $scope.getBetterMoveStr(bestMoveSan, lastMoveSan);
+            const evaluationAndDepthStr = $scope.getEvaluationAndDepthStr(movesBefore);
+            return $(document.createElement('span')).addClass(className).html(numStr + move.san + betterMoveStr +' ')
+            	.attr('title', evaluationAndDepthStr);
+        }
 
         $scope.getMoveNumberStr = function(moveColor, moveNumber) {
             return (moveColor == "w") ? (moveNumber + ".") : "";
