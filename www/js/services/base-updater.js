@@ -54,7 +54,7 @@ angular.module("melissa.services")
             };
             setInterval(sendForAnalysis, sendForAnalysisTimeout);
 
-            return {
+            const baseUpdater = {
                 getStart: function () {
                     return base;
                 },
@@ -81,9 +81,20 @@ angular.module("melissa.services")
                         return null;
                     }
                 },
+                getBestMoveAsync: moves => {
+                    return new Promise((resolve, reject) => {
+                        try {
+                            let result = baseUpdater.getBestMove(moves);
+                            resolve(result);
+                        } catch (err) {
+                            reject(err);
+                        }
+                    })
+                },
                 getEvaluation: function(moves) {
                     var position = positionSelector.getPositionByMoves(base, moves);
                     return position ? position.e : null;
                 }
             }
+            return baseUpdater;
         }]);

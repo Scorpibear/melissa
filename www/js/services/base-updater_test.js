@@ -77,6 +77,13 @@ describe("baseUpdater", function () {
             expect(baseUpdater.getBestMove(['d4'])).toEqual("Nf6");
         })
     });
+    describe('getBestMoveAsync', () => {
+        it('returns getBestMove result as a promise', async () => {
+            spyOn(baseUpdater, 'getBestMove').and.returnValue('Nf6')
+            let result = await baseUpdater.getBestMoveAsync(['d4','d5'])
+            expect(result).toBe('Nf6')
+        });
+    })
     describe("getEvaluation", function() {
     	it("returns evaluation", function() {
             spyOn(positionSelector, 'getPositionByMoves').and.returnValue({e: {v: 0.3, d: 31}})
