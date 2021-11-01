@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('melissa.watchGames', ['ngRoute', 'melissa.messages', 'melissa.services'])
+angular.module('melissa.watchGames', ['ngRoute', 'melissa.messages', 'melissa.services', 'melissa.boardDisplay'])
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/js/watch-games', {
         templateUrl: 'js/watch-games/watch-games.html'
