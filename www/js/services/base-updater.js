@@ -4,8 +4,10 @@ angular.module("melissa.services")
     .value("queueToAnalyze", [])
     .constant("sendForAnalysisTimeout", 2000)
     .factory("baseUpdater", [
-        '$http', 'baseManager', 'positionSelector', 'moveValidator', 'queueToAnalyze', 'sendForAnalysisTimeout', 'userService', 'connectionIndicator',
-        function ($http, baseManager, positionSelector, moveValidator, queueToAnalyze, sendForAnalysisTimeout, userService, connectionIndicator) {
+        '$http', 'baseManager', 'positionSelector', 'moveValidator', 'queueToAnalyze',
+        'sendForAnalysisTimeout', 'userService', 'connectionIndicator', 'apiClient',
+        function ($http, baseManager, positionSelector, moveValidator, queueToAnalyze,
+        sendForAnalysisTimeout, userService, connectionIndicator, apiClient) {
             let baseUpdated = false;
             let base = baseManager.restoreBase();
             let backendUrl = 'http://umain-02.cloudapp.net:9966';
@@ -82,10 +84,16 @@ angular.module("melissa.services")
                     }
                 },
                 getBestMoveAsync: moves => {
-                    return new Promise((resolve, reject) => {
+                    return new Promise(async (resolve, reject) => {
                         try {
                             let result = baseUpdater.getBestMove(moves);
-                            resolve(result);
+                            if(!result) {
+                                let fen = pgnConverter.movesToFen(moves);
+                                let fenData = await apiClient.getFenData(fen);
+                                resolve(fenData.bestMove);
+                            } else {
+                                resolve(result);
+                            }
                         } catch (err) {
                             reject(err);
                         }

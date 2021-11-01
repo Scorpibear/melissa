@@ -18,6 +18,7 @@ describe("baseUpdater", function () {
         getBestSubPositions: function() {},
         getPositionByMoves: function() {}
     };
+    const apiClient = { getFenData: () => {} };
 
     beforeEach(module("melissa.services"));
     beforeEach(module(function ($provide) {
@@ -25,6 +26,7 @@ describe("baseUpdater", function () {
         $provide.value("moveValidator", moveValidator);
         $provide.value("queueToAnalyze", queueToAnalyze);
         $provide.value("positionSelector", positionSelector);
+        $provide.value('apiClient', apiClient);
     }));
     beforeEach(inject(function (_baseUpdater_) {
         baseUpdater = _baseUpdater_;
@@ -82,6 +84,12 @@ describe("baseUpdater", function () {
             spyOn(baseUpdater, 'getBestMove').and.returnValue('Nf6')
             let result = await baseUpdater.getBestMoveAsync(['d4','d5'])
             expect(result).toBe('Nf6')
+        });
+        it('request fendata from backend if no in the base', async () => {
+            spyOn(apiClient, 'getFenData').and.returnValue({bestMove: 'c4'});
+            spyOn(baseUpdater, 'getBestMove').and.returnValue(null);
+            let result = await baseUpdater.getBestMoveAsync(['d4', 'd5']);
+            expect(result).toBe('c4');
         });
     })
     describe("getEvaluation", function() {

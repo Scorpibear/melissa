@@ -30,7 +30,7 @@
     "update-webdriver": "webdriver-manager update --gecko=false",
     "pree2e": "npm run update-webdriver",
     "e2e": "protractor e2e-tests/protractor.conf.js",
-    "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + sed(/sourceMappingURL=angular-loader.min.js.map/,'sourceMappingURL=bower_components/angular-loader/angular-loader.min.js.map','app/bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\"",
+    "update-index": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + sed(/sourceMappingURL=angular-loader.min.js.map/,'sourceMappingURL=bower_components/angular-loader/angular-loader.min.js.map','www/js/bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'www/index.html');\"",
     "report-coverage": "codecov",
     "release-android": "read -p 'Enter keystore password:' sp && read -p 'Enter key password:' kp && cordova build android --release -- --keystore=../docs/Keys/melissa.jks --alias=melissa --storePassword=$sp --password=$kp",
     "release-web": "cordova build browser",
