@@ -3,11 +3,16 @@
 angular.module("melissa.services")
     .value("queueToAnalyze", [])
     .constant("sendForAnalysisTimeout", 2000)
+    .constant('moveConverter', {movesToFen: moves => {
+        const chess = new Chess();
+        moves.forEach(move => chess.move(move));
+        return chess.fen();
+    }})
     .factory("baseUpdater", [
         '$http', 'baseManager', 'positionSelector', 'moveValidator', 'queueToAnalyze',
-        'sendForAnalysisTimeout', 'userService', 'connectionIndicator', 'apiClient',
-        function ($http, baseManager, positionSelector, moveValidator, queueToAnalyze,
-        sendForAnalysisTimeout, userService, connectionIndicator, apiClient) {
+        'sendForAnalysisTimeout', 'userService', 'connectionIndicator', 'apiClient', 'moveConverter',
+        ($http, baseManager, positionSelector, moveValidator, queueToAnalyze,
+        sendForAnalysisTimeout, userService, connectionIndicator, apiClient, moveConverter) => {
             let baseUpdated = false;
             let base = baseManager.restoreBase();
             let backendUrl = 'http://umain-02.cloudapp.net:9966';
@@ -84,13 +89,14 @@ angular.module("melissa.services")
                     }
                 },
                 getBestMoveAsync: moves => {
-                    return new Promise(async (resolve, reject) => {
+                    return new Promise((resolve, reject) => {
                         try {
                             let result = baseUpdater.getBestMove(moves);
                             if(!result) {
-                                let fen = pgnConverter.movesToFen(moves);
-                                let fenData = await apiClient.getFenData(fen);
-                                resolve(fenData.bestMove);
+                                let fen = moveConverter.movesToFen(moves);
+                                apiClient.getFenData(fen).then(fenData => {
+                                    resolve(fenData.bestMove);
+                                })
                             } else {
                                 resolve(result);
                             }

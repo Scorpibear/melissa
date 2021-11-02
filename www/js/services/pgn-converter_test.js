@@ -27,9 +27,4 @@ describe('pgnConverter', function() {
       expect(pgnConverter.shortenPgn(input)).toEqual(expected);
     });
   });
-  describe('movesToFen', () => {
-    it('return starting fen for empty move list', () => {
-      expect(pgnConverter.movesToFen([])).toBe('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
-    });
-  });
 });

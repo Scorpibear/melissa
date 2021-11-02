@@ -18,7 +18,7 @@ describe("baseUpdater", function () {
         getBestSubPositions: function() {},
         getPositionByMoves: function() {}
     };
-    const apiClient = { getFenData: () => {} };
+    const apiClient = { getFenData: () => Promise.resolve({}) };
 
     beforeEach(module("melissa.services"));
     beforeEach(module(function ($provide) {
@@ -86,7 +86,7 @@ describe("baseUpdater", function () {
             expect(result).toBe('Nf6')
         });
         it('request fendata from backend if no in the base', async () => {
-            spyOn(apiClient, 'getFenData').and.returnValue({bestMove: 'c4'});
+            spyOn(apiClient, 'getFenData').and.returnValue(Promise.resolve({bestMove: 'c4'}));
             spyOn(baseUpdater, 'getBestMove').and.returnValue(null);
             let result = await baseUpdater.getBestMoveAsync(['d4', 'd5']);
             expect(result).toBe('c4');

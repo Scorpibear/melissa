@@ -1,8 +1,8 @@
 angular.module("melissa.services")
-.factory('apiClient', () => {
+.factory('apiClient', [() => {
   return {
     getFenData: (fen) => {
-      return {bestMove: 'c4'}
+      return Promise.resolve({bestMove: 'c4'});
     }
-  }
-})
+  };
+}])
