@@ -28,7 +28,7 @@ angular.module("melissa.services")
     function extendIdeas(ideasContainer) {
       var ideas = ideasContainer.popIdeas();
       ideas.forEach(function(idea) {
-        var bestMove = baseIterator.getBestAnswer(idea.pgn);
+        var bestMove = baseIterator.getBestMoveSync(idea.pgn);
         var newPgn = idea.pgn.slice();
         newPgn.push(bestMove);
         var subIdea = {pgn: newPgn};

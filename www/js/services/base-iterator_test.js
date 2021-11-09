@@ -22,12 +22,15 @@ describe('baseIterator', function() {
       expect(baseIterator.getBestPgn(['a3'])).toEqual(['a3', 'Nf6']);
     });
   });
-  describe('getBestAnswer', function() {
+  describe('getBestMoveSync', function() {
     it('returns first submove', function() {
       spyOn(positionSelector, 'getPositionByMoves').and.returnValue({m: '', s:[{m: 'e4'}]});
-      expect(baseIterator.getBestAnswer([])).toEqual('e4');
+      expect(baseIterator.getBestMoveSync([])).toEqual('e4');
     });
   });
+  describe('getBestMove', () => {
+
+  })
   describe('getSubPgns', function() {
     it('returns what is in s', function() {
       spyOn(positionSelector, 'getPositionByMoves').and.returnValue({m: '', s:[{m: 'a4'},{m: 'b4'}]});

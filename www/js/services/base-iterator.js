@@ -27,10 +27,13 @@ angular.module("melissa.services")
       },
       // input: pgn
       // output: move
-      getBestAnswer: function(pgn) {
+      getBestMoveSync: function(pgn) {
         var position = positionSelector.getPositionByMoves(baseUpdater.getStart(), pgn);
         var result = (position && position.s && position.s.length) ? position.s[0].m : undefined;
         return result;
+      },
+      getBestMove: moves => {
+        return Promise.resolve(this.getBestMoveSync(moves));
       },
       // input: pgn
       // output: array of pgns

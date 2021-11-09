@@ -5,7 +5,7 @@ describe('notLearntPuzzleGenerator', function () {
   var puzzle = {position: '', answer: 'e4'};
   var teacher = {getListOfPgnsToLearn: function(){}};
   var puzzleBuilder = {buildFromPgn: function(){}};
-  var baseIterator = {getBestAnswer: function(){}};
+  var baseIterator = {getBestMoveSync: function(){}};
 
   beforeEach(module('melissa.services'));
   beforeEach(module(function($provide) {
@@ -34,9 +34,9 @@ describe('notLearntPuzzleGenerator', function () {
       notLearntPuzzleGenerator.reset();
       expect(teacher.getListOfPgnsToLearn).toHaveBeenCalled();
     });
-    it('uses baseIterator.getBestAnswer result to build the puzzle', function() {
+    it('uses baseIterator.getBestMoveSync result to build the puzzle', function() {
       spyOn(teacher, 'getListOfPgnsToLearn').and.returnValue([['d4']]);
-      spyOn(baseIterator, 'getBestAnswer').and.returnValue('Nf6');
+      spyOn(baseIterator, 'getBestMoveSync').and.returnValue('Nf6');
       spyOn(puzzleBuilder, 'buildFromPgn');
       notLearntPuzzleGenerator.reset();
       expect(puzzleBuilder.buildFromPgn).toHaveBeenCalledWith(['d4'], 'Nf6');

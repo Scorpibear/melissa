@@ -6,7 +6,7 @@ angular.module("melissa.services")
     return {
       isGoodIdea: function(idea) {
         if(idea && idea.pgn) {
-          var bestAnswer = baseIterator.getBestAnswer(idea.pgn);
+          var bestAnswer = baseIterator.getBestMoveSync(idea.pgn);
           if(bestAnswer) {
             var isNotLearnt = !(learningProgress.isLearnt(puzzleBuilder.buildFromPgn(idea.pgn, bestAnswer)));
             return isNotLearnt;

@@ -13,7 +13,7 @@ angular.module("melissa.services")
         var pgns = teacher.getListOfPgnsToLearn();
         if(Array.isArray(pgns)){
           pgns.forEach(function(pgn) {
-            var puzzle = puzzleBuilder.buildFromPgn(pgn, baseIterator.getBestAnswer(pgn));
+            var puzzle = puzzleBuilder.buildFromPgn(pgn, baseIterator.getBestMoveSync(pgn));
             puzzleList.push(puzzle);
           });
         }

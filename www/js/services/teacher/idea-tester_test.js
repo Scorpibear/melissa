@@ -2,7 +2,7 @@
 describe('ideaTester', function() {
   var ideaTester;
   var learningProgress = {isLearnt: function() {}};
-  var baseIterator = {getBestAnswer: function() {}};
+  var baseIterator = {getBestMoveSync: function() {}};
   var puzzleBuilder = {buildFromPgn: function() {}};
   
   beforeEach(module('melissa.services'));
@@ -24,12 +24,12 @@ describe('ideaTester', function() {
     });
     it('returns true when position is not learnt', function() {
       spyOn(learningProgress, 'isLearnt').and.returnValue(false);
-      spyOn(baseIterator, 'getBestAnswer').and.returnValue('e4');
+      spyOn(baseIterator, 'getBestMoveSync').and.returnValue('e4');
       expect(ideaTester.isGoodIdea({pgn:[]})).toBeTruthy();
     });
     it('pass pgn and bestMove to puzzleBuilder', function() {
       spyOn(learningProgress, 'isLearnt');
-      spyOn(baseIterator, 'getBestAnswer').and.returnValue('e6');
+      spyOn(baseIterator, 'getBestMoveSync').and.returnValue('e6');
       spyOn(puzzleBuilder, 'buildFromPgn');
       var idea = {pgn: ['e4']};
       ideaTester.isGoodIdea(idea);
@@ -37,13 +37,13 @@ describe('ideaTester', function() {
     });
     it('returns false when idea has no best answer', function() {
       spyOn(learningProgress, 'isLearnt').and.returnValue(false);
-      spyOn(baseIterator, 'getBestAnswer').and.returnValue(undefined);
+      spyOn(baseIterator, 'getBestMoveSync').and.returnValue(undefined);
       expect(ideaTester.isGoodIdea({pgn:['a3','e5','Nc3']})).toBeFalsy();
     });
     it('learningProgress.isLearnt uses output of puzzleBuilder', function() {
       var puzzle = {position: 'aaa', answer: 'bbb'};
       spyOn(learningProgress, 'isLearnt');
-      spyOn(baseIterator, 'getBestAnswer').and.returnValue('e4');
+      spyOn(baseIterator, 'getBestMoveSync').and.returnValue('e4');
       spyOn(puzzleBuilder, 'buildFromPgn').and.returnValue(puzzle);
       ideaTester.isGoodIdea({pgn: []});
       expect(learningProgress.isLearnt).toHaveBeenCalledWith(puzzle);

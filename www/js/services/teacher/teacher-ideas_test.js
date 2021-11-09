@@ -1,7 +1,7 @@
 'use strict';
 describe('teacherIdeas', function() {
   var teacherIdeas;
-  var baseIterator = {getBestAnswer: function() {}, getSubPgns: function(){}};
+  var baseIterator = {getBestMoveSync: function() {}, getSubPgns: function(){}};
   var ideasContainer = {isEmpty: function(){}, pushIdea: function(){}, addIdea: function(){},
                        getIdea: function(){}, popIdeas: function(){}};
   
@@ -36,7 +36,7 @@ describe('teacherIdeas', function() {
       spyOn(ideasContainer, 'getIdea').and.returnValue(null);
       spyOn(ideasContainer, 'popIdeas').and.returnValue([{pgn:['e4']}]);
       spyOn(baseIterator, 'getSubPgns').and.returnValue([['e4','e6','Nf3'],['e4','e6','d4']]);
-      spyOn(baseIterator, 'getBestAnswer').and.returnValue('e6');
+      spyOn(baseIterator, 'getBestMoveSync').and.returnValue('e6');
       spyOn(ideasContainer, 'pushIdea');
       teacherIdeas.getIdea(ideasContainer);
       expect(ideasContainer.pushIdea.calls.count()).toBe(2);
@@ -45,7 +45,7 @@ describe('teacherIdeas', function() {
     });
     it('does not push not full ideas', function() {
       spyOn(ideasContainer, 'popIdeas').and.returnValue([{pgn:['a3']}]);
-      spyOn(baseIterator, 'getBestAnswer').and.returnValue('e5')
+      spyOn(baseIterator, 'getBestMoveSync').and.returnValue('e5')
       spyOn(baseIterator, 'getSubPgns').and.returnValue([]);
       spyOn(ideasContainer, 'pushIdea');
       teacherIdeas.getIdea(ideasContainer);
@@ -55,7 +55,7 @@ describe('teacherIdeas', function() {
       spyOn(ideasContainer, 'isEmpty').and.returnValue(false);
       spyOn(ideasContainer, 'getIdea').and.returnValue(null);
       spyOn(ideasContainer, 'popIdeas').and.returnValue([{pgn:[]}]);
-      spyOn(baseIterator, 'getBestAnswer').and.returnValue('e4');
+      spyOn(baseIterator, 'getBestMoveSync').and.returnValue('e4');
       spyOn(baseIterator, 'getSubPgns').and.returnValue([['e4', 'e5']]);
       spyOn(ideasContainer, 'pushIdea');
       teacherIdeas.getIdea(ideasContainer);
