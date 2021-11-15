@@ -12,7 +12,7 @@ describe('analyzeBoard', function() {
     $window = _$window_;
     $window.ChessBoard = function(id, boardConfigInput){
       boardConfig = boardConfigInput;
-      return jasmine.createSpyObj({},['position']);
+      return jasmine.createSpyObj('board', ['position']);
     };
     analyzeBoardElement = '<div><div id="analyze-board" melissa-analyze-board></div></div>';
     analyzeChessGame = _analyzeChessGame_;
