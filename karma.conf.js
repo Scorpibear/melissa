@@ -14,6 +14,7 @@ module.exports = function (config) {
             'www/js/messages/messages.js',
             'www/js/messages/*.js',
             'www/js/services/services.js',
+            'www/js/services/connectors/*',
             'www/js/services/learning-progress/*',
             'www/js/services/teacher/*.js',
             'www/js/services/train_strategies/game-creator.js',

@@ -30,10 +30,5 @@ describe('apiClient', () => {
       const result = await apiClient.getBase();
       expect(result).toEqual(base);
     });
-    it('calls start sending for connection indicator', () => {
-      spyOn(connectionIndicator, 'startSending');
-      apiClient.getBase();
-      expect(connectionIndicator.startSending).toHaveBeenCalled();
-    })
   })
 });
