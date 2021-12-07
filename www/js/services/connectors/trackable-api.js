@@ -6,8 +6,16 @@ angular.module("melissa.services")
     getFenData: (fen) => {
       
     },
-    getBase: () => {
-      
+    getBase: async () => {
+      connectionIndicator.startSending();
+      try {
+        result = await apiClient.getBase();
+        connectionIndicator.success();
+        return result;
+      } catch (err) {
+        connectionIndicator.error();
+        return Promise.reject(err);
+      }
     }
   };
 }])
