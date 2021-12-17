@@ -3,13 +3,22 @@ angular.module("melissa.services")
     ['apiClient', 'connectionIndicator',
     (apiClient, connectionIndicator) => {
   return {
-    getFenData: (fen) => {
+    getFenData: async (fen) => {
+      connectionIndicator.startSending();
+      try {
+        const fenData = apiClient.getFenData(fen);
+        connectionIndicator.success();
+        return fenData;
+      } catch (err) {
+        connectionIndicator.error();
+        return Promise.reject(err);
+      }
       
     },
     getBase: async () => {
       connectionIndicator.startSending();
       try {
-        result = await apiClient.getBase();
+        const result = await apiClient.getBase();
         connectionIndicator.success();
         return result;
       } catch (err) {
