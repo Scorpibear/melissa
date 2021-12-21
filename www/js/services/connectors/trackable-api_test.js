@@ -29,12 +29,13 @@ describe('trackableApi', () => {
       expect(connectionIndicator.success).toHaveBeenCalled();
     });
     it('calls connectionIndicator.error() in case of rejected promise', async () => {
-      spyOn(apiClient, 'getBase').and.callFake(() => Promise.reject());
+      spyOn(apiClient, 'getBase').and.callFake(() => Promise.reject('something went wrong'));
       spyOn(connectionIndicator, 'error');
       try {
         await trackableApi.getBase();
         expect.fail('promise was not rejected');
       } catch (err) {
+        expect(err).toEqual('something went wrong');
       }
       expect(connectionIndicator.error).toHaveBeenCalled();
     });
@@ -55,6 +56,16 @@ describe('trackableApi', () => {
       await trackableApi.getFenData(fen);
       expect(connectionIndicator.success).toHaveBeenCalled();
     });
-    it('calls error, if apiClient rejects');
+    it('calls error, if apiClient rejects', async () => {
+      spyOn(apiClient, 'getFenData').and.callFake(() => Promise.reject('something went wrong'));
+      spyOn(connectionIndicator, 'error');
+      try{
+        await trackableApi.getFenData(fen);
+        expect.fail('promise was not rejected');
+      } catch (err) {
+        expect(err).toEqual('something went wrong');
+      }
+      expect(connectionIndicator.error).toHaveBeenCalled();
+    });
   });
 });

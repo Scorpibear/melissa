@@ -6,7 +6,7 @@ angular.module("melissa.services")
     getFenData: async (fen) => {
       connectionIndicator.startSending();
       try {
-        const fenData = apiClient.getFenData(fen);
+        const fenData = await apiClient.getFenData(fen);
         connectionIndicator.success();
         return fenData;
       } catch (err) {
