@@ -10,7 +10,7 @@ angular.module("melissa.services")
     }})
     .factory("baseUpdater", [
         '$http', 'baseManager', 'positionSelector', 'moveValidator', 'queueToAnalyze',
-        'sendForAnalysisTimeout', 'userService', 'connectionIndicator', 'apiClient', 'moveConverter',
+        'sendForAnalysisTimeout', 'userService', 'connectionIndicator', 'trackableApiClient', 'moveConverter',
         ($http, baseManager, positionSelector, moveValidator, queueToAnalyze,
         sendForAnalysisTimeout, userService, connectionIndicator, apiClient, moveConverter) => {
             let baseUpdated = false;

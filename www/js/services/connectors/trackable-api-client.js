@@ -1,5 +1,5 @@
 angular.module("melissa.services")
-.factory('trackableApi', 
+.factory('trackableApiClient', 
     ['apiClient', 'connectionIndicator',
     (apiClient, connectionIndicator) => {
   return {
