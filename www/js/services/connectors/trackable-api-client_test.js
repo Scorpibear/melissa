@@ -68,4 +68,12 @@ describe('trackableApiClient', () => {
       expect(connectionIndicator.error).toHaveBeenCalled();
     });
   });
+  describe('analyze', () => {
+    /* TODO: finalize
+    it('asynchronously sends for analysis provided pgn via apiClient', () => {
+      const pgn = 'some valid pgn';
+      // ...
+      expect(apiClient.getFenData).toHaveBeenCalledWith(pgn);
+    })*/
+  });
 });
