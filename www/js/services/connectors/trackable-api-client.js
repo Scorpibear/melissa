@@ -25,6 +25,16 @@ angular.module("melissa.services")
         connectionIndicator.error();
         return Promise.reject(err);
       }
+    },
+    analyze: async pgn => {
+      connectionIndicator.startSending();
+      try {
+        await apiClient.analyze(pgn);
+        connectionIndicator.success();
+      } catch (err) {
+        connectionIndicator.error();
+        return Promise.reject(err);
+      }
     }
   };
 }])

@@ -2,7 +2,7 @@ describe('trackableApiClient', () => {
   let trackableApiClient;
   const stub = () => {/* stub */};
   let connectionIndicator = {startSending: stub, success: stub, error: stub};
-  let apiClient = {getBase: () => Promise.resolve({}), getFenData: () => Promise.resolve({})};
+  let apiClient = {getBase: () => Promise.resolve({}), getFenData: () => Promise.resolve({}), analyze: () => Promise.resolve()};
   let fen = 'rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 2';
   beforeEach(module('melissa.services'));
   beforeEach(module(function($provide) {
@@ -69,11 +69,11 @@ describe('trackableApiClient', () => {
     });
   });
   describe('analyze', () => {
-    /* TODO: finalize
-    it('asynchronously sends for analysis provided pgn via apiClient', () => {
+    it('asynchronously sends for analysis provided pgn via apiClient', async () => {
       const pgn = 'some valid pgn';
-      // ...
-      expect(apiClient.getFenData).toHaveBeenCalledWith(pgn);
-    })*/
+      spyOn(apiClient, 'analyze').and.resolve;
+      await trackableApiClient.analyze(pgn);
+      expect(apiClient.analyze).toHaveBeenCalledWith(pgn);
+    })
   });
 });
