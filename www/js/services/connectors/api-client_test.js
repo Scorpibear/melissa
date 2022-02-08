@@ -1,7 +1,11 @@
 describe('apiClient', () => {
-  let apiClient;
-  let $http = {get: () => Promise.resolve({data: {bestMove: 'c4'}})};
   const stub = () => {/* stub */};
+  const pStub = () => Promise.resolve();
+  let apiClient;
+  let $http = {
+    get: () => Promise.resolve({data: {bestMove: 'c4'}}),
+    jsonp: pStub
+  };
   let connectionIndicator = {startSending: stub, success: stub, error: stub}
   beforeEach(module('melissa.services'));
   beforeEach(module(function($provide) {
@@ -30,5 +34,13 @@ describe('apiClient', () => {
       const result = await apiClient.getBase();
       expect(result).toEqual(base);
     });
-  })
+  });
+  describe('analyze', () => {
+    /*it('makes a POST /analyze call to the backend with moves in the body', async () => {
+      const moves = ['e4', 'c5', 'c3', 'Nf6', 'Bc5', 'Nfxe5', 'Bxf7+', 'Kxf7', 'Qh4+'];
+      spyOn($http, 'jsonp').and.stub();
+      await apiClient.analyze(moves);
+      expect($http.jsonp).toHaveBeenCalledWith(jasmine.anything(), moves);
+    });*/
+  });
 });
