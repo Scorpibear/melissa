@@ -4,6 +4,10 @@ angular.module("melissa.services")
     ['$http', 'backendUrl', 'userService', 
     ($http, backendUrl, userService) => {
   return {
+    analyze: (moves) => {
+      return $http.jsonp(backendUrl + '/api/analyze', {data: moves}).
+        catch(error => console.error(error));
+    },
     getFenData: (fen) => {
       return $http.get(backendUrl + '/api/fenData', {params: {fen}}).
         then(res => res.data, error => console.error(error));

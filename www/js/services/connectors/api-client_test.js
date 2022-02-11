@@ -36,11 +36,11 @@ describe('apiClient', () => {
     });
   });
   describe('analyze', () => {
-    /*it('makes a POST /analyze call to the backend with moves in the body', async () => {
+    it('makes a POST /api/analyze call to the backend with moves in the body', async () => {
       const moves = ['e4', 'c5', 'c3', 'Nf6', 'Bc5', 'Nfxe5', 'Bxf7+', 'Kxf7', 'Qh4+'];
-      spyOn($http, 'jsonp').and.stub();
+      spyOn($http, 'jsonp').and.callThrough();
       await apiClient.analyze(moves);
-      expect($http.jsonp).toHaveBeenCalledWith(jasmine.anything(), moves);
-    });*/
+      expect($http.jsonp).toHaveBeenCalledWith(jasmine.stringContaining('/api/analyze'), {data: moves});
+    });
   });
 });
