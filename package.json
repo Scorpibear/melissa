@@ -20,7 +20,7 @@
     "karma-jasmine": "^2.0.1",
     "karma-junit-reporter": "^1.2.0",
     "protractor": "^7.0.0",
-    "shelljs": "^0.8.4"
+    "shelljs": "^0.8.5"
   },
   "scripts": {
     "postinstall": "bower install",
