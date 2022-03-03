@@ -14,7 +14,7 @@ services:
 before_script:
   - npm install
   - bower install
-  - npm run pree2e
+  - npm run update-webdriver
   - nohup bash -c "./nodemodules/protractor/bin/webdriver-manager start 2>&1 &"
 addons:
   sonarcloud:

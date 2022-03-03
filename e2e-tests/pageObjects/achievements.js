@@ -4,7 +4,7 @@ class Achievements {
 
     achievementsButton = element(by.css('[href="#!/js/achievements"]'));
     resetProgressButton = element(by.css('[ng-click="resetProgress()"]'));
-    levelTextInAchievements = element(by.xpath('//*[@id="stats-list"]/li[1]/span[1]'));
+    levelTextInAchievements = element(by.css('#stats-list > li:nth-child(1) > span.stats-label'));
     positionsLearnedInAchievements = element(by.xpath('//*[@id="stats-list"]/li[2]/span[1]'));
     tillNextlevelFieldInAchievements = element(by.xpath('//*[@id="stats-list"]/li[3]/span[1]'));
 
