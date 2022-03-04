@@ -22,7 +22,7 @@ addons:
     token:
       secure: "OWrFTtkqAgukMMOlY5dtbfxw25H9bnXnZB89KCc4x3MDt71ISu7PYCw4Wnca/LQtxMUuw4INtoSQXVe2Nqon/KmG1LXzTE3hnPnsklPisjEdrzthUqoPNK5F32Jq9qHYBABnwxUESkLBy83RV3RHCqHjCpBEAOlch8h7WV3FXGw="
 script:
-  - ./node_modules/.bin/karma start --browsers Firefox --single-run
+  - ./node_modules/.bin/karma start --single-run
   - codecov
   - (npm start > /dev/null &) && (npm run e2e)
   - sonar-scanner
