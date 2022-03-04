@@ -1,6 +1,6 @@
 # Melissa
 
-[![Build Status](https://travis-ci.org/Scorpibear/melissa.svg?branch=master)](https://travis-ci.org/Scorpibear/melissa)[![Coverage Status](https://codecov.io/gh/Scorpibear/melissa/coverage.svg)](https://codecov.io/gh/Scorpibear/melissa)
+[![Build Status](https://app.travis-ci.com/Scorpibear/melissa.svg?branch=master)](https://app.travis-ci.com/Scorpibear/melissa)[![Coverage Status](https://codecov.io/gh/Scorpibear/melissa/coverage.svg)](https://codecov.io/gh/Scorpibear/melissa)
 
 Memory and intuition trainer based on chess game positions.
 
