@@ -29,7 +29,7 @@ describe('gameCreator', function() {
     });
     it('better to have not-learnt positions', function() {
       spyOn(puzzleBuilder, 'buildFromPositionObject').and.callFake(position => position);
-      spyOn(learningProgress, 'isLearnt').and.callFake((puzzle) => ({"a": true,"b": false}[puzzle]));
+      learningProgress.isLearnt = (puzzle) => ({"a": true,"b": false}[puzzle]);
       var gameLongButLearnt = ["a", "a", "a"];
       var gameShortButNotLearnt = ["b"];
       expect(gameCreator.isBetter(gameLongButLearnt, gameShortButNotLearnt)).toBeFalsy();
