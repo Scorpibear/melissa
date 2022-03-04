@@ -37,6 +37,9 @@ describe('gameCreator', function() {
   })
 
   describe('getNotLearntPositionsCount', function() {
+    beforeEach(() => {
+      learningProgress.isLearnt = () => false;
+    });
     it('return zero for empty game', function() {
       expect(gameCreator.getNotLearntPositionsCount([])).toBe(0);
     });
@@ -47,5 +50,9 @@ describe('gameCreator', function() {
       spyOn(learningProgress, 'isLearnt').and.returnValue(true);
       expect(gameCreator.getNotLearntPositionsCount([{}])).toBe(0);
     });
+    it('counts as not learnt if there is no info about learning progress', () => {
+      learningProgress.isLearnt = undefined;
+      expect(gameCreator.getNotLearntPositionsCount([{}, {}, {}])).toBe(3);
+    })
   })
 })

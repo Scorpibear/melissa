@@ -21,6 +21,12 @@ describe('baseIterator', function() {
             {m:'c4'}]}]});
       expect(baseIterator.getBestPgn(['a3'])).toEqual(['a3', 'Nf6']);
     });
+    it('does not count nodes without m property', () => {
+      spyOn(positionSelector, 'getPositionByMoves').and.returnValue({m: 'a3', s:[
+        {m:'Nf6',s:[
+          {mwithtypo:'c4', s:[{m:'c5'}]}]}]});
+      expect(baseIterator.getBestPgn(['a3'])).toEqual(['a3', 'Nf6']);
+    });
   });
   describe('getBestAnswer', function() {
     it('returns first submove', function() {
