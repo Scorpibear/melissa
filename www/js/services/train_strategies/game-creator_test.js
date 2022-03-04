@@ -47,6 +47,7 @@ describe('gameCreator', function() {
       expect(gameCreator.getNotLearntPositionsCount([{},{}])).toBe(2);
     });
     it('returns zero if a single position is learnt', function() {
+      learningProgress.isLearnt = () => false;
       spyOn(learningProgress, 'isLearnt').and.returnValue(true);
       expect(gameCreator.getNotLearntPositionsCount([{}])).toBe(0);
     });
